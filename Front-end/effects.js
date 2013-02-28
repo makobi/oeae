@@ -1,10 +1,32 @@
+$(document).ready(function() {
 
+// Esta funcion cuando hacen click en la imagen abre y cierra el nav_drop
+	$('#show_hide').click(function() {
 
-$("div#show_hide").click(function () {
-	var width = $("div#nav_drop").css("width");
-	while(width != 0){
-		width = width - 1;
-	  $("div#nav_drop").css("width", width);
-	}
+	  $('#nav_drop').animate({
+		    //-webkit-box-flex: 0,
+		    width: 'toggle',
+		  }, 500, function() {
+		  			
+		    // Animation complete.
+ 		});
+	  /*
+	  $('#profile').animate({
+		    //-webkit-box-flex: 0,
+		    width: 'toggle',
+		  	}, 700, function() {
+		    	// Animation complete.
+ 	 	});
+
+ 	  $('#menu').animate({
+		    //-webkit-box-flex: 0,
+		    width: 'toggle',
+		  	}, 700, function() {
+		    	// Animation complete.
+ 	 	});
+ 	 */
+	});
 });
+
+
  

@@ -17,19 +17,31 @@ body{
 
 	display:-webkit-box;
 	-webkit-box-orient: horizontal;
+	border-bottom: 1px solid black;
 	width:100%;
 	height: 50px;
 	background: #95d788;
         background-image: -webkit-linear-gradient(#AAD6EF, #81C7EF);
         background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #81C7EF),color-stop(1, #AAD6EF));
+        box-shadow: 1px 1px 1px #888888;
 }
 
-#top_bar img{
+#logout{
+
 	position: absolute;
-	top:10px;
-	left:10px;
-	width:45px;
-	height:30px;
+	text-decoration: none;
+	font-family: helvetica;
+	font-weight: bold;
+	color: gray;
+	font-size: 22px;
+	left:90%;
+	bottom: 91.5%	
+
+}
+
+#logout:hover{
+
+	color: black;
 }
 
 #main_wrapper{
@@ -37,7 +49,6 @@ body{
 	display:-webkit-box;
 	-webkit-box-orient: horizontal;
 	-webkit-box-flex: 1;
-	border:1px solid green;
 	height: 655px;
 }
 
@@ -45,13 +56,48 @@ body{
 
 	display:-webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-box-flex: 1;
+	width: 25%;
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	background-color: #D9DBD5;
-	border:1px solid black;
+	border-left:1px solid black;
+	border-right:1px solid black;
+	border-bottom:1px solid black;
+	box-shadow: 1px 1px 1px #888888;
+}
+
+#profile{
+
+	display:-webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-flex: 1;
+	border: 1px solid blue;
+	margin-right: 5px;
+	margin-left: 5px;
+	padding:0px;
+}
+
+#profile img{
+
+	width:50px;
+	height:50px;
+}
+
+#profile p{
+
+	margin:0px;
+}
+
+#menu{
+
+	display:-webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-flex: 50;
+	border:1px solid green;
+	margin-right: 5px;
+	margin-left: 5px;
 }
 
 /*
@@ -68,13 +114,30 @@ body{
 
 	display:-webkit-box;
 	-webkit-box-orient: vertical;
-	-webkit-box-flex: 3;
+	width: 75%
 	border:1px solid black;
 }
 
 #top_main{
+display:-webkit-box;
+	-webkit-box-orient: horizontal;
+	width:100%;
+	height: 50px;
 
 
+}
+
+#top_main img{
+	position: relative;
+	top:10px;
+	left:10px;
+	width:45px;
+	height:30px;
+	opacity: .4;
+}
+
+#top_main img:hover{
+	opacity: 1;
 }
 
 #main_content{
