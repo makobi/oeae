@@ -44,6 +44,8 @@ body{
 	color: black;
 }
 
+
+
 #main_wrapper{
 
 	display:-webkit-box;
@@ -57,10 +59,7 @@ body{
 	display:-webkit-box;
 	-webkit-box-orient: vertical;
 	width: 25%;
-	padding-left: 5px;
-	padding-right: 5px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	overflow-y:scroll;
 	background-color: #D9DBD5;
 	border-left:1px solid black;
 	border-right:1px solid black;
@@ -68,22 +67,117 @@ body{
 	box-shadow: 1px 1px 1px #888888;
 }
 
+#nav_drop a{
+
+	text-decoration: none;
+}
+
+.title{
+
+	height: 30px;
+	width: 100%;
+	margin: auto;
+	/* IE10 Consumer Preview */ 
+	background-image: -ms-linear-gradient(top, #00A3F0 0%, #006A9C 100%);
+
+	/* Mozilla Firefox */ 
+	background-image: -moz-linear-gradient(top, #00A3F0 0%, #006A9C 100%);
+
+	/* Opera */ 
+	background-image: -o-linear-gradient(top, #00A3F0 0%, #006A9C 100%);
+
+	/* Webkit (Safari/Chrome 10) */ 
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #00A3F0), color-stop(1, #006A9C));
+
+	/* Webkit (Chrome 11+) */ 
+	background-image: -webkit-linear-gradient(top, #00A3F0 0%, #006A9C 100%);
+
+	/* W3C Markup, IE10 Release Preview */ 
+	background-image: linear-gradient(to bottom, #00A3F0 0%, #006A9C 100%);
+
+	
+}
+
+.title p{
+
+	margin: 0px;
+	height: 25px;
+	font-family: helvetica;
+	text-align: left;
+	padding-top: 5.5px;
+	padding-left: 5px;
+	opacity: .9;
+	color: white;
+}
+
+.secction{
+
+	display:-webkit-box;
+	-webkit-box-orient: horizontal;
+	height: 50px;
+	width: 100%;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color: #D9DBD5;
+
+}
+
+.secction p{
+	position: relative;
+	margin: 0px;
+	height: 25px;
+	font-size: 18px;
+	font-family: helvetica;
+	text-align: left;
+	padding-top: 13px;
+	padding-left: 10px;
+	color: black;
+}
+
+
+.secction img{
+
+	position: relative;
+	top:10px;
+	left:5px;
+	width:30px;
+	height:27px;
+
+}
+
+.secction1{
+
+	display:-webkit-box;
+	-webkit-box-orient: vertical;
+	background-color: #CECEDE;
+
+}
+
 #profile{
 
 	display:-webkit-box;
 	-webkit-box-orient: horizontal;
 	-webkit-box-flex: 1;
-	border: 1px solid blue;
-	margin-right: 5px;
-	margin-left: 5px;
-	padding:0px;
+
 }
 
 #profile img{
 
-	width:50px;
-	height:50px;
+	position: relative;
+	top:5px;
+	left:5px;
+	width:40px;
+	height:35px;
 }
+#major{
+
+	display:-webkit-box;
+	-webkit-box-flex: 10;
+	
+
+
+}
+
 
 #profile p{
 

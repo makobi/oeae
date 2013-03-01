@@ -10,6 +10,7 @@ $(document).ready(function() {
 		  			
 		    // Animation complete.
  		});
+
 	  /*
 	  $('#profile').animate({
 		    //-webkit-box-flex: 0,
@@ -26,6 +27,7 @@ $(document).ready(function() {
  	 	});
  	 */
 	});
+
 });
 
 
