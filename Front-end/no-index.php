@@ -54,22 +54,19 @@ $cursos = mysql_query($cursosquery);
 	<script type="text/javascript" src="effects.js"></script>
 	<script type="text/javascript" src="holder.js"></script>
 
-	<script type="text/javascript">
+	 <script type="text/javascript">
 
+	 // Esto explota!
+	// <?php 
+	// 	while($row=mysql_fetch_array($cursos)) {
+	// 		echo "$('#".$row[0]."').click(function() {
 
-	<?php 
-		while($row=mysql_fetch_array($cursos)) {
-			echo "$('#".$row[0]."').click(function() {
+	// 			  $('#".$row[1]."').slideToggle('slow', function() {
+ //  			});";
 
-				  $('#".$row[1]."').slideToggle('slow', function() {
-			    // Animation complete.
-  			});";
-
-		}
-
-
-	?>
-	</script>
+	// 	}
+	// ?>
+	 </script>
 
 </head>
 <!-- Termina el head -->
@@ -97,27 +94,42 @@ $cursos = mysql_query($cursosquery);
 			<div class="secction1" id="major"> 
 				<div class="title"> <p>Classes</p></div>
 				<div class="secction1"> 
-					<?php 
-							while ($row=mysql_fetch_array($cursos)) {
-								echo "
+					<ul>
+					<?php
+						while ($row=mysql_fetch_array($cursos)) {
+							$string = "
+							<li>
+								<a href='no-index.html' id='".$row[0]."'>
+									<div class='secction'> 
+										<div><img src='class_img.jpg' id='effect'></div>
+										<p>".$row[0]." ".$row[1]."</p>
+									</div>
+								</a>
+								<ul id='".$row[1]."'>";
+							echo $string;
+							 $query = "SELECT nombre_act FROM ActividadesCurso natural join Actividades natural join Cursos where nombre_curso='Matematica Discreta'";
+							
+							 $activity = mysql_query($query);
+							
+							  if (mysql_num_rows($activity)>0) {
+							 	while ($res=mysql_fetch_array($activity)) {
+							 		$act = "
 									<li>
-										<a href='no-index.html' id='".$row[0]."'><div class='secction'> 
-											<div ><img src='class_img.jpg' id='effect'></div>
-											<p>".$row[0]." ".$row[1]."</p>
-										</div></a>
-
-										<ul id='".$row[1]."'>";
-										while ($activity=mysql_fetch_array($activityquery)) {
-											echo "<li><a href='no-index.html'><div class='secction2'> 
-												<div ><img src='class_img.jpg' id='effect'></div>
-												<p>".$activity[0]."</p>
-											</div></a></li>";
-										}
-										echo "</ul>
-									</li>
-									";
+										<a href='no-index.html'>
+											<div class='secction2'>
+												<div><img src='class_img.jpg' id='effect'>	</div>
+												<p>".$res[0]."</p>
+											</div>
+										</a>
+									</li>";
+									echo $act;
+								}
 							}
+							echo "</li>";						
+
+						}	
 						?>
+					</ul>
 				</div>
 				<div class="title"> <p>Options</p></div>
 				<div class="secction1"> 
