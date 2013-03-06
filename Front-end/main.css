@@ -48,7 +48,57 @@ body{
 	color: black;
 }
 
+/*empieza css de las paginas de jose (forgot.html, index.html)*/
 
+#recovery {
+
+position: relative;	  	
+text-decoration: none;	  	
+margin-left: 15%;
+	  	
+
+}	  	
+
+	  	
+#forgotinst {
+	  	
+position: relative;
+	  	
+text-decoration: none;	  	
+font-family: arial;	  	
+color: black;	  	
+font-size: 18px;
+ margin-left: 5%;	  	
+margin-right: 5%;
+	  	
+margin-top: 30%;
+	  	
+text-align: justify;
+	  	
+}
+  	
+ 	
+#rec_email{
+	  	
+position: relative;	  	
+text-decoration: none;	  	
+font-family: arial;
+	  	
+color: black;
+	  	
+font-size: 22px;
+margin-left: 15%;	  	
+margin-top: 2%;  
+}
+
+#placeholder{  	
+position: relative;  	
+text-decoration: none;
+font-family: helvetica;
+color: black;  	
+font-size: 18px;	  	
+ text-align: center;	  	
+}
 
 #main_wrapper{
 
