@@ -163,21 +163,21 @@ $cursos = mysql_query($cursosquery);
 						<tr>
 							<td>
 					<ul class="thumbnails">
-					  <li >
-					    <a href="#" class="thumbnail">
+					  <li id="thumb1">
+					    <a href="#" class="thumbnail" >
 					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://renewable.uprrp.edu" alt="Captured by webthumbnail.org" />
 							<h3>Rubrics</h3>
 					     </a>
 					  </li>
-					   <li >
-					    <a href="#" class="thumbnail">
+					   <li id="thumb2">
+					    <a href="#" class="thumbnail" >
 					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://uprrp.edu" alt="Captured by webthumbnail.org" />
 							<h3>Graphs</h3>
 					     </a>
 					  </li>
 
-					  <li >
-					    <a href="#" class="thumbnail">
+					  <li id="thumb3">
+					    <a href="#" class="thumbnail" >
 					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://ccom.uprrp.edu" alt="Captured by webthumbnail.org" />
 							<h3>Students</h3>
 					     </a>
