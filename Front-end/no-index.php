@@ -38,34 +38,15 @@
 			<div class="secction1" id="major"> 
 				<div class="title"> <p>Classes</p></div>
 				<div class="secction1"> 
-					<a href="no-index.html" ><div class="secction"> 
-						<div ><img src="class_img.jpg" id="effect"></div>
-						<p>Class Name and Code Here</p>
-					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
-						<div ><img src="class_img.jpg" id="effect"></div>
-						<p>Class Name and Code Here</p>
-					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
-						<div ><img src="class_img.jpg" id="effect"></div>
-						<p>Class Name and Code Here</p>
-					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
-						<div ><img src="class_img.jpg" id="effect"></div>
-						<p>Class Name and Code Here</p>
-					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
-						<div ><img src="class_img.jpg" id="effect"></div>
-						<p>Class Name and Code Here</p>
-					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
-						<div ><img src="class_img.jpg" id="effect"></div>
-						<p>Class Name and Code Here</p>
-					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
-						<div ><img src="class_img.jpg" id="effect"></div>
-						<p>Class Name and Code Here</p>
-					</div></a>
+					<?php 
+						while ($row=mysql_fetch_array($cursos)) {
+							echo "
+							<a href='no-index.html' ><div class='secction'> 
+								<div ><img src='class_img.jpg' id='effect'></div>
+								<p>".$row[0]." ".$row[1]."</p>
+							</div></a>";
+						}
+					?>
 				</div>
 				<div class="title"> <p>Options</p></div>
 				<div class="secction1"> 
@@ -105,6 +86,11 @@
 			<!-- Esto contiene la informacion principal -->
 			<div id="main_content">
 				<!-- Aqui va la informacion de las rubricas -->
+
+				<center>
+					<table>
+						<tr>
+							<td>
 					<ul class="thumbnails">
 					  <li >
 					    <a href="#" class="thumbnail">
@@ -127,22 +113,36 @@
 					  </li>
 					  
 					</ul>
+				</td>
+				</tr>
+				</table>
+				</center>
 
 					<div id="content">
-						<table>
-							<?php for ($i=0; $i < 5; $i++) { 
+						<center>
+							<table id="rubrica">
+
+								<?php 
 									echo "<tr>
-											<td>Nombre</td>
-											<td>1-2</td>
-											<td>3-4</td>
-											<td>5-6</td>
-											<td>7-8</td>
-										  </tr>";
-									} ?>
-						</table>
-
+												<td><button type='button' onclick='change_number_rows()'>Edit</button></td>
+												<td>1-2</td>
+												<td>3-4</td>
+												<td>5-6</td>
+												<td>7-8</td>
+											  </tr>";
+								for ($i=0; $i < 5; $i++) { 
+										echo "<tr>
+												<td><p>Nombre</p>
+												</td>
+												<td>Descripcion</td>
+												<td>Descripcion</td>
+												<td>Descripcion</td>
+												<td>Descripcion</td>
+											  </tr>";
+										} ?>
+							</table>
+						</center>
 					</div>
-
 					
 			</div>
   	

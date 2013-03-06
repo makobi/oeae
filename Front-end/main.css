@@ -1,12 +1,16 @@
 html{
-    width: 100%;
-    min-height: 100%
+    max-width: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    min-width: 100%;
 }
 
 body{
 
-	 width: 100%;
-    min-height: 100%
+	 max-width: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    min-width: 100%;
 	display:-webkit-box;
 	-webkit-box-orient: vertical;
 	font-family: cambria;
@@ -51,11 +55,14 @@ body{
 	display:-webkit-box;
 	-webkit-box-orient: horizontal;
 	-webkit-box-flex: 1;
-	height: 655px;
+	max-width: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    min-width: 100%;
 }
 
 #nav_drop{
-
+	position: relative;
 	display:-webkit-box;
 	-webkit-box-orient: vertical;
 	width: 25%;
@@ -208,8 +215,10 @@ body{
 
 	display:-webkit-box;
 	-webkit-box-orient: vertical;
-	width: 75%
-	border:1px solid black;
+	-webkit-box-flex: 1;
+		border:1px solid black;
+		overflow-y:scroll;
+		
 }
 
 #top_main{
@@ -235,6 +244,67 @@ display:-webkit-box;
 }
 
 #main_content{
+display:-webkit-box;
+	-webkit-box-orient: vertical;
+	width: 100%;
+}
 
+.tab{
+   position:relative;
+   width:265px;
+   height: 170px;
+}
+.tab .iframe_overlay{
+    position:absolute;
+    z-index:95;
+    left:0;top:0;
+    height:100%;width:100%;
+    background:#fff;
+    opacity:0;
+}
+.tab iframe{
+    position:relative;
+    -webkit-transform: scale(0.3, 0.29);
+    -moz-transform: scale(0.3, 0.29);
+    transform: scale(0.3, 0.29);
+    -moz-transform-origin:0 0;
+    -webkit-transform-origin:0 0;
+    transform-origin:0 0;
+  
+    z-index:90;
+}
+
+ iframe{
+
+width: 884px;
+ height: 591px;
 
 }
+
+#content{
+
+	width: 100%;
+	height: 100%;
+	padding-right: 10px;
+
+overflow-x:scroll;
+}
+
+#rubrica {
+margin: 10px;
+	text-align: center;
+	border:1px solid blue;
+}
+
+#rubrica tr td{
+
+
+border:1px solid blue;
+padding-top: 50px;
+padding-bottom: 50px;
+padding-right: 60px;
+padding-left: 60px; 
+}
+
+
+
