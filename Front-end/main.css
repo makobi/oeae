@@ -50,6 +50,16 @@ body{
 
 /*empieza css de las paginas de jose (forgot.html, index.html)*/
 
+#login{  	
+position: relative;  	
+text-decoration: none;
+font-family: arial;
+color: black;
+font-size: 22px;
+margin-left: 15%;
+margin-top: 30%;  
+}
+
 #recovery {
 
 position: relative;	  	
