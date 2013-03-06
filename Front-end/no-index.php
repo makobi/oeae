@@ -62,7 +62,7 @@ $cursos = mysql_query($cursosquery);
 	<!-- Esto es la barra de arriba, que tiene el log-out -->
 	<div id="top_bar">
 		
-		<a href="" id="logout"><p>Logout</p></a>
+		<a href="index.php" id="logout"><p>Logout</p></a>
 	</div>
 	<!-- Termina la barra -->
 
