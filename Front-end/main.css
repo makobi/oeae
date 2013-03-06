@@ -32,14 +32,15 @@ body{
 
 #logout{
 
-	position: relative;
+	position: absolute;
 	text-decoration: none;
 	font-family: helvetica;
 	font-weight: bold;
 	color: gray;
 	font-size: 22px;
-	margin-left: 2500%;
-	padding-top : 25%
+	left:90%;
+	bottom: 91.5%	
+
 }
 
 #logout:hover{
@@ -76,44 +77,6 @@ body{
 #nav_drop a{
 
 	text-decoration: none;
-}
-
-#login{
-	position: relative;
-	text-decoration: none;
-	font-family: arial;
-	color: black;
-	font-size: 22px;
-	margin-left: 15%;
-	margin-top: 30%;	
-}
-
-#recovery {
-	position: relative;
-	text-decoration: none;
-	margin-left: 15%;
-}
-
-#forgotinst {
-	position: relative;
-	text-decoration: none;
-	font-family: arial;
-	color: black;
-	font-size: 18px;
-	margin-left: 5%;
-	margin-right: 5%;
-	margin-top: 30%;
-	text-align: justify;
-}
-
-#rec_email{
-	position: relative;
-	text-decoration: none;
-	font-family: arial;
-	color: black;
-	font-size: 22px;
-	margin-left: 15%;
-	margin-top: 2%;	
 }
 
 .title{
@@ -197,6 +160,52 @@ body{
 
 }
 
+.secction1 ul{
+
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.secction1 li{
+
+	margin: 0px;
+}
+
+.secction2{
+
+	display:-webkit-box;
+	-webkit-box-orient: horizontal;
+	height: 50px;
+	width: 100%;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color: gray;
+
+}
+
+.secction2 p{
+	position: relative;
+	margin: 0px;
+	height: 25px;
+	font-size: 18px;
+	font-family: helvetica;
+	text-align: left;
+	padding-top: 13px;
+	padding-left: 10px;
+	color: black;
+}
+
+
+.secction2 img{
+
+	position: relative;
+	top:10px;
+	left:5px;
+	width:30px;
+	height:27px;
+
+}
 #profile{
 
 	display:-webkit-box;
@@ -284,15 +293,6 @@ display:-webkit-box;
 display:-webkit-box;
 	-webkit-box-orient: vertical;
 	width: 100%;
-}
-
-#placeholder{
-	position: relative;
-	text-decoration: none;
-	font-family: helvetica;
-	color: black;
-	font-size: 18px;
-	text-align: center;
 }
 
 .tab{
