@@ -54,6 +54,23 @@ $cursos = mysql_query($cursosquery);
 	<script type="text/javascript" src="effects.js"></script>
 	<script type="text/javascript" src="holder.js"></script>
 
+	<script type="text/javascript">
+
+
+	<?php 
+		while($row=mysql_fetch_array($cursos)) {
+			echo "$('#".$row[0]."').click(function() {
+
+				  $('#".$row[1]."').slideToggle('slow', function() {
+			    // Animation complete.
+  			});";
+
+		}
+
+
+	?>
+	</script>
+
 </head>
 <!-- Termina el head -->
 
@@ -81,14 +98,26 @@ $cursos = mysql_query($cursosquery);
 				<div class="title"> <p>Classes</p></div>
 				<div class="secction1"> 
 					<?php 
-						while ($row=mysql_fetch_array($cursos)) {
-							echo "
-							<a href='no-index.html' ><div class='secction'> 
-								<div ><img src='class_img.jpg' id='effect'></div>
-								<p>".$row[0]." ".$row[1]."</p>
-							</div></a>";
-						}
-					?>
+							while ($row=mysql_fetch_array($cursos)) {
+								echo "
+									<li>
+										<a href='no-index.html' id='".$row[0]."'><div class='secction'> 
+											<div ><img src='class_img.jpg' id='effect'></div>
+											<p>".$row[0]." ".$row[1]."</p>
+										</div></a>
+
+										<ul id='".$row[1]."'>";
+										while ($activity=mysql_fetch_array($activityquery)) {
+											echo "<li><a href='no-index.html'><div class='secction2'> 
+												<div ><img src='class_img.jpg' id='effect'></div>
+												<p>".$activity[0]."</p>
+											</div></a></li>";
+										}
+										echo "</ul>
+									</li>
+									";
+							}
+						?>
 				</div>
 				<div class="title"> <p>Options</p></div>
 				<div class="secction1"> 
