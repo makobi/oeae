@@ -12,7 +12,7 @@ profile.php si los credenciales son validos, sino te vas a quedar aqui
 </head>
 <body>
 	<h1>Sign In</h1> <br>
-	<form method='post' action='no-index.php'>
+	<form method='post' action='../Front-end/no-index.php'>
 		Email:
 		<input type='text' name='email'> <br>
 		Password:
