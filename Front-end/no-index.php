@@ -23,7 +23,7 @@ $credentials = mysql_fetch_array(mysql_query($loginquery));
 
 // If credential are not valid, send back to login page
 if ($credentials['passwd'] !== $passwd) {
-	header('Location: http://ada.uprrp.edu/~chrodriguez/index.php');	
+	header('Location: http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/');	
 	exit();
 }
 
@@ -76,7 +76,7 @@ $cursos = mysql_query($cursosquery);
 	<!-- Esto es la barra de arriba, que tiene el log-out -->
 	<div id="top_bar">
 		
-		<a href="index.php" id="logout"><p>Logout</p></a>
+		<a href="index.html" id="logout"><p>Logout</p></a>
 	</div>
 	<!-- Termina la barra -->
 
