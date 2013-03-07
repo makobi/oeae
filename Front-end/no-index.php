@@ -171,7 +171,7 @@ $cursos = mysql_query($cursosquery);
 				<!-- Aqui va la informacion de las rubricas -->
 
 				<center>
-					<table>
+					<table id="thumb0">
 						<tr>
 							<td>
 					<ul class="thumbnails">
