@@ -107,7 +107,7 @@ $cursos = mysql_query($cursosquery);
 								</a>
 								<ul id='".$row[1]."'>";
 							echo $string;
-							 $query = "SELECT nombre_act FROM ActividadesCurso natural join Actividades natural join Cursos where nombre_curso='Matematica Discreta'";
+							 $query = "SELECT nombre_act FROM ActividadesCurso natural join Actividades natural join Cursos where nombre_curso='$row[0]'";
 							
 							 $activity = mysql_query($query);
 							
