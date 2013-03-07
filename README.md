@@ -8,7 +8,7 @@ This is a work in progress. The students working on this project are:
 
 2. Alex Santos
 
-3. Tahiri Laboy
+3. Tahiri Laboy de Jesus
 
 4. Jose Reyes
 
