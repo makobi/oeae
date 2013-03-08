@@ -38,6 +38,8 @@ $_SESSION['email'] = $email;
 // Informacion de la facultad y el departamento
 $profinfo = "SELECT fac_prof, dpto_prof FROM Profesores where prof_id=$_SESSION[prof_id]";
 $prof = mysql_fetch_array(mysql_query($profinfo));
+$_SESSION['fac_prof'] = $prof['fac_prof'];
+$_SESSION['dpto_prof'] = $prof['dpto_prof'];
 
 // Informacion sobre los cursos que esta dando el profesor
 $cursosquery = "SELECT nombre_curso, codificacion FROM Profesores NATURAL JOIN ProfesorImparte natural join Cursos where prof_id=$_SESSION[prof_id]"; 
@@ -57,7 +59,7 @@ $cursos = mysql_query($cursosquery);
 	<link rel="stylesheet" href="bootstrap.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<script type="text/javascript" src="effects.js"></script>
-	<script type="text/javascript" src="holder.js"></script>
+<!-- 	 <script type="text/javascript" src="holder.js"></script> -->
 
 	 <script type="text/javascript">
 
@@ -92,7 +94,7 @@ $cursos = mysql_query($cursosquery);
 		<div id="nav_drop">
 			<!-- Aqui va todo lo que va en la parte izquierda -->
 			<div class="title"> <p>Profile</p></div>
-			<a href="no-index.html" ><div class="secction" id="profile"> 
+			<a href="#" ><div class="secction" id="profile"> 
 				<div ><img src="person_purple.png" id="effect"></div>
 				<p> <?php echo $_SESSION['nombre_prof'] ?> </p>
 			</div></a>
@@ -175,44 +177,14 @@ $cursos = mysql_query($cursosquery);
 			<div id="main_content">
 				<!-- Aqui va la informacion de las rubricas -->
 
-				<center>
-					<table id="thumb0">
-						<tr>
-							<td>
-					<ul class="thumbnails">
-					  <li id="thumb1">
-					    <a href="#" class="thumbnail" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://renewable.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Rubrics</h3>
-					     </a>
-					  </li>
-					   <li id="thumb2">
-					    <a href="#" class="thumbnail" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Graphs</h3>
-					     </a>
-					  </li>
-
-					  <li id="thumb3">
-					    <a href="#" class="thumbnail" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://ccom.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Students</h3>
-					     </a>
-					  </li>
-					  
-					</ul>
-				</td>
-				</tr>
-				</table>
-				</center>
 					<!-- Este div es el que se renderea cada vez que cambiamos de actividad -->
 					<div id="content">
 						<center>
 
 						<h1><? echo "$_SESSION[nombre_prof]"; ?></h1>
 						<h2> <?php echo "$_SESSION[email]"; ?></h2>
-						<h2> <?php echo "$prof[fac_prof]"; ?></h2>
-						<h2> <?php echo "$prof[dpto_prof]"; ?></h2> <br>
+						<h2> <?php echo "$_SESSION[fac_prof]"; ?></h2>
+						<h2> <?php echo "$_SESSION[dpto_prof]"; ?></h2> <br>
 
 						</center>
 					</div>

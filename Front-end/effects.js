@@ -72,6 +72,13 @@ $(document).ready(function() {
 		})
 	});
 
+	$("#profile").on("click", function () {
+		$.get("http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/profile.php", function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 
 });
 
