@@ -357,6 +357,17 @@ display:-webkit-box;
 	width: 100%;
 }
 
+#mierda{
+
+	display:-webkit-box;
+	-webkit-box-orient: horizontal;
+}
+
+.add{
+
+	margin-left: 13px;
+}
+
 .tab{
    position:relative;
    width:265px;
