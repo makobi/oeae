@@ -61,19 +61,6 @@ $cursos = mysql_query($cursosquery);
 	<script type="text/javascript" src="effects.js"></script>
 <!-- 	 <script type="text/javascript" src="holder.js"></script> -->
 
-	 <script type="text/javascript">
-
-	 // Esto explota!
-	// <?php 
-	// 	while($row=mysql_fetch_array($cursos)) {
-	// 		echo "$('#".$row[0]."').click(function() {
-
-	// 			  $('#".$row[1]."').slideToggle('slow', function() {
- //  			});";
-
-	// 	}
-	// ?>
-	 </script>
 
 </head>
 <!-- Termina el head -->

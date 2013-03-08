@@ -14,11 +14,13 @@ if ($db) {
 }
 
 
-$name = $_GET['nombre_act'];
-$act_id = $_GET['act_id'];
+$_SESSION['nombre_act'] = $_GET['nombre_act'];
+$_SESSION['act_id'] = $_GET['act_id'];
 
-$courseidquery = "SELECT curso_id from ActividadesCurso where act_id=$act_id";
+$courseidquery = "SELECT curso_id from ActividadesCurso where act_id=$_SESSION[act_id]";
 $courseid = mysql_fetch_array(mysql_query($courseidquery));
+
+$_SESSION['course_id'] = $courseid[0];
 
 
 $table=				'<div id="content"><center>
@@ -26,8 +28,8 @@ $table=				'<div id="content"><center>
 						<tr>
 							<td>
 					<ul class="thumbnails">
-					  <li id="thumb1">
-					    <a href="#" class="thumbnail" >
+					  <li id="displayrubric">
+					    <a href="#" class="thumbnail">
 					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://renewable.uprrp.edu" alt="Captured by webthumbnail.org" />
 							<h3>Rubrics</h3>
 					     </a>
@@ -40,7 +42,7 @@ $table=				'<div id="content"><center>
 					  </li>
 
 					  <li id="students">
-					    <a href="#" class="thumbnail" id="'.$courseid[0].'" >
+					    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
 					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://ccom.uprrp.edu" alt="Captured by webthumbnail.org" />
 							<h3>Students</h3>
 					     </a>
@@ -51,7 +53,7 @@ $table=				'<div id="content"><center>
 				</tr>
 				</table>';
 
-$table=$table." <h1>".$name." ".$act_id."</h1>
+$table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
 							<table id='rubrica'><tr>
 				<td><button type='button' onclick='change_number_rows()'>Edit</button></td>
 				<td>1-2</td>
@@ -72,14 +74,13 @@ for ($i=0; $i < 5; $i++) {
 echo $table."</table>
 						</center> 	</div>
 			<script type='text/javascript'>
+
 			$('#students a').on('click', function() {
 				var course = $(this).attr('id');
 				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/students.php?course_id='+course;
-
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)
-					console.log('salio?');
 				})
 
 			});
