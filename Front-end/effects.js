@@ -25,7 +25,7 @@ $(document).ready(function() {
 	$("#thumb1").on("click", function() {
 		//remove/fadeout el content
 		//append spinner
-		$.get("http://emmy2.ccom.uprrp.edu/~asantos/Front-end/ruta.php", function(html){
+		$.get("http://emmy2.ccom.uprrp.edu/~asantos/Front-end/ruta.php?act_id=1", function(html){
 			//remove/fadeout el spinner
 			//append html
 			$("#content").hide()
@@ -55,6 +55,17 @@ $(document).ready(function() {
 			$("#content").hide()
 			$("#content").replaceWith(html)
 			console.log(html)
+		})
+	});
+
+	// Magia oscura! Las actividades renderean una tabla con el nombre de la actividad arriba onClick
+	$(".actividades").on("click", function() {
+
+		var code = $(this).find('p').text();
+
+		$.get("http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/viewcourse.php?codificacion="+code, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
 		})
 	});
 

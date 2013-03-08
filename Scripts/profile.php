@@ -37,8 +37,8 @@ $_SESSION['prof_id'] = $credentials['prof_id'];
 $_SESSION['nombre_prof'] = $credentials['nombre_prof'];
 $_SESSION['email'] = $email;
 
-$query = "SELECT fac_prof, dpto_prof FROM Profesores where prof_id=$_SESSION[prof_id]";
-$prof = mysql_fetch_array(mysql_query($query));
+$profinfo = "SELECT fac_prof, dpto_prof FROM Profesores where prof_id=$_SESSION[prof_id]";
+$prof = mysql_fetch_array(mysql_query($profinfo));
  ?>
 
 <html>

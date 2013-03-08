@@ -32,9 +32,14 @@ $_SESSION['prof_id'] = $credentials['prof_id'];
 $_SESSION['nombre_prof'] = $credentials['nombre_prof'];
 $_SESSION['email'] = $email;
 
+
+// Aqui se hacen los queries para sacar toda la info del profesor
+
+// Informacion de la facultad y el departamento
 $query = "SELECT fac_prof, dpto_prof FROM Profesores where prof_id=$_SESSION[prof_id]";
 $prof = mysql_fetch_array(mysql_query($query));
 
+// Informacion sobre los cursos que esta dando el profesor
 $cursosquery = "SELECT nombre_curso, codificacion FROM Profesores NATURAL JOIN ProfesorImparte natural join Cursos where prof_id=$_SESSION[prof_id]"; 
 $cursos = mysql_query($cursosquery);
 
@@ -46,7 +51,7 @@ $cursos = mysql_query($cursosquery);
 <!-- Comienza el head -->
 <head>
 	<meta charset="utf-8" />
-	<title>Tu mai es la gorda</title>
+	<title>Avaluo!!</title>
 	<link rel="stylesheet" href="main.css">
 	<link rel="stylesheet" href="bootstrap-responsive.css">
 	<link rel="stylesheet" href="bootstrap.css">
@@ -98,8 +103,8 @@ $cursos = mysql_query($cursosquery);
 					<?php
 						while ($row=mysql_fetch_array($cursos)) {
 							$string = "
-							<li>
-								<a href='no-index.html' id='".$row[0]."'>
+							<li class='cursos'>
+								<a href='#' id='".$row[0]."'>
 									<div class='secction'> 
 										<div><img src='class_img.jpg' id='effect'></div>
 										<p>".$row[0]." ".$row[1]."</p>
@@ -115,10 +120,10 @@ $cursos = mysql_query($cursosquery);
 							 	while ($res=mysql_fetch_array($activity)) {
 							 		$act = "
 									<li>
-										<a href='no-index.html'>
+										<a href='#' class='actividades'>
 											<div class='secction2'>
 												<div><img src='class_img.jpg' id='effect'>	</div>
-												<p>".$res[0]."</p>
+												<p id='act_name'>".$res[0]."</p>
 											</div>
 										</a>
 									</li>";
@@ -200,32 +205,18 @@ $cursos = mysql_query($cursosquery);
 				</tr>
 				</table>
 				</center>
-
+					<!-- Este div es el que se renderea cada vez que cambiamos de actividad -->
 					<div id="content">
 						<center>
-							<table id="rubrica">
 
-								<?php 
-									echo "<tr>
-												<td><button type='button' onclick='change_number_rows()'>Edit</button></td>
-												<td>1-2</td>
-												<td>3-4</td>
-												<td>5-6</td>
-												<td>7-8</td>
-											  </tr>";
-								for ($i=0; $i < 5; $i++) { 
-										echo "<tr>
-												<td><p>Nombre</p>
-												</td>
-												<td>Descripcion</td>
-												<td>Descripcion</td>
-												<td>Descripcion</td>
-												<td>Descripcion</td>
-											  </tr>";
-										} ?>
-							</table>
+						<h1><? echo "$_SESSION[nombre_prof]"; ?></h1>
+						<h2> <?php echo "$_SESSION[email]"; ?></h2>
+						<h2> <?php echo "$prof[fac_prof]"; ?></h2>
+						<h2> <?php echo "$prof[dpto_prof]"; ?></h2> <br>
+
 						</center>
 					</div>
+					<!-- Aqui termina el div -->
 					
 			</div>
   	
