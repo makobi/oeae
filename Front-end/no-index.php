@@ -36,8 +36,8 @@ $_SESSION['email'] = $email;
 // Aqui se hacen los queries para sacar toda la info del profesor
 
 // Informacion de la facultad y el departamento
-$query = "SELECT fac_prof, dpto_prof FROM Profesores where prof_id=$_SESSION[prof_id]";
-$prof = mysql_fetch_array(mysql_query($query));
+$profinfo = "SELECT fac_prof, dpto_prof FROM Profesores where prof_id=$_SESSION[prof_id]";
+$prof = mysql_fetch_array(mysql_query($profinfo));
 
 // Informacion sobre los cursos que esta dando el profesor
 $cursosquery = "SELECT nombre_curso, codificacion FROM Profesores NATURAL JOIN ProfesorImparte natural join Cursos where prof_id=$_SESSION[prof_id]"; 
@@ -112,7 +112,7 @@ $cursos = mysql_query($cursosquery);
 								</a>
 								<ul id='".$row[1]."'>";
 							echo $string;
-							 $query = "SELECT nombre_act FROM ActividadesCurso natural join Actividades natural join Cursos where nombre_curso='$row[0]'";
+							 $query = "SELECT nombre_act, act_id FROM ActividadesCurso natural join Actividades natural join Cursos where nombre_curso='$row[0]'";
 							
 							 $activity = mysql_query($query);
 							
@@ -123,7 +123,7 @@ $cursos = mysql_query($cursosquery);
 										<a href='#' class='actividades'>
 											<div class='secction2'>
 												<div><img src='class_img.jpg' id='effect'>	</div>
-												<p id='act_name'>".$res[0]."</p>
+												<p id='".$res[1]."'>".$res[0]."</p>
 											</div>
 										</a>
 									</li>";

@@ -13,9 +13,11 @@ session_start();
 //   exit();
 // }
 
-$code = $_GET['codificacion'];
+$name = $_GET['nombre_act'];
+$id = $_GET['act_id'];
 
-$table="<center> <h1>".$code."</h1>
+
+$table="<center> <h1>".$name." ".$id."</h1>
 							<table id='rubrica'><tr>
 				<td><button type='button' onclick='change_number_rows()'>Edit</button></td>
 				<td>1-2</td>

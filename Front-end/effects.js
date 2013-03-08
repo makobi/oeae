@@ -61,9 +61,12 @@ $(document).ready(function() {
 	// Magia oscura! Las actividades renderean una tabla con el nombre de la actividad arriba onClick
 	$(".actividades").on("click", function() {
 
-		var code = $(this).find('p').text();
+		var name = $(this).find('p').text();
+		var id = $(this).find('p').attr('id');
 
-		$.get("http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/viewcourse.php?codificacion="+code, function(html) {
+		var url = "http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/viewcourse.php?nombre_act="+name+"&act_id="+id;
+
+		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)
 		})
