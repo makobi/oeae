@@ -108,8 +108,10 @@ $cursos = mysql_query($cursosquery);
 							<li class='cursos'>
 								<a href='#' id='".$row[0]."'>
 									<div class='secction'> 
-										<div><img src='class_img.jpg' id='effect'></div>
-										<p>".$row[0]." ".$row[1]."</p>
+										<div id='mierda'><img src='class_img.jpg' id='effect'>
+											<p>".$row[0]." ".$row[1]."</p>
+											<a href='#''><img class='add' src='add.png' width='10' height='10'></a>
+										</div>
 									</div>
 								</a>
 								<ul id='".$row[1]."'>";
