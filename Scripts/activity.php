@@ -1,51 +1,63 @@
-<!-- 
-Christian A. Rodriguez Encarnacion
-Este es el script preliminar para crear una actividad en un curso.
-Despues de someter los credenciales de la actividad, vamos a
-add.php donde se crea verdaderamente la actividad.
- -->
+<?php 
 
-<html>
-<head>
-	<title>Add Activity</title>
-	<?php 
+session_start();
 
-	 $db = mysql_connect("localhost","nosotros","oeaeavaluo2013");
+$_SESSION['curso_id']=$_GET['curso_id'];
 
-	// Choose the database 'Avaluo'
-	if ($db) {
-		mysql_select_db("Avaluo");
-	} else {
-		echo "Could not connect to db";
-		exit();
-	}
+ $db = mysql_connect("localhost","nosotros","oeaeavaluo2013");
+// Choose the database 'Avaluo'
+if ($db) {
+	mysql_select_db("Avaluo");
+} else {
+	echo "Could not connect to db";
+	exit();
+}
 
+// Select the distinct Rubrics from the database
+$query = mysql_query("SELECT distinct rub_id FROM Rubricas");
+ 
+$output = "
+<div id='content'>
+<center>
+<form>
+	Nombre de la Actividad (Sin espacios por ahora): <br>
+	<input type='text' name='nombre_act'> <br>
+	Seleccione Rubrica para la actividad <br>
+	<select name='rub_id'>";
 
-	// Select the distinct Rubrics from the database
-	$query = mysql_query("SELECT distinct rub_id FROM Rubricas");
+while ($row = mysql_fetch_array($query)) {
+		$output = $output."<option>".strval($row[0])."</option><br>";
+	} 
 
+$output = $output."</select> <br>
+	Logro Esperado (1-100) <br>
+	<input type='text' name='logro_esperado'> <br>
+	<input type='Submit' value='Crear Actividad'>
+</form>
+</center>
+</div>
 
-	 ?>
-</head>
-<body>
-	<form method='post' action='add.php'>
-		Nombre de la Actividad: <br>
-		<input type='text' name='nombre_act'> <br>
-		Seleccione Rubrica para la actividad <br>
-		<select name='rub_id'>
-		<?php 
-		// Show different rubrics for the professor to choose
-		while ($row = mysql_fetch_array($query)) {
-			echo "<option>".strval($row[0])."</option><br>";
-			echo "algo";
-		} 
-		mysql_free_result($query);
+<script type='text/javascript'>
 
-		?>
-		</select> <br>
-		Logro Esperado (1-100) <br>
-		<input type='text' name='logro_esperado'> <br>
-		<input type='Submit' value='Crear Actividad'>
-	</form>
-</body>
-</html>
+$('form').submit(function() {
+  var data = $(this).serializeArray();
+  var nombre_act = data[0].value;
+  var rub_id = data[1].value;
+  var logro_esperado = data[2].value;
+
+  var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/add.php?nombre_act='+nombre_act+'&rub_id='+rub_id+'&logro_esperado='+logro_esperado;
+
+  $.get(url, function(res) {
+ 	window.location.replace('http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/no-index.php');
+  })
+
+  return false;
+});
+
+</script>
+
+";
+
+echo $output;
+
+ ?>	

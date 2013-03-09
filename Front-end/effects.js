@@ -42,6 +42,17 @@ $(document).ready(function() {
 		})
 	});
 
+	$(".newactivity").on("click", function() {
+		var curso_id = $(this).prev().attr("id");
+		
+		var url= "http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/activity.php?curso_id="+curso_id ;
+
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 });
 
 
