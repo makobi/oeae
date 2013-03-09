@@ -15,6 +15,46 @@ if ($db) {
 
 $est_id = $_GET['est_id'];
 
+/***************************************************************************************************/
+// Generar Rubrica
+		$aid = $_SESSION['act_id'];
+
+		// Busco el id de los criterios asociados a esa rubrica
+		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
+					or die(mysql_error());
+
+		// Verifica que hayan resultados
+		$crit_qty = mysql_num_rows($query1); 
+		if ($crit_qty > 0) {
+			$cids = array();
+			while ($result = mysql_fetch_array($query1)) {
+				$cids[] = $result["crit_id"];
+			}
+		}
+
+		$criterios = array();
+			foreach ($cids as $cid) {
+				//Busco los nombres de los criterios
+				$query2 = mysql_query("SELECT nombre_crit FROM Criterios WHERE crit_id = '$cid'")
+					or die(mysql_error());
+				$result = mysql_fetch_array($query2);
+				$criterios[$cid] = $result["nombre_crit"];
+			}
+			
+			$descripcion = array(array());
+			$valor = array();
+
+			foreach ($cids as $cid) {
+				$query3 = mysql_query("SELECT descripcion, valor FROM EscalaCriterio
+									   WHERE crit_id = $cid ORDER BY valor;")
+						or die(mysql_error());
+				while ($result = mysql_fetch_array($query3)) {
+					$valor = $result["valor"];
+					$descripcion[$cid][$valor] = $result["descripcion"];
+				}
+			}
+/***************************************************************************************************/
+
 $table = '<div id="content"><center>
 					<table id="thumb0">
 						<tr>
@@ -53,14 +93,14 @@ $table=$table." <h1>".$_SESSION['nombre_act']." ".$est_id."</h1>
 				<td>5-6</td>
 				<td>7-8</td>
 			  </tr>";
-for ($i=0; $i < 5; $i++) { 
+for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
-				<td><p>Nombre</p>
+				<td><p>".$criterios[$cids[$i]]."</p>
 				</td>
-				<td>Descripcion</td>
-				<td>Descripcion</td>
-				<td>Descripcion</td>
-				<td>Descripcion</td>
+				<td>".$descripcion[$cids[$i]][2]."</td>
+				<td>".$descripcion[$cids[$i]][4]."</td>
+				<td>".$descripcion[$cids[$i]][6]."</td>
+				<td>".$descripcion[$cids[$i]][8]."</td>
 			  </tr>";
 }
 echo $table."</table>
