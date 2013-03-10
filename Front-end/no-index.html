@@ -10,7 +10,16 @@
 	<link rel="stylesheet" href="bootstrap.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<script type="text/javascript" src="effects.js"></script>
-	<script type="text/javascript" src="holder.js"></script>
+
+	<script type="text/javascript">
+
+		function abrir_cerrar(id){
+
+		  	$(id).slideToggle('slow');	
+	 	
+	 	}
+
+	</script>
 
 </head>
 <!-- Termina el head -->
@@ -38,10 +47,24 @@
 			<div class="secction1" id="major"> 
 				<div class="title"> <p>Classes</p></div>
 				<div class="secction1"> 
-					<a href="no-index.html" ><div class="secction"> 
-						<div ><img src="class_img.jpg" id="effect"></div>
-						<p>Class Name and Code Here</p>
-					</div></a>
+					<ul>
+						<li>
+							<a href='#' onclick="abrir_cerrar('#actividades');"> <!--en vez de actividades usa el nombre de la clase -->
+								<div class="secction" id="clase"> 
+									<div ><img src="class_img.jpg" id="effect"></div>
+										<p>Class Name and Code Here</p>
+								</div>
+							</a>
+							<ul id="actividades"> <!-- en vez de actividades usa el nombre de la clase como id -->
+								<li>
+									<p>tu mai</p>
+								</li>
+								<li>
+									<p>tu mai</p>
+								</li>
+							</ul>
+						</li>
+					</ul>
 					<a href="no-index.html" ><div class="secction"> 
 						<div ><img src="class_img.jpg" id="effect"></div>
 						<p>Class Name and Code Here</p>
