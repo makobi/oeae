@@ -35,6 +35,7 @@ $(document).ready(function() {
 		})
 	});
 
+	// Información del perfil del profesor
 	$("#profile").on("click", function () {
 		$.get("http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/profile.php", function(html) {
 			$("#content").hide()
@@ -42,6 +43,7 @@ $(document).ready(function() {
 		})
 	});
 
+	// Crear una actividad nueva
 	$(".newactivity").on("click", function() {
 		var curso_id = $(this).prev().attr("id");
 		

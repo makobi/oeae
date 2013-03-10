@@ -1,9 +1,13 @@
 <?php 
 
-/*Christian A. Rodriguez Encarnacion
-Por ahora este codigo lo que hace es deslplegar los estudiantes del
-primer curso, pero cuando Alex termine el display de los estudiantes
-lo hago mas dinamico.*/
+/*
+Christian A. Rodriguez Encarnacion
+
+Este script despliega a los estudiantes matriculados en el curso perteneciente a la actividad, junto a la suma de
+sus puntos utilizando la rubrica de la actividad. Para evaluar a los estudiantes solo debes hacer click encima del
+nombre del estudiante que desee evaluar.
+
+*/
 
 
 session_start();
@@ -25,6 +29,7 @@ $curso_id = $_GET['course_id'];
 $studentquery = "SELECT nombre_est, est_id FROM Estudiantes natural join Matricula where curso_id=$curso_id";
 $students = mysql_query($studentquery);
 
+// Primero los 3 thumbnails
 $content='
 				<div id="content"><center>
 					<table id="thumb0">
@@ -58,10 +63,52 @@ $content='
 				<h1>'.$_SESSION['nombre_act'].'</h1>
 			<ul id="studentlist">';
 
+// Aqui empiezan a desplegarse los estudiantes
 while ($row = mysql_fetch_array($students)) {
-	$content = $content."<li><a href='#' class='evaluacion'><h2 id='".$row[1]."'>".$row[0]."</h2></a> <h2>Score:15/24</h2> </li><br>";
+
+	// Primero el nombre del estudiante
+	$content = $content."<li><a href='#' class='evaluacion'><h2 id='".$row[1]."'>".$row[0]."</h2></a>"; 
+	
+	// Query para sacar el mat_id de ese estudiante en ese curso
+	$matquery = mysql_query("SELECT mat_id from Matricula where curso_id=$curso_id[0] and est_id=$row[1]");
+	$mat = mysql_fetch_array($matquery);
+	$mat_id = $mat[0];
+
+	// Busco el id de los criterios asociados a esa rubrica
+	$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$_SESSION[act_id]'")
+			or die(mysql_error());
+
+	// Verifica que hayan resultados
+	$crit_qty = mysql_num_rows($query1); 
+	if ($crit_qty > 0) {
+		$cids = array();
+		while ($result = mysql_fetch_array($query1)) {
+			$cids[] = $result["crit_id"];
+		}
+	}
+
+	// Busco el rub_id
+	$query2 = mysql_query("SELECT rub_id FROM Actividades where act_id='$_SESSION[act_id]'");
+	$rubrica = mysql_fetch_array($query2);
+	$rub_id = $rubrica[0];
+
+	// Acumulador para nota actual del estudiante
+	$score=0;
+
+	// Sumar puntos obtenidos por cada criterio al acumulador
+	for ($i=0; $i < $crit_qty; $i++) { 
+	$eval = "SELECT ptos_obtenidos from Evaluacion 
+			where act_id=$_SESSION[act_id] and crit_id=".$cids[$i]." and mat_id=$mat_id and rub_id=$rub_id";
+	$res = mysql_query($eval);
+	$puntos = mysql_fetch_array($res);
+	$score = $score + intval($puntos[0]);
+	}
+
+	// Desplegar nota actual del estudiante
+	$content = $content."<h2>Score:$score/".strval($crit_qty*8)."</h2></li><br>";
 }
 
+// Concatenar los scripts de jQuery relevantes a esta data.
 $content = $content."</ul></center></div>
 			<script type='text/javascript'>
 
@@ -83,10 +130,11 @@ $content = $content."</ul></center></div>
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)
-					console.log('salioox')
 				})
 			});
 			</script>";
+
+// Desplegar todo
 echo $content;
 
 ?>

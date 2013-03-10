@@ -1,5 +1,18 @@
 <?php 
 
+/*
+Christian A. Rodriguez Encarnacion
+
+Este script es el que se llama cada vez que el profesor desea ver una de la actividades de algun curso
+Va a guarda el id de la actividad y del curso para uso futuro, genera la rubrica de esta actividad utilizando
+ese id y despliega la rubrica utilizada en esa actividad.
+Tambien despliega 3 thumbnails utilizados para volver a la rubrica, ver datos agregados de la actividad, o
+proceder a evaluar a los estudiantes.
+
+Al final tambien desplegamos un script en jQuery para darle funcionalidad a los thumbnails.
+
+*/
+
 session_start();
 
 // Connect to the Database
@@ -13,13 +26,15 @@ if ($db) {
   exit();
 }
 
-
+// Guardar el nombre de la actividad y el id
 $_SESSION['nombre_act'] = $_GET['nombre_act'];
 $_SESSION['act_id'] = $_GET['act_id'];
 
+// Buscar el curso al cual pertenece la actividad
 $courseidquery = "SELECT curso_id from ActividadesCurso where act_id=$_SESSION[act_id]";
 $courseid = mysql_fetch_array(mysql_query($courseidquery));
 
+// Guardar el id del curso de la actividad
 $_SESSION['course_id'] = $courseid[0];
 
 /***************************************************************************************************/
@@ -62,7 +77,7 @@ $_SESSION['course_id'] = $courseid[0];
 			}
 /***************************************************************************************************/
 
-
+// Primero se despliegan los 3 thumbnails
 $table=				'<div id="content"><center>
 					<table id="thumb0">
 						<tr>
@@ -93,6 +108,7 @@ $table=				'<div id="content"><center>
 				</tr>
 				</table>';
 
+// Aqui se comienza a generar la tabla de la rubrica
 $table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
 							<table id='rubrica'><tr>
 				<td><button type='button' onclick='change_number_rows()'>Edit</button></td>
@@ -101,6 +117,8 @@ $table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
 				<td>5-6</td>
 				<td>7-8</td>
 			  </tr>";
+
+// Cada fila de la rubrica representa un criterio
 for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
 				<td><p>".$criterios[$cids[$i]]."</p>
@@ -111,6 +129,8 @@ for ($i=0; $i < $crit_qty; $i++) {
 				<td>".$descripcion[$cids[$i]][8]."</td>
 			  </tr>";
 }
+
+// Se despliega el contenido de la actividad
 echo $table."</table>
 						</center> 	</div>
 			<script type='text/javascript'>

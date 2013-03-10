@@ -1,5 +1,15 @@
 <?php 
 
+/*
+Christian A. Rodriguez Encarnacion
+
+Este script es llamado cada vez que el profesor desee evaluar a un estudiante. Desplega el nombre del estudiante
+y la rubrica del curso, esta vez con botones para escoger la puntuacion del estudiante, y someter dicha puntuacion.
+Si el profesor no ha evaluado antes, se crea la entrada en la base de datos, si ha evaluado antes se hace un
+update a la evaluacion actual.
+
+*/
+
 session_start();
 
 // Connect to the Database
@@ -13,7 +23,14 @@ if ($db) {
   exit();
 }
 
+// Id del estudiante a ser evaluado
 $est_id = $_GET['est_id'];
+
+// Query para sacar el nombre del estudiante
+$studentnamequery = "SELECT nombre_est from Estudiantes where est_id=$est_id";
+$studentname = mysql_fetch_array(mysql_query($studentnamequery));
+$nombre_est = $studentname[0];
+
 
 /***************************************************************************************************/
 // Generar Rubrica
@@ -55,6 +72,7 @@ $est_id = $_GET['est_id'];
 			}
 /***************************************************************************************************/
 
+// Primero los 3 thumbnails
 $table = '<div id="content"><center>
 					<table id="thumb0">
 						<tr>
@@ -85,25 +103,48 @@ $table = '<div id="content"><center>
 				</tr>
 				</table>';
 
-$table=$table." <h1>".$_SESSION['nombre_act']." ".$est_id."</h1>
+// Primera fila de la rubrica
+$table=$table." <h1>".$_SESSION['nombre_act'].": ".$nombre_est."</h1>
+				<form>
 							<table id='rubrica'><tr>
-				<td><button type='button' onclick='change_number_rows()'>Edit</button></td>
+				<td><input type='Submit' value='Submit Evaluation'></td>
 				<td>1-2</td>
 				<td>3-4</td>
 				<td>5-6</td>
 				<td>7-8</td>
 			  </tr>";
+
+// Por cada criterio desplegar una fila con las puntuaciones, pero esta vez con botones para escoger
 for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
 				<td><p>".$criterios[$cids[$i]]."</p>
 				</td>
-				<td>".$descripcion[$cids[$i]][2]."</td>
-				<td>".$descripcion[$cids[$i]][4]."</td>
-				<td>".$descripcion[$cids[$i]][6]."</td>
-				<td>".$descripcion[$cids[$i]][8]."</td>
-			  </tr>";
+				<td>".$descripcion[$cids[$i]][2]."<br>
+					<input type=radio name='".$cids[$i]."' value=1> 1
+					&nbsp &nbsp
+					<input type=radio name='".$cids[$i]."' value=2> 2
+				</td>
+				<td>".$descripcion[$cids[$i]][4]." <br>
+					<input type=radio name='".$cids[$i]."' value=3> 3
+					&nbsp &nbsp
+					<input type=radio name='".$cids[$i]."' value=4> 4
+				</td>
+				<td>".$descripcion[$cids[$i]][6]." <br>
+					<input type=radio name='".$cids[$i]."' value=5> 5
+					&nbsp &nbsp
+					<input type=radio name='".$cids[$i]."' value=6> 6
+				</td>
+				<td>".$descripcion[$cids[$i]][8]." <br>
+					<input type=radio name='".$cids[$i]."' value=7> 7
+					&nbsp
+					<input type=radio name='".$cids[$i]."' value=8> 8
+				</td>
+			  </tr>
+			  ";
 }
-echo $table."</table>
+
+// Desplegar todo, junto con el jQuery pertinente
+echo $table."</table> </form>
 						</center> 	</div>
 			<script type='text/javascript'>
 
@@ -116,6 +157,19 @@ echo $table."</table>
 				})
 
 			});
+
+			$('form').submit(function() {
+  				var data = $(this).serialize();
+
+				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/addeval.php?'+data+'&est_id=".$est_id."';							
+
+				$.get(url, function(res) {
+					alert(res);
+				})
+
+				return false;
+			});
+
 			</script>
 			";
 
