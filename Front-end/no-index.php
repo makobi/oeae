@@ -140,19 +140,19 @@ $cursos = mysql_query($cursosquery);
 				</div>
 				<div class="title"> <p>Options</p></div>
 				<div class="secction1"> 
-					<a href="no-index.html" ><div class="secction"> 
+					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Option Name Here</p>
 					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
+					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Option Name Here</p>
 					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
+					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Option Name Here</p>
 					</div></a>
-					<a href="no-index.html" ><div class="secction"> 
+					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Option Name Here</p>
 					</div></a>
