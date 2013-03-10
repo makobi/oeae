@@ -63,6 +63,15 @@ $cursos = mysql_query($cursosquery);
 	<script type="text/javascript" src="effects.js"></script>
 <!-- 	 <script type="text/javascript" src="holder.js"></script> -->
 
+	<script type="text/javascript">
+
+		function abrir_cerrar(id){
+
+		  	$(id).slideToggle('slow');	
+	 	
+	 	}
+
+	</script>
 
 </head>
 <!-- Termina el head -->
@@ -95,7 +104,7 @@ $cursos = mysql_query($cursosquery);
 						while ($row=mysql_fetch_array($cursos)) {
 							$string = "
 							<li class='cursos'>
-								<a href='#' id='".$row[2]."'>
+								<a href='#' id='".$row[2]."' onclick='abrir_cerrar($row[1]);'>
 									<div class='secction'> 
 										<div id='addactivity'><img src='class_img.jpg' id='effect'>
 											<p>".$row[0]." ".$row[1]."</p>
@@ -123,7 +132,7 @@ $cursos = mysql_query($cursosquery);
 									echo $act;
 								}
 							}
-							echo "</li>";						
+							echo "</ul></li>";						
 
 						}	
 						?>
