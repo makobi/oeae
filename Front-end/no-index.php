@@ -35,6 +35,10 @@ if (isset($_SESSION['login']) !== true) {
 
 $_SESSION['login'] = true;
 
+if($_SESSION['nombre_prof']=='Administrador') {
+	header('LOCATION: http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/admin.php');
+}
+
 // Aqui se hacen los queries para sacar toda la info del profesor
 
 // Informacion de la facultad y el departamento

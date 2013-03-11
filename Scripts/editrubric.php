@@ -26,16 +26,11 @@ if ($db) {
   exit();
 }
 
-// Guardar el nombre de la actividad y el id
-$_SESSION['nombre_act'] = $_GET['nombre_act'];
-$_SESSION['act_id'] = $_GET['act_id'];
 
 // Buscar el curso al cual pertenece la actividad
 $courseidquery = "SELECT curso_id from ActividadesCurso where act_id=$_SESSION[act_id]";
 $courseid = mysql_fetch_array(mysql_query($courseidquery));
 
-// Guardar el id del curso de la actividad
-$_SESSION['course_id'] = $courseid[0];
 
 /***************************************************************************************************/
 // Generar Rubrica
@@ -112,7 +107,7 @@ $table=				'<div id="content"><center>
 $table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
 							<table id='rubrica'><tr>
 				<form>
-				<td><input type='submit' value='Editar'></td>
+				<td><input type='submit' value='Someter'></td>
 				</form>
 				<td>1-2</td>
 				<td>3-4</td>
@@ -123,7 +118,7 @@ $table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
 // Cada fila de la rubrica representa un criterio
 for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
-				<td><p>".$criterios[$cids[$i]]."</p>
+				<td><p>".$criterios[$cids[$i]]." <input type='checkbox' name='".$cids[$i]."'> </p>
 				</td>
 				<td>".$descripcion[$cids[$i]][2]."</td>
 				<td>".$descripcion[$cids[$i]][4]."</td>
