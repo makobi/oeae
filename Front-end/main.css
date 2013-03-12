@@ -3,7 +3,7 @@ html{
     max-height: 100%;
     min-height: 100%;
     min-width: 100%;
-}
+} 
 
 body{
 
@@ -168,6 +168,57 @@ font-size: 18px;
 	background-image: linear-gradient(to bottom, #00A3F0 0%, #006A9C 100%);
 
 	
+}
+
+#grading{
+
+	text-align: center;
+	margin:5px;
+
+}
+
+#grading thead{
+		border: 3px solid #81C7EF;
+		background: #95d788;
+        background-image: -webkit-linear-gradient(#AAD6EF, #81C7EF);
+        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #81C7EF),color-stop(1, #AAD6EF));
+
+}
+
+#grading thead p{
+
+	margin-top: 7px;
+	font-weight: bold;
+	font-family: helvetica;
+	font-size: 16px;
+
+}
+
+#grading p{
+
+	margin-top: 5px;
+}
+
+#grading tfoot{
+
+	border: 1px solid white;
+}
+
+#grading tbody td{
+
+	border: 3px solid #81C7EF;
+}
+
+
+#grading td{
+
+	padding: 10px;
+	
+}
+
+.styled-select{
+
+	width: 60px;
 }
 
 .title p{
