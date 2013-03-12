@@ -237,6 +237,8 @@ font-size: 18px;
 
 	display:-webkit-box;
 	-webkit-box-orient: horizontal;
+	display:-moz-box;
+	-moz-box-orient: horizontal;
 	height: 50px;
 	width: 100%;
 	border-top: 1px solid black;
@@ -272,6 +274,8 @@ font-size: 18px;
 
 	display:-webkit-box;
 	-webkit-box-orient: vertical;
+	display:-moz-box;
+	-moz-box-orient: vertical;
 	background-color: #CECEDE;
 
 }
@@ -292,6 +296,8 @@ font-size: 18px;
 
 	display:-webkit-box;
 	-webkit-box-orient: horizontal;
+	display:-moz-box;
+	-moz-box-orient: horizontal;
 	height: 50px;
 	width: 100%;
 	border-top: 1px solid black;
@@ -328,6 +334,9 @@ font-size: 18px;
 	-webkit-box-orient: horizontal;
 	-webkit-box-flex: 1;
 
+	display:-moz-box;
+	-moz-box-orient: horizontal;
+	-moz-box-flex: 1;
 }
 
 #profile img{
@@ -343,7 +352,8 @@ font-size: 18px;
 	display:-webkit-box;
 	-webkit-box-flex: 10;
 	
-
+	display:-moz-box;
+	-moz-box-flex: 10;
 
 }
 
@@ -361,6 +371,10 @@ font-size: 18px;
 	border:1px solid green;
 	margin-right: 5px;
 	margin-left: 5px;
+
+	display:-moz-box;
+	-moz-box-orient: vertical;
+	-moz-box-flex: 50;
 }
 
 /*
@@ -381,6 +395,9 @@ font-size: 18px;
 		border:1px solid black;
 		/*overflow-y:scroll;*/
 		
+	display:-moz-box;
+	-moz-box-orient: vertical;
+	-moz-box-flex: 1;
 }
 
 #top_main{
@@ -389,6 +406,8 @@ display:-webkit-box;
 	width:100%;
 	height: 50px;
 
+display:-moz-box;
+	-moz-box-orient: horizontal;
 
 }
 
@@ -409,12 +428,18 @@ display:-webkit-box;
 display:-webkit-box;
 	-webkit-box-orient: vertical;
 	width: 100%;
+
+	display:-moz-box;
+	-moz-box-orient: vertical;
 }
 
 #addactivity{
 
 	display:-webkit-box;
 	-webkit-box-orient: horizontal;
+
+	display:-moz-box;
+	-moz-box-orient: horizontal;
 }
 
 .add{
