@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "
 		<div id = 'content'>
-	
+		<center>
 			<form name='nueva_rub' action='".$me."' method='POST' 
 			onSubmit = 'checkform()'>
 			<div><br>
@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		<button type='submit' value='create'>Create!
 			<br></div>
 			</form>
+		</center>
 		</div>
 		";
 

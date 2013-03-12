@@ -66,7 +66,7 @@ $(document).ready(function() {
 
 	// Crear Rubrica (admin only)
 	$(".rub").on("click", function() {
-		url = "http://ada.uprrp.edu/~tlaboy/OEAE/Scripts/createrubric.php";
+		url = "http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/createrubric.php";
 		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)
