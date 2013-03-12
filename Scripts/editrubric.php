@@ -31,6 +31,8 @@ if ($db) {
 $courseidquery = "SELECT curso_id from ActividadesCurso where act_id=$_SESSION[act_id]";
 $courseid = mysql_fetch_array(mysql_query($courseidquery));
 
+$criteriosquery = "SELECT nombre_crit,crit_id from Criterios";
+$nombre_crit = mysql_query($criteriosquery);
 
 /***************************************************************************************************/
 // Generar Rubrica
@@ -105,10 +107,9 @@ $table=				'<div id="content"><center>
 
 // Aqui se comienza a generar la tabla de la rubrica
 $table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
+							<form>
 							<table id='rubrica'><tr>
-				<form>
 				<td><input type='submit' value='Someter'></td>
-				</form>
 				<td>1-2</td>
 				<td>3-4</td>
 				<td>5-6</td>
@@ -118,7 +119,7 @@ $table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
 // Cada fila de la rubrica representa un criterio
 for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
-				<td><p>".$criterios[$cids[$i]]." <input type='checkbox' name='".$cids[$i]."'> </p>
+				<td><p>".$criterios[$cids[$i]]." <br> <input type='checkbox' name='".$cids[$i]."' value='".$cids[$i]."'> </p>
 				</td>
 				<td>".$descripcion[$cids[$i]][2]."</td>
 				<td>".$descripcion[$cids[$i]][4]."</td>
@@ -127,8 +128,24 @@ for ($i=0; $i < $crit_qty; $i++) {
 			  </tr>";
 }
 
+$table=$table."<tr>
+				<td>
+				Seleccione criterio para añadir
+				<select name='addcriterio'>
+				<option value='0'> Ninguno";
+while ($row = mysql_fetch_array($nombre_crit)) {
+	$table = $table."<option value='$row[1]'>$row[0]";
+}
+
+$table=$table."	</select></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			  </tr>";
+
 // Se despliega el contenido de la actividad
-echo $table."</table>
+echo $table."</table></form>
 						</center> 	</div>
 			<script type='text/javascript'>
 
@@ -142,11 +159,14 @@ echo $table."</table>
 			});
 
 			$('form').submit( function() {
-				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/editrubric.php';
+				var data = $(this).serialize();
+				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/removecrit.php?'+data;
+				console.log(data);
 
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)
+					console.log(html);
 				})
 
 				return false;

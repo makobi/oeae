@@ -1,6 +1,11 @@
 <?php 
 
+
 session_start();
+
+if($_SESSION['nombre_prof']!='Administrador') {
+	header('LOCATION: http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/index.php');
+}
 
 ?>
 <!doctype html> 
@@ -53,7 +58,7 @@ session_start();
 			<div class="secction1" id="major"> 
 				<div class="title"> <p>Options</p></div>
 				<div class="secction1"> 
-					<a href="#" ><div class="secction"> 
+					<a href="#" class="prof"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Add Professor</p>
 					</div></a>

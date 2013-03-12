@@ -36,22 +36,21 @@ if ($db) {
 }
 
 //  Get professors credentials from the html form, and generate a random password
-$profemail = $_POST['profemail'];
-$profname = $_POST['profname'];
-$profdept = $_POST['profdept'];
-$proffaculty = $_POST['proffaculty'];
+$profemail = $_GET['profemail'];
+$profname = $_GET['profname'];
+$profdept = $_GET['profdept'];
+$proffaculty = $_GET['proffaculty'];
 $profpass = generateRandomPassword();
-echo $profpass . "<br>";
+echo $profpass;
 $profpass = md5($profpass);
-echo $profpass . "<br>" ;
 
 // Insert Profesor data to the Database
 if (mysql_query("INSERT INTO Profesores (nombre_prof, email, passwd, dpto_prof, fac_prof) values ('$profname', '$profemail', '$profpass', '$profdept', '$proffaculty')")) {
-  echo "Salio el query";
-  $email = new HttpRequest('https://sendgrid.com/api/mail.send.json?api_user=christian.rodriguez35@upr.edu&api_key=emmyNoether&to=christian.etpr10@gmail.com&toname=Christian&subject=New Profesor&text=SeCreoUnProfNew&from=christian.rodriguez35@upr.edu', HttpRequest::METH_GET);
-  $email->send();
+  //echo "Salio el query";
+ // $email = new HttpRequest('https://sendgrid.com/api/mail.send.json?api_user=christian.rodriguez35@upr.edu&api_key=emmyNoether&to=christian.etpr10@gmail.com&toname=Christian&subject=New Profesor&text=SeCreoUnProfNew&from=christian.rodriguez35@upr.edu', HttpRequest::METH_GET);
+ // $email->send();
 } else {
-  echo "No salio el query";
+ // echo "No salio el query";
 }
 
 

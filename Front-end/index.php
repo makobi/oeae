@@ -45,7 +45,7 @@ session_destroy();
 						<input type="submit" value="Submit"> 
 					</form>
 				
-					<a href="forgot.html" > <p id = "recovery"> Forgot Password? </p> </a>	
+					<!-- <a href="forgot.html" > --> <p id = "recovery"> Forgot Password?(Not implemented) </p><!--  </a>	 -->
 			
 		</div>
 		<!-- Termina el navegador drop down -->

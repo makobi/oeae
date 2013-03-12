@@ -55,6 +55,15 @@ $(document).ready(function() {
 		})
 	});
 
+	// Añadir profesor(admin only)
+	$(".prof").on("click", function() {
+		url = "http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/prof.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 });
 
 

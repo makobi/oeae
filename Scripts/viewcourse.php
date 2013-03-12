@@ -109,7 +109,7 @@ $table=				'<div id="content"><center>
 				</table>';
 
 // Aqui se comienza a generar la tabla de la rubrica
-$table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
+$table=$table." <h1>".$_SESSION['nombre_act']."</h1>
 							<table id='rubrica'><tr>
 				<form>
 				<td><input type='submit' value='Editar'></td>
