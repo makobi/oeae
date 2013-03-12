@@ -64,7 +64,7 @@ $(document).ready(function() {
 		})
 	});
 
-	// Crear Rubrica (admin only)
+	// Banco de Rubricas (admin only)
 	$(".rub").on("click", function() {
 		url = "http://ada.uprrp.edu/~tlaboy/OEAE/Scripts/createrubric.php";
 		$.get(url, function(html) {
