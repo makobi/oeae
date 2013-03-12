@@ -29,6 +29,32 @@ $curso_id = $_GET['course_id'];
 $studentquery = "SELECT nombre_est, est_id FROM Estudiantes natural join Matricula where curso_id=$curso_id";
 $students = mysql_query($studentquery);
 
+// Generar Rubrica
+		$aid = $_SESSION['act_id'];
+
+		// Busco el id de los criterios asociados a esa rubrica
+		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
+					or die(mysql_error());
+
+		// Verifica que hayan resultados
+		$crit_qty = mysql_num_rows($query1); 
+		if ($crit_qty > 0) {
+			$cids = array();
+			while ($result = mysql_fetch_array($query1)) {
+				$cids[] = $result["crit_id"];
+			}
+		}
+
+		$criterios = array();
+			foreach ($cids as $cid) {
+				//Busco los nombres de los criterios
+				$query2 = mysql_query("SELECT nombre_crit FROM Criterios WHERE crit_id = '$cid'")
+					or die(mysql_error());
+				$result = mysql_fetch_array($query2);
+				$criterios[$cid] = $result["nombre_crit"];
+			}
+
+
 // Primero los 3 thumbnails
 $content='
 				<div id="content"><center>
@@ -61,31 +87,54 @@ $content='
 				</tr>
 				</table>
 				<h1>'.$_SESSION['nombre_act'].'</h1>
-			<ul id="studentlist">';
+			<table id="grading">
+					<thead> <!-- Begins Header row -->
+						<td>
+							<p>Estudiantes</p>
+						</td>';
+
+for ($i=0; $i < $crit_qty; $i++) {
+		$content=$content."<td>
+							<p>".$criterios[$cids[$i]]."</p>
+						</td>";
+}
+
+$content=$content."<td>
+						<p>Total</p>
+					</td>
+					</thead> <!-- Ends Header row -->
+								<tbody>
+								<form>";
 
 // Aqui empiezan a desplegarse los estudiantes
 while ($row = mysql_fetch_array($students)) {
 
 	// Primero el nombre del estudiante
-	$content = $content."<li><a href='#' class='evaluacion'><h2 id='".$row[1]."'>".$row[0]."</h2></a>"; 
-	
+	$content = $content."<tr> <!-- Begins row -->
+										<td>
+											<p>$row[0]</p>
+										</td>";
+
+	for ($i=0; $i < $crit_qty; $i++) { 
+		$content=$content."<td>
+							<select class='styled-select' name='".$row[1]."y".$cids[$i]."'>
+							<option value='0'>0</option><option value='1'>1</option>
+							<option value='2'>2</option>
+							<option value='3'>3</option>
+							<option value='4'>4</option>
+							<option value='5'>5</option>
+							<option value='6'>6</option>
+							<option value='7'>7</option>
+							<option value='8'>8</option>
+							</select>
+							</td>";
+	}
+
+
 	// Query para sacar el mat_id de ese estudiante en ese curso
 	$matquery = mysql_query("SELECT mat_id from Matricula where curso_id=$curso_id[0] and est_id=$row[1]");
 	$mat = mysql_fetch_array($matquery);
 	$mat_id = $mat[0];
-
-	// Busco el id de los criterios asociados a esa rubrica
-	$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$_SESSION[act_id]'")
-			or die(mysql_error());
-
-	// Verifica que hayan resultados
-	$crit_qty = mysql_num_rows($query1); 
-	if ($crit_qty > 0) {
-		$cids = array();
-		while ($result = mysql_fetch_array($query1)) {
-			$cids[] = $result["crit_id"];
-		}
-	}
 
 	// Busco el rub_id
 	$query2 = mysql_query("SELECT rub_id FROM Actividades where act_id='$_SESSION[act_id]'");
@@ -104,12 +153,21 @@ while ($row = mysql_fetch_array($students)) {
 	$score = $score + intval($puntos[0]);
 	}
 
-	// Desplegar nota actual del estudiante
-	$content = $content."<h2>Score:$score/".strval($crit_qty*8)."</h2></li><br>";
+	$content=$content."<td>
+							$score/".strval($crit_qty*8)."
+							</td>
+						</tr> <!-- Ends row -->";
+
 }
 
 // Concatenar los scripts de jQuery relevantes a esta data.
-$content = $content."</ul></center></div>
+$content = $content."</tbody>
+								<tfoot>
+									<td>
+										<input type='submit' value='Submit'>
+									</td>
+								</tfoot></form>
+							</table></center></div>
 			<script type='text/javascript'>
 
 			$('#students a').on('click', function() {
@@ -122,15 +180,12 @@ $content = $content."</ul></center></div>
 
 			});
 
-			$('.evaluacion').on('click', function () {
-				var est_id = $(this).children('h2').attr('id');
-				console.log(est_id)
-				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/eval.php?est_id='+est_id;
+			$('form').submit(function () {
 
-				$.get(url, function(html) {
-					$('#content').hide()
-					$('#content').replaceWith(html)
-				})
+				var data = $(this).serialize();
+				console.log(data)
+				alert('Falta guardar la evaluacion en la base de datos')
+				return false;
 			});
 			</script>";
 
