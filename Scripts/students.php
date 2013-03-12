@@ -23,7 +23,7 @@ if ($db) {
   exit();
 }
 
-$curso_id = $_GET['course_id'];
+$curso_id = $_SESSION['course_id'];
 
 // Select students query
 $studentquery = "SELECT nombre_est, est_id FROM Estudiantes natural join Matricula where curso_id=$curso_id";
@@ -118,6 +118,7 @@ while ($row = mysql_fetch_array($students)) {
 	for ($i=0; $i < $crit_qty; $i++) { 
 		$content=$content."<td>
 							<select class='styled-select' name='".$row[1]."y".$cids[$i]."'>
+							<option value='nul'>N/A</option>
 							<option value='0'>0</option><option value='1'>1</option>
 							<option value='2'>2</option>
 							<option value='3'>3</option>
@@ -164,7 +165,7 @@ while ($row = mysql_fetch_array($students)) {
 $content = $content."</tbody>
 								<tfoot>
 									<td>
-										<input type='submit' value='Submit'>
+										<input type='submit' value='Submit' class='btn btn-primary'>
 									</td>
 								</tfoot></form>
 							</table></center></div>
@@ -183,8 +184,13 @@ $content = $content."</tbody>
 			$('form').submit(function () {
 
 				var data = $(this).serialize();
-				console.log(data)
-				alert('Falta guardar la evaluacion en la base de datos')
+				
+				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/addeval.php?'+data
+
+				$.get(url, function(html) {
+					alert(html)
+				})
+
 				return false;
 			});
 			</script>";
