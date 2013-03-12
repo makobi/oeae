@@ -4,7 +4,7 @@
 session_start();
 
 if($_SESSION['nombre_prof']!='Administrador') {
-	header('LOCATION: http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/index.php');
+	header('LOCATION: ./index.php');
 }
 
 ?>

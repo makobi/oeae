@@ -24,7 +24,7 @@ if (isset($_SESSION['login']) !== true) {
 
 	// If credential are not valid, send back to login page
 	if ( ($credentials['passwd'] !== $passwd)) {
-		header('Location: http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/');	
+		header('Location: ./index.php');	
 		exit();
 	}
 	// Save credential in the session variable
@@ -36,7 +36,7 @@ if (isset($_SESSION['login']) !== true) {
 $_SESSION['login'] = true;
 
 if($_SESSION['nombre_prof']=='Administrador') {
-	header('LOCATION: http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/admin.php');
+	header('LOCATION: ./admin.php');
 }
 
 // Aqui se hacen los queries para sacar toda la info del profesor
