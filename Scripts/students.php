@@ -165,7 +165,7 @@ while ($row = mysql_fetch_array($students)) {
 $content = $content."</tbody>
 								<tfoot>
 									<td>
-										<input type='submit' value='Submit'>
+										<input type='submit' value='Submit' class='btn btn-primary'>
 									</td>
 								</tfoot></form>
 							</table></center></div>

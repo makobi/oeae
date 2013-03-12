@@ -112,7 +112,7 @@ $table=				'<div id="content"><center>
 $table=$table." <h1>".$_SESSION['nombre_act']."</h1>
 							<table id='rubrica'><tr>
 				<form>
-				<td><input type='submit' value='Editar'></td>
+				<td><input type='submit' value='Editar' class='btn btn-primary'></td>
 				</form>
 				<td>1-2</td>
 				<td>3-4</td>
