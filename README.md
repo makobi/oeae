@@ -4,12 +4,18 @@ OEAE
 Web application used for the Office of Student Academic Evaluation.
 This is a work in progress. The students working on this project are:
 
-1. Christian Rodriguez
+* Christian Rodriguez
+* Alex Santos
+* Tahiri Laboy de Jesus
+* Jose Reyes
 
-2. Alex Santos
+Status
+---
 
-3. Tahiri Laboy de Jesus
+Estamos empezano la segunda entrega. Las tareas ahora mismo son las siguientes:
 
-4. Jose Reyes
+* Arreglar la Base de Datos: Christian y Tahirí
+* Arreglar los issues con el front-end: Alex
+* Aprender como usar el Google Charts Api: Jose
 
-Status: La primera entrega tiene soft deadline Viernes, 8 de marzo y hard deadline Lunes, 11 de marzo. Ya estamos casi acabando, entra a getblimp.com para info de las tareas.
+Estas tareas son para el viernes, despues que terminemos esto empezamos a trabajar los agregados!!
