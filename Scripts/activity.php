@@ -1,5 +1,16 @@
 <?php 
 
+/*
+Christian A. Rodriguez Encarnacion
+Este script se activa cuando el profesor desea añadir una actividad. Contiene una forma que le permite
+al profesor someter los credenciales de la actividad.
+
+FALTA MOSTRAR EL NOMBRE DE LAS RUBRICAS EN LA SELECCION. EL LOGRO ESPERADO TAMBIEN ESTA MEDIO ALGARETE.
+
+
+*/
+
+
 session_start();
 
 $_SESSION['curso_id']=$_GET['curso_id'];

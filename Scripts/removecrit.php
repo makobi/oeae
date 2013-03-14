@@ -1,5 +1,14 @@
 <?php 
 
+/*
+Christian A. Rodriguez Encarnacion
+Este es el superscript de editar rubricas.
+
+DEBEMOS HACER QUE SE PUEDAN ANADIR MAS DE UN CRITERIO A LA VEZ, Y QUE SE PUEDAN EDITAR LAS DESCRIPCIONES
+DE LOS CRITERIOS. PRIMERO HAY QUE ARREGLAR LA BASE DE DATOS
+
+*/
+
 session_start();
 
 // Connect to the Database

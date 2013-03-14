@@ -3,7 +3,7 @@
 /*
 Christian A. Rodriguez Encarnacion
 
-Este script guarda la evaluación de un profesor en una actividad.
+Este script guarda la evaluación de un profesor en una actividad. 2d Array por http get inception.
 
 */
 

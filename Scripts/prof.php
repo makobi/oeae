@@ -1,4 +1,12 @@
 <?php  
+
+/*
+Christian A. Rodriguez Encarnacion
+Este script solo desplega la forma para el administrador poder someter los credenciales de un profesor nuevo.
+Esto se puede hacer sin php, despues lo cambio a un html solo.
+
+*/
+
 echo "<div id='content'>
 	<center>
 	<p>Enter Professor's information</p>

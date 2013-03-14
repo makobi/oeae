@@ -1,5 +1,14 @@
 <?php 
 
+/*
+Christian A. Rodriguez Encarnacion
+Este script se llama cuando el usuario hace click en su nombre, para poder volver a enseñar su informacion
+de perfil.
+
+SE DEBE EDITAR PARA QUE EL USUARIO PUEDA EDITAR SU INFORMACION.
+
+*/
+
 session_start();
 
 echo '<div id="content">
