@@ -18,4 +18,11 @@ Estamos empezano la segunda entrega. Las tareas ahora mismo son las siguientes:
 * Arreglar los issues con el front-end: Alex
 * Aprender como usar el Google Charts Api: Jose
 
+**Tareas que tambien faltan**
+
+* Remover Actividades
+* Añadir y editar criterios
+* Algunos scripts de php le faltan cosas. Estan en los comments.
+* Editar la información de los profesores
+
 Estas tareas son para el viernes, despues que terminemos esto empezamos a trabajar los agregados!!
