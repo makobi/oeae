@@ -19,8 +19,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 DROP TABLE IF EXISTS `Actividades`;
 
 
-CREATE TABLE IF NOT EXISTS `Actividades` (`act_id` int(11) NOT NULL auto_increment, `nombre_act` varchar(500) NOT NULL, `logro_esperado` int(11) NOT NULL, `fecha_dado` date DEFAULT NULL, `ultima_modif` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
-                                          UPDATE CURRENT_TIMESTAMP, `rub_id` int(11) NOT NULL, PRIMARY KEY (`act_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+CREATE TABLE IF NOT EXISTS `Actividades` (`act_id` int(11) NOT NULL auto_increment, `nombre_act` varchar(500) NOT NULL, `logro_esperado` int(11) NOT NULL, `estudiantes_logro` int(11) NOT NULL, `fecha_dado` date DEFAULT NULL, `ultima_modif` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
+                                          UPDATE CURRENT_TIMESTAMP, `rublocal_id` int(11) NOT NULL, PRIMARY KEY (`act_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
  -- --------------------------------------------------------
  --
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `Actividades` (`act_id` int(11) NOT NULL auto_increme
 DROP TABLE IF EXISTS `ActividadesCurso`;
 
 
-CREATE TABLE IF NOT EXISTS `ActividadesCurso` (`act_id` int(11) NOT NULL, `curso_id` int(11) NOT NULL, KEY `act_id` (`act_id`), KEY `curso_id` (`curso_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `ActividadesCurso` (`act_id` int(11) NOT NULL, `curso_id` int(11) NOT NULL, KEY `act_id` (`act_id`), KEY `curso_id` (`curso_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
  -- --------------------------------------------------------
  --
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Criterios` (`crit_id` int(11) NOT NULL auto_incremen
 DROP TABLE IF EXISTS `Cursos`;
 
 
-CREATE TABLE IF NOT EXISTS `Cursos` (`curso_id` int(11) NOT NULL auto_increment, `codificacion` char(8) NOT NULL, `seccion` char(3) NOT NULL, `nombre_curso` varchar(30) NOT NULL, `fac_curso` varchar(40) NOT NULL, `prog_curso` varchar(40) NOT NULL, PRIMARY KEY (`curso_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+CREATE TABLE IF NOT EXISTS `Cursos` (`curso_id` int(11) NOT NULL auto_increment, `codificacion` char(8) NOT NULL, `seccion` char(3) NOT NULL, `nombre_curso` varchar(30) NOT NULL, `fac_curso` varchar(4) NOT NULL, `prog_curso` varchar(40) NOT NULL, PRIMARY KEY (`curso_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
  -- --------------------------------------------------------
  --
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `Estudiantes` (`est_id` int(11) NOT NULL auto_increme
 DROP TABLE IF EXISTS `Evaluacion`;
 
 
-CREATE TABLE IF NOT EXISTS `Evaluacion` (`act_id` int(11) NOT NULL, `crit_id` int(11) NOT NULL, `ptos_obtenidos` int(11) DEFAULT NULL, `mat_id` int(11) NOT NULL, `rub_id` int(11) NOT NULL, UNIQUE KEY `act_id_2` (`act_id`,`crit_id`,`mat_id`), KEY `act_id` (`act_id`), KEY `crit_id` (`crit_id`), KEY `mat_id` (`mat_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `Evaluacion` (`act_id` int(11) NOT NULL, `crit_id` int(11) NOT NULL, `ptos_obtenidos` int(11) DEFAULT NULL, `mat_id` int(11) NOT NULL, UNIQUE KEY `act_id_2` (`act_id`,`crit_id`,`mat_id`), KEY `act_id` (`act_id`), KEY `crit_id` (`crit_id`), KEY `mat_id` (`mat_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
  -- --------------------------------------------------------
  --
@@ -120,7 +120,17 @@ CREATE TABLE IF NOT EXISTS `Matricula` (`curso_id` int(11) NOT NULL, `est_id` in
 DROP TABLE IF EXISTS `NombresRubricas`;
 
 
-CREATE TABLE IF NOT EXISTS `NombresRubricas` (`rub_id` int(11) NOT NULL, `nombre_rub` varchar(200) NOT NULL, PRIMARY KEY (`rub_id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `NombresRubricas` (`rub_id` int(11) NOT NULL auto_increment, `nombre_rub` varchar(200) NOT NULL, KEY (`rub_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ -- --------------------------------------------------------
+ --
+-- Table structure for table `NombresRubricasLocal`
+--
+
+DROP TABLE IF EXISTS `NombresRubricasLocal`;
+
+
+CREATE TABLE IF NOT EXISTS `NombresRubricasLocal` (`rublocal_id` int(11) NOT NULL auto_increment, `nombre_rub` varchar(200) NOT NULL, KEY (`rublocal_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
  -- --------------------------------------------------------
  --
@@ -151,7 +161,7 @@ DROP TABLE IF EXISTS `RubricaCreadaPor`;
 
 
 CREATE TABLE IF NOT EXISTS `RubricaCreadaPor` (`prof_id` int(11) NOT NULL, `fecha_creacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON
-                                               UPDATE CURRENT_TIMESTAMP, `rub_id` int(11) NOT NULL, PRIMARY KEY (`rub_id`), KEY `prof_id` (`prof_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+                                               UPDATE CURRENT_TIMESTAMP, `rub_id` int(11) NOT NULL, KEY (`rub_id`), KEY `prof_id` (`prof_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
  -- --------------------------------------------------------
  --
@@ -161,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `RubricaCreadaPor` (`prof_id` int(11) NOT NULL, `fech
 DROP TABLE IF EXISTS `RubricaLocal`;
 
 
-CREATE TABLE IF NOT EXISTS `RubricaLocal` (`rub_id` int(11) NOT NULL, `crit_id` int(11) NOT NULL, `prof_id` int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `RubricaLocal` (`rublocal_id` int(11) NOT NULL, `crit_id` int(11) NOT NULL, `prof_id` int(11) NOT NULL, KEY `crit_id` (`crit_id`), KEY `prof_id` (`prof_id`), KEY `rublocal_id` (`rublocal_id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
  -- --------------------------------------------------------
  --
@@ -171,20 +181,38 @@ CREATE TABLE IF NOT EXISTS `RubricaLocal` (`rub_id` int(11) NOT NULL, `crit_id` 
 DROP TABLE IF EXISTS `Rubricas`;
 
 
-CREATE TABLE IF NOT EXISTS `Rubricas` (`rub_id` int(11) NOT NULL, `crit_id` int(11) NOT NULL, KEY `crit_id` (`crit_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `Rubricas` (`rub_id` int(11) NOT NULL, `crit_id` int(11) NOT NULL, KEY `crit_id` (`crit_id`), KEY `rub_id` (`rub_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
  --
 -- Constraints for dumped tables
 --
  --
+-- Constraints for table `Actividades`
+--
+
+ALTER TABLE `Actividades` ADD CONSTRAINT
+FOREIGN KEY (`rublocal_id`) REFERENCES `NombresRubricasLocal` (`rublocal_id`) ON
+DELETE RESTRICT;
+
+ --
+-- Constraints for table `ActividadesCurso`
+--
+
+ALTER TABLE `ActividadesCurso` ADD CONSTRAINT
+FOREIGN KEY (`act_id`) REFERENCES `Actividades` (`act_id`) ON
+DELETE CASCADE, ADD CONSTRAINT
+FOREIGN KEY (`curso_id`) REFERENCES `Cursos` (`curso_id`) ON
+DELETE CASCADE;
+
+ --
 -- Constraints for table `CriterioPertenece`
 --
 
 ALTER TABLE `CriterioPertenece` ADD CONSTRAINT `CriterioPertenece_ibfk_4`
-FOREIGN KEY (`crit_id`) REFERENCES `Criterios` (`crit_id`), ADD CONSTRAINT `CriterioPertenece_ibfk_1`
-FOREIGN KEY (`dom_id`) REFERENCES `Dominios` (`dom_id`), ADD CONSTRAINT `CriterioPertenece_ibfk_2`
-FOREIGN KEY (`crit_id`) REFERENCES `Criterios` (`crit_id`), ADD CONSTRAINT `CriterioPertenece_ibfk_3`
-FOREIGN KEY (`dom_id`) REFERENCES `Dominios` (`dom_id`);
+FOREIGN KEY (`crit_id`) REFERENCES `Criterios` (`crit_id`) ON
+DELETE CASCADE, ADD CONSTRAINT
+FOREIGN KEY (`dom_id`) REFERENCES `Dominios` (`dom_id`) ON
+DELETE CASCADE;
 
  --
 -- Constraints for table `EscalaCriterio`
@@ -199,9 +227,12 @@ DELETE CASCADE;
 --
 
 ALTER TABLE `Evaluacion` ADD CONSTRAINT `Evaluacion_ibfk_1`
-FOREIGN KEY (`act_id`) REFERENCES `Actividades` (`act_id`), ADD CONSTRAINT `Evaluacion_ibfk_2`
-FOREIGN KEY (`crit_id`) REFERENCES `Criterios` (`crit_id`), ADD CONSTRAINT `Evaluacion_ibfk_3`
-FOREIGN KEY (`mat_id`) REFERENCES `Matricula` (`mat_id`);
+FOREIGN KEY (`act_id`) REFERENCES `Actividades` (`act_id`) ON
+DELETE CASCADE, ADD CONSTRAINT `Evaluacion_ibfk_2`
+FOREIGN KEY (`crit_id`) REFERENCES `Criterios` (`crit_id`) ON
+DELETE CASCADE, ADD CONSTRAINT `Evaluacion_ibfk_3`
+FOREIGN KEY (`mat_id`) REFERENCES `Matricula` (`mat_id`) ON
+DELETE CASCADE;
 
  --
 -- Constraints for table `Matricula`
@@ -209,30 +240,45 @@ FOREIGN KEY (`mat_id`) REFERENCES `Matricula` (`mat_id`);
 
 ALTER TABLE `Matricula` ADD CONSTRAINT `Matricula_ibfk_4`
 FOREIGN KEY (`curso_id`) REFERENCES `Cursos` (`curso_id`) ON
-DELETE CASCADE, ADD CONSTRAINT `Matricula_ibfk_1`
-FOREIGN KEY (`curso_id`) REFERENCES `Cursos` (`curso_id`), ADD CONSTRAINT `Matricula_ibfk_2`
-FOREIGN KEY (`est_id`) REFERENCES `Estudiantes` (`est_id`), ADD CONSTRAINT `Matricula_ibfk_3`
-FOREIGN KEY (`est_id`) REFERENCES `Estudiantes` (`est_id`) ON
-DELETE CASCADE;
+DELETE CASCADE, ADD CONSTRAINT `Matricula_ibfk_2`
+FOREIGN KEY (`est_id`) REFERENCES `Estudiantes` (`est_id`);
 
  --
 -- Constraints for table `ProfesorImparte`
 --
 
 ALTER TABLE `ProfesorImparte` ADD CONSTRAINT `ProfesorImparte_ibfk_1`
-FOREIGN KEY (`curso_id`) REFERENCES `Cursos` (`curso_id`), ADD CONSTRAINT `ProfesorImparte_ibfk_2`
-FOREIGN KEY (`prof_id`) REFERENCES `Profesores` (`prof_id`);
+FOREIGN KEY (`curso_id`) REFERENCES `Cursos` (`curso_id`) ON
+DELETE CASCADE, ADD CONSTRAINT `ProfesorImparte_ibfk_2`
+FOREIGN KEY (`prof_id`) REFERENCES `Profesores` (`prof_id`) ON
+DELETE CASCADE;
 
  --
 -- Constraints for table `RubricaCreadaPor`
 --
 
-ALTER TABLE `RubricaCreadaPor` ADD CONSTRAINT `RubricaCreadaPor_ibfk_1`
-FOREIGN KEY (`prof_id`) REFERENCES `Profesores` (`prof_id`);
+ALTER TABLE `RubricaCreadaPor` ADD CONSTRAINT
+FOREIGN KEY (`prof_id`) REFERENCES `Profesores` (`prof_id`), ADD CONSTRAINT
+FOREIGN KEY (`rub_id`) REFERENCES `NombresRubricas` (`rub_id`);
+
+ --
+-- Constraints for table `RubricaLocal`
+--
+
+ALTER TABLE `RubricaLocal` ADD CONSTRAINT
+FOREIGN KEY (`crit_id`) REFERENCES `Criterios` (`crit_id`) ON
+DELETE CASCADE, ADD CONSTRAINT
+FOREIGN KEY (`prof_id`) REFERENCES `Profesores` (`prof_id`) ON
+DELETE CASCADE, ADD CONSTRAINT
+FOREIGN KEY (`rublocal_id`) REFERENCES `NombresRubricasLocal` (`rublocal_id`) ON
+DELETE CASCADE;
 
  --
 -- Constraints for table `Rubricas`
 --
 
-ALTER TABLE `Rubricas` ADD CONSTRAINT `Rubricas_ibfk_1`
-FOREIGN KEY (`crit_id`) REFERENCES `Criterios` (`crit_id`);
+ALTER TABLE `Rubricas` ADD CONSTRAINT
+FOREIGN KEY (`crit_id`) REFERENCES `Criterios` (`crit_id`) ON
+DELETE CASCADE, ADD CONSTRAINT
+FOREIGN KEY (`rub_id`) REFERENCES `NombresRubricas` (`rub_id`) ON
+DELETE CASCADE;

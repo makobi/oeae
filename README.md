@@ -24,5 +24,7 @@ Estamos empezano la segunda entrega. Las tareas ahora mismo son las siguientes:
 * Añadir y editar criterios
 * Algunos scripts de php le faltan cosas. Estan en los comments.
 * Editar la información de los profesores
+* Hacer Input Validation en TODAS las formas
+
 
 Estas tareas son para el viernes, despues que terminemos esto empezamos a trabajar los agregados!!
