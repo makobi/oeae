@@ -10,6 +10,11 @@ FALTA MOSTRAR EL NOMBRE DE LAS RUBRICAS EN LA SELECCION. EL LOGRO ESPERADO TAMBI
 
 */
 
+/*
+Revisado el 14 de marzo (Tahiri)
+
+Incluir query que permita escoger tambien de las Rubricas Locales. 
+*/
 
 session_start();
 
@@ -25,7 +30,7 @@ if ($db) {
 }
 
 // Select the distinct Rubrics from the database
-$query = mysql_query("SELECT distinct rub_id FROM Rubricas");
+$query = mysql_query("SELECT distinct rublocal_id FROM RubricaLocal");
  
 $output = "
 <div id='content'>

@@ -33,7 +33,7 @@ $students = mysql_query($studentquery);
 		$aid = $_SESSION['act_id'];
 
 		// Busco el id de los criterios asociados a esa rubrica
-		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
+		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN RubricaLocal WHERE act_id = '$aid'")
 					or die(mysql_error());
 
 		// Verifica que hayan resultados
@@ -138,7 +138,7 @@ while ($row = mysql_fetch_array($students)) {
 	$mat_id = $mat[0];
 
 	// Busco el rub_id
-	$query2 = mysql_query("SELECT rub_id FROM Actividades where act_id='$_SESSION[act_id]'");
+	$query2 = mysql_query("SELECT rublocal_id FROM Actividades where act_id='$_SESSION[act_id]'");
 	$rubrica = mysql_fetch_array($query2);
 	$rub_id = $rubrica[0];
 
@@ -148,7 +148,7 @@ while ($row = mysql_fetch_array($students)) {
 	// Sumar puntos obtenidos por cada criterio al acumulador
 	for ($i=0; $i < $crit_qty; $i++) { 
 	$eval = "SELECT ptos_obtenidos from Evaluacion 
-			where act_id=$_SESSION[act_id] and crit_id=".$cids[$i]." and mat_id=$mat_id and rub_id=$rub_id";
+			where act_id=$_SESSION[act_id] and crit_id=".$cids[$i]." and mat_id=$mat_id";
 	$res = mysql_query($eval);
 	$puntos = mysql_fetch_array($res);
 	$score = $score + intval($puntos[0]);

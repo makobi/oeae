@@ -1,7 +1,9 @@
 <?php
 /*
 	Tahiri Laboy De Jesus
-	Script para crear rubrica
+	Script para crear rubrica (Administrativo)
+
+	Revisado el 14 de marzo - Se necesita implementar para profesores. 
 */
 
 $server         = 'localhost';
@@ -68,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "
 		<div id = 'content'>
-		<center>
+	
 			<form name='nueva_rub' action='".$me."' method='POST' 
 			onSubmit = 'checkform()'>
 			<div><br>
@@ -81,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		<button type='submit' value='create'>Create!
 			<br></div>
 			</form>
-		</center>
 		</div>
 		";
 

@@ -4,6 +4,8 @@ Christian A. Rodriguez Encarnacion
 Este script se encarga de crear la actividad con los credenciales de
 activity.php. Todavia falta ver si hace falta insertar informacion en otros
 lugares que no sean la tabla Actividades.
+
+Revisado el 14 de marzo (Tahiri): Query para DB version 2
 */
 
 session_start();
@@ -25,7 +27,10 @@ $logro_esperado = $_GET['logro_esperado'];
 
 
 // Insert query
-$actividad = "INSERT INTO Actividades (nombre_act, rub_id, logro_esperado) values ('$nombre_act', '$rub_id', '$logro_esperado')";
+//$actividad = "INSERT INTO Actividades (nombre_act, rub_id, logro_esperado) values ('$nombre_act', '$rub_id', '$logro_esperado')";
+
+
+$actividad = "INSERT INTO Actividades (nombre_act, rublocal_id, logro_esperado) values ('$nombre_act', '$rub_id', '$logro_esperado')";
 
 mysql_query($actividad);
 

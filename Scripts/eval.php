@@ -37,8 +37,13 @@ $nombre_est = $studentname[0];
 		$aid = $_SESSION['act_id'];
 
 		// Busco el id de los criterios asociados a esa rubrica
-		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
+/*		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
 					or die(mysql_error());
+*/
+				
+		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN RubricaLocal WHERE act_id = '$aid'")
+					or die(mysql_error());
+		
 
 		// Verifica que hayan resultados
 		$crit_qty = mysql_num_rows($query1); 

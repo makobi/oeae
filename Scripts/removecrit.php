@@ -1,13 +1,9 @@
 <?php 
-
 /*
-Christian A. Rodriguez Encarnacion
-Este es el superscript de editar rubricas.
-
-DEBEMOS HACER QUE SE PUEDAN ANADIR MAS DE UN CRITERIO A LA VEZ, Y QUE SE PUEDAN EDITAR LAS DESCRIPCIONES
-DE LOS CRITERIOS. PRIMERO HAY QUE ARREGLAR LA BASE DE DATOS
-
+	Script para editar (anadir/remover) criterios en la rubrica
+	Revisado el 15 de marzo
 */
+
 
 session_start();
 
@@ -29,8 +25,13 @@ echo "<div id='content'>
 		$aid = $_SESSION['act_id'];
 
 		// Busco el id de los criterios asociados a esa rubrica
-		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
+//		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
+//					or die(mysql_error());
+
+		
+			$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN RubricaLocal WHERE act_id = '$aid'")
 					or die(mysql_error());
+		
 
 		// Verifica que hayan resultados
 		$crit_qty = mysql_num_rows($query1); 
@@ -41,14 +42,16 @@ echo "<div id='content'>
 			}
 		}
 
-$rubidquery = "SELECT rub_id from Actividades where act_id=$aid";
+
+$rubidquery = "SELECT rublocal_id from Actividades where act_id=$aid";
 $rub = mysql_fetch_array(mysql_query($rubidquery));
 $rub_id=$rub[0];
 
-
 for ($i=0; $i < $crit_qty; $i++) { 
 	if (isset($_GET[$cids[$i]])) {
-		$delquery = "DELETE FROM Rubricas WHERE rub_id=$rub_id AND crit_id=".$cids[$i];
+
+		// Query para borrar los criterios seleccionados por el usuario
+		$delquery = "DELETE FROM RubricaLocal WHERE rublocal_id=$rub_id AND crit_id=".$cids[$i]." AND prof_id=".$_SESSION['prof_id'];
 		if(mysql_query($delquery)) {
 			echo $cids[$i];
 		}
@@ -56,7 +59,8 @@ for ($i=0; $i < $crit_qty; $i++) {
 }
 
 if ($_GET['addcriterio']!=0) {
-	$addquery = "INSERT INTO Rubricas (rub_id,crit_id) values (".$rub_id.",".$_GET['addcriterio'].")";
+	// Query para insertar criterios a la Rubrica Local
+	$addquery = "INSERT INTO RubricaLocal (rublocal_id,crit_id,prof_id) values (".$rub_id.",".$_GET['addcriterio'].",".$_SESSION['prof_id'].")";
 	if (mysql_query($addquery)) {
 		echo "<br>Criterio añadido!<br>";
 	}

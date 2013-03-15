@@ -3,8 +3,9 @@
 /*
 Christian A. Rodriguez Encarnacion
 
-Este script guarda la evaluación de un profesor en una actividad. 2d Array por http get inception.
+Este script guarda la evaluación de un profesor en una actividad.
 
+Revisado el 14 de marzo - Tahiri
 */
 
 session_start();
@@ -33,8 +34,13 @@ $students = mysql_query($studentquery);
 
 
 // Busco el id de los criterios asociados a esa rubrica
-$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
+/*$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
 			or die(mysql_error());
+*/
+ 
+$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN RubricaLocal WHERE act_id = '$aid'")
+			or die(mysql_error());
+
 
 // Verifica que hayan resultados
 $crit_qty = mysql_num_rows($query1); 
@@ -46,7 +52,12 @@ if ($crit_qty > 0) {
 }
 
 // Query para buscar Id de la rubrica
-$query2 = mysql_query("SELECT rub_id FROM Actividades where act_id='$aid'");
+//$query2 = mysql_query("SELECT rub_id FROM Actividades where act_id='$aid'");
+
+
+$query2 = mysql_query("SELECT rublocal_id FROM Actividades where act_id='$aid'");
+
+
 $rubrica = mysql_fetch_array($query2);
 $rub_id = $rubrica[0];
 
@@ -61,17 +72,29 @@ while ($row = mysql_fetch_array($students)) {
 
 	for ($i=0; $i < $crit_qty; $i++) { 
 		$get = $row[1]."y".$cids[$i];
-		$ptos = $_GET[$get];
-		if ($ptos!='nul') {
-			$savequery = "INSERT INTO Evaluacion 
+		if (isset($_GET[$get])) {
+			$ptos = $_GET[$get];
+			if ($ptos!='nul') {
+/*				$savequery = "INSERT INTO Evaluacion 
                         (act_id,crit_id,ptos_obtenidos,mat_id,rub_id)
                         values 
                         ('$aid',".$cids[$i].",".$ptos.",$mat_id,$rub_id)
                         ON DUPLICATE KEY UPDATE ptos_obtenidos=".$ptos.";";
-        	if(mysql_query($savequery)){
-        		$count++;
-        	}
+*/
+
+				$savequery = "INSERT INTO Evaluacion 
+                        (act_id,crit_id,ptos_obtenidos,mat_id)
+                        values 
+                        ('$aid',".$cids[$i].",".$ptos.",$mat_id)
+                        ON DUPLICATE KEY UPDATE ptos_obtenidos=".$ptos.";";
+
+ 
+       			if(mysql_query($savequery)){
+        			$count++;
+        		}
+			}
 		}
+		
 		
 	}
 }

@@ -11,6 +11,7 @@ proceder a evaluar a los estudiantes.
 
 Al final tambien desplegamos un script en jQuery para darle funcionalidad a los thumbnails.
 
+REVISADO EL 15 DE MARZO
 */
 
 session_start();
@@ -42,7 +43,7 @@ $_SESSION['course_id'] = $courseid[0];
 		$aid = $_SESSION['act_id'];
 
 		// Busco el id de los criterios asociados a esa rubrica
-		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
+		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN RubricaLocal WHERE act_id = '$aid'")
 					or die(mysql_error());
 
 		// Verifica que hayan resultados

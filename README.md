@@ -14,15 +14,17 @@ Status
 
 Estamos empezano la segunda entrega. Las tareas ahora mismo son las siguientes:
 
-* Arreglar la Base de Datos: Christian y Tahirí
 * Arreglar los issues con el front-end: Alex
 * Aprender como usar el Google Charts Api: Jose
+* Crear copia a rubrica local cuando el profesor crea una actividad: Tahirí
+* Añadir crear rubricas para profesores: Tahirí
+* Trabajar el Banco de Rubricas: Tahirí
+* Remover Actividades: Christian
+* Añadir y editar criterio: Christian
+* Arreglar lo que falta en scripts de php: Christian
 
 **Tareas que tambien faltan**
 
-* Remover Actividades
-* Añadir y editar criterios
-* Algunos scripts de php le faltan cosas. Estan en los comments.
 * Editar la información de los profesores
 * Hacer Input Validation en TODAS las formas
 

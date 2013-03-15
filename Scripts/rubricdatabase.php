@@ -34,15 +34,19 @@ echo"<div id='content'> <center>
 	<p> Rubric Database
 	<p> Choose one of the rubrics:<br>";
 
-for ($i = 0; $i < mysql_num_rows($query); $i++) {
-	echo "<a href='LinkAViewRubricConId".$rubids[$i]."'>".$nombresrubricas[$i]."</a><br>"; 
-}
+// 
 
+for ($i = 0; $i < mysql_num_rows($query); $i++) {
+echo"<link href= '../Scripts/view_rubric.php?rub_id=".$rubids[$i]."'>".$nombresrubricas[$i]."</a><br>"; 
+}
+// Boton de create rubric
+/*
 echo"</p>
 
 	<form action='createrubric.php'>
 		<button type='submit' value='Create Rubric'>Create Rubric
 	</form>
-
+*/
+echo "
 	 </center></div>";
 ?>
