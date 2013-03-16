@@ -14,8 +14,13 @@ Status
 
 Estamos empezano la segunda entrega. Las tareas ahora mismo son las siguientes:
 
-* Arreglar los issues con el front-end: Alex
+* Cross-browser compatibility: Alex
+* Posicion del boton de logout: Alex
+* Tres botones de Rubrica, Grafica y Estudiantes: Alex
+* La tabla de las rubricas se debe ver mas presentable: Alex
 * Aprender como usar el Google Charts Api: Jose
+* Diseñar como vamos a visualizar la data: Jose
+* Implementar las graficas con dummy data: Jose
 * Crear copia a rubrica local cuando el profesor crea una actividad: Tahirí
 * Añadir crear rubricas para profesores: Tahirí
 * Trabajar el Banco de Rubricas: Tahirí
