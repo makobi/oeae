@@ -29,7 +29,7 @@ echo "<div id='content'>
 
 	$('form').submit( function() {
 			var data = $(this).serialize();
-			var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/newprof.php?'+data;
+			var url = '../Scripts/newprof.php?'+data;
 			console.log(data);
 
 		$.get(url, function(html) {

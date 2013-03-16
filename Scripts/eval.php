@@ -155,7 +155,7 @@ echo $table."</table> </form>
 
 			$('#students a').on('click', function() {
 				var course = $(this).attr('id');
-				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/students.php?course_id='+course;
+				var url = '../Scripts/students.php?course_id='+course;
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)
@@ -166,7 +166,7 @@ echo $table."</table> </form>
 			$('form').submit(function() {
   				var data = $(this).serialize();
 
-				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/addeval.php?'+data+'&est_id=".$est_id."';							
+				var url = '../Scripts/addeval.php?'+data+'&est_id=".$est_id."';							
 
 				$.get(url, function(res) {
 					alert(res);

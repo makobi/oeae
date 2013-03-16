@@ -27,7 +27,7 @@ $(document).ready(function() {
 		var name = $(this).find('p').text();
 		var id = $(this).find('p').attr('id');
 
-		var url = "http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/viewcourse.php?nombre_act="+name+"&act_id="+id;
+		var url = "../Scripts/viewcourse.php?nombre_act="+name+"&act_id="+id;
 
 		$.get(url, function(html) {
 			$("#content").hide()
@@ -37,7 +37,7 @@ $(document).ready(function() {
 
 	// Información del perfil del profesor
 	$("#profile").on("click", function () {
-		$.get("http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/profile.php", function(html) {
+		$.get("../Scripts/profile.php", function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)
 		})
@@ -47,7 +47,7 @@ $(document).ready(function() {
 	$(".newactivity").on("click", function() {
 		var curso_id = $(this).prev().attr("id");
 		
-		var url= "http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/activity.php?curso_id="+curso_id ;
+		var url= "../Scripts/activity.php?curso_id="+curso_id ;
 
 		$.get(url, function(html) {
 			$("#content").hide()
@@ -57,7 +57,7 @@ $(document).ready(function() {
 
 	// Añadir profesor(admin only)
 	$(".prof").on("click", function() {
-		url = "http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/prof.php";
+		url = "../Scripts/prof.php";
 		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)
@@ -66,7 +66,7 @@ $(document).ready(function() {
 
 	// Crear Rubrica (admin only)
 	$(".rub").on("click", function() {
-		url = "http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/createrubric.php";
+		url = "../Scripts/createrubric.php";
 		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)

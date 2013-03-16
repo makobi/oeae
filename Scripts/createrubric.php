@@ -116,7 +116,7 @@ else {
 	$query = mysql_query("INSERT INTO NombresRubricas(rub_id, nombre_rub)
 		VALUES('$newrid','$rname');") or die (mysql_error());
 
-	header( 'Location: http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/admin.php' ) ;
+	header( 'Location: ../Front-end/admin.php' ) ;
 	
   }
   // Si no los tenemos, volvemos a mostrar el form.

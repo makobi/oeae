@@ -12,7 +12,6 @@ FALTA MOSTRAR EL NOMBRE DE LAS RUBRICAS EN LA SELECCION. EL LOGRO ESPERADO TAMBI
 
 /*
 Revisado el 14 de marzo (Tahiri)
-
 Incluir query que permita escoger tambien de las Rubricas Locales. 
 */
 
@@ -61,10 +60,10 @@ $('form').submit(function() {
   var rub_id = data[1].value;
   var logro_esperado = data[2].value;
 
-  var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/add.php?nombre_act='+nombre_act+'&rub_id='+rub_id+'&logro_esperado='+logro_esperado;
+  var url = '../Scripts/add.php?nombre_act='+nombre_act+'&rub_id='+rub_id+'&logro_esperado='+logro_esperado;
 
   $.get(url, function(res) {
- 	window.location.replace('http://ada.uprrp.edu/~chrodriguez/oeae/Front-end/no-index.php');
+ 	window.location.replace('../Front-end/no-index.php');
   })
 
   return false;

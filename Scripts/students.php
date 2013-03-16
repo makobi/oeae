@@ -173,7 +173,7 @@ $content = $content."</tbody>
 
 			$('#students a').on('click', function() {
 				var course = $(this).attr('id');
-				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/students.php?course_id='+course;
+				var url = '../Scripts/students.php?course_id='+course;
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)
@@ -185,7 +185,7 @@ $content = $content."</tbody>
 
 				var data = $(this).serialize();
 				
-				var url = 'http://ada.uprrp.edu/~chrodriguez/oeae/Scripts/addeval.php?'+data
+				var url = '../Scripts/addeval.php?'+data
 
 				$.get(url, function(html) {
 					alert(html)
