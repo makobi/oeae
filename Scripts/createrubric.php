@@ -70,19 +70,22 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 
 	echo "
 		<div id = 'content'>
-	
+		<center>
 			<form name='nueva_rub' action='".$me."' method='POST' 
-			onSubmit = 'checkform()'>
+			onSubmit = 'checkform()' class='form-inline'>
 			<div><br>
-			Rubric Name: <input type = 'text' name = 'rname'><br>";
+			Rubric Name: <input type = 'text' name = 'rname'><br><br>";
 
 	for ($i = 0; $i < mysql_num_rows($query); $i++) {
-		echo "<input type='checkbox' name='cr' value=".$idscriterios[$i].">".$criterios[$i]."<br>";
+		echo "<label class='checkbox inline'>
+			<input type='checkbox' name='cr' value=".$idscriterios[$i].">".$criterios[$i]."
+			</label>";
 	}
-	echo"
+	echo"<br><br>
 		<button type='submit' value='create'>Create!
 			<br></div>
 			</form>
+			</center>
 		</div>
 		";
 

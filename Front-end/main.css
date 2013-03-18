@@ -512,3 +512,6 @@ padding-left: 60px;
 }
 
 
+#checkboxes input{
+	float: left;
+}

@@ -66,9 +66,9 @@ if($_SESSION['nombre_prof']!='Administrador') {
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Create Rubric</p>
 					</div></a>
-					<a href="#" ><div class="secction"> 
+					<a href="#" class="addcrit"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Option Name Here</p>
+						<p>Add Criterio</p>
 					</div></a>
 					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
