@@ -24,15 +24,20 @@ if ($db) {
 $nombre_act = $_GET['nombre_act'];
 $rub_id = $_GET['rub_id'];
 $logro_esperado = $_GET['logro_esperado'];
+$estudiantes_logro = $_GET['estudiantes_logro'];
 
 
 // Insert query
 //$actividad = "INSERT INTO Actividades (nombre_act, rub_id, logro_esperado) values ('$nombre_act', '$rub_id', '$logro_esperado')";
 
 
-$actividad = "INSERT INTO Actividades (nombre_act, rublocal_id, logro_esperado) values ('$nombre_act', '$rub_id', '$logro_esperado')";
+$actividad = "INSERT INTO Actividades (nombre_act, rublocal_id, logro_esperado, estudiantes_logro) values ('$nombre_act', '$rub_id', '$logro_esperado', '$estudiantes_logro')";
 
-mysql_query($actividad);
+if(mysql_query($actividad)) {
+	echo "Se creo la actividad!";
+}else {
+	echo "No se creo la actividad!";
+}
 
 $newactivity = mysql_query("SELECT act_id from Actividades where nombre_act='$nombre_act'");
 
