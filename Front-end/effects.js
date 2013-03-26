@@ -82,6 +82,15 @@ $(document).ready(function() {
 		})
 	});
 
+	// Crear Criterio (admin only)
+	$(".editcrit").on("click", function() {
+		url = "../Scripts/editcriterio.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 });
 
 

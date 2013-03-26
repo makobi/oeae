@@ -46,7 +46,7 @@ $profpass = md5($profpass);
 
 // Insert Profesor data to the Database
 if (mysql_query("INSERT INTO Profesores (nombre_prof, email, passwd, dpto_prof, fac_prof) values ('$profname', '$profemail', '$profpass', '$profdept', '$proffaculty')")) {
-  //echo "Salio el query";
+  echo "Salio el query";
  // $email = new HttpRequest('https://sendgrid.com/api/mail.send.json?api_user=christian.rodriguez35@upr.edu&api_key=emmyNoether&to=christian.etpr10@gmail.com&toname=Christian&subject=New Profesor&text=SeCreoUnProfNew&from=christian.rodriguez35@upr.edu', HttpRequest::METH_GET);
  // $email->send();
 } else {
