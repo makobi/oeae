@@ -33,7 +33,8 @@ echo "<div id='content'>
 			console.log(data);
 
 		$.get(url, function(html) {
-				alert('Professor in Database. Password: '+html)
+				alert('Professor in Database. Password: '+html);
+				window.location.replace('./admin.php');
 			})
 
 		return false;

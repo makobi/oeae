@@ -5,13 +5,12 @@ Christian A. Rodriguez Encarnacion
 Este script se activa cuando el profesor desea añadir una actividad. Contiene una forma que le permite
 al profesor someter los credenciales de la actividad.
 
-FALTA MOSTRAR EL NOMBRE DE LAS RUBRICAS EN LA SELECCION. EL LOGRO ESPERADO TAMBIEN ESTA MEDIO ALGARETE.
-
-Revisado el 14 de marzo (Tahiri)
-Incluir query que permita escoger tambien de las Rubricas Locales.
-Esto debe redirigir al home de la actividad.
 */
 
+/*
+Revisado el 14 de marzo (Tahiri)
+Incluir query que permita escoger tambien de las Rubricas Locales. 
+*/
 
 session_start();
 
@@ -27,24 +26,30 @@ if ($db) {
 }
 
 // Select the distinct Rubrics from the database
-$query = mysql_query("SELECT distinct rub_id FROM Rubricas");
- 
+$query = mysql_query("SELECT rublocal_id, nombre_rub FROM NombresRubricasLocal");
+$cursoquery = mysql_query("SELECT nombre_curso FROM Cursos where curso_id=".$_SESSION['curso_id']);
+
+$curso = mysql_fetch_array($cursoquery);
+
 $output = "
 <div id='content'>
 <center>
+<h2>Crear Actividad: ".$curso[0]."</h2>
 <form>
-	Nombre de la Actividad (Sin espacios por ahora): <br>
+	Nombre de la Actividad: <br>
 	<input type='text' name='nombre_act'> <br>
 	Seleccione Rubrica para la actividad <br>
 	<select name='rub_id'>";
 
 while ($row = mysql_fetch_array($query)) {
-		$output = $output."<option>".strval($row[0])."</option><br>";
+		$output = $output."<option value='".$row[0]."'>".$row[1]."</option><br>";
 	} 
 
 $output = $output."</select> <br>
 	Logro Esperado (1-100) <br>
 	<input type='text' name='logro_esperado'> <br>
+	Procentaje de Estudiantes (1-100) <br>
+	<input type='text' name='estudiantes_logro'> <br>
 	<input type='Submit' value='Crear Actividad'>
 </form>
 </center>
@@ -57,10 +62,12 @@ $('form').submit(function() {
   var nombre_act = data[0].value;
   var rub_id = data[1].value;
   var logro_esperado = data[2].value;
+  var estudiantes_logro = data[3].value;
 
-  var url = '../Scripts/add.php?nombre_act='+nombre_act+'&rub_id='+rub_id+'&logro_esperado='+logro_esperado;
+  var url = '../Scripts/add.php?nombre_act='+nombre_act+'&rub_id='+rub_id+'&logro_esperado='+logro_esperado+'&estudiantes_logro='+estudiantes_logro;
 
   $.get(url, function(res) {
+  	alert(res);
  	window.location.replace('../Front-end/no-index.php');
   })
 

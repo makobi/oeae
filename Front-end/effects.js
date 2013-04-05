@@ -1,5 +1,3 @@
-
-
 $(document).ready(function() {
 
 	var h = $(window).height(); 
@@ -15,7 +13,7 @@ $(document).ready(function() {
 		    //-webkit-box-flex: 0,
 		    width: 'toggle',
 		  }, 500, function() {
-		  			
+
 		    // Animation complete.
  		});
 
@@ -46,7 +44,7 @@ $(document).ready(function() {
 	// Crear una actividad nueva
 	$(".newactivity").on("click", function() {
 		var curso_id = $(this).prev().attr("id");
-		
+
 		var url= "../Scripts/activity.php?curso_id="+curso_id ;
 
 		$.get(url, function(html) {
@@ -55,7 +53,7 @@ $(document).ready(function() {
 		})
 	});
 
-	// Anadir profesor(admin only)
+	// Añadir profesor(admin only)
 	$(".prof").on("click", function() {
 		url = "../Scripts/prof.php";
 		$.get(url, function(html) {
@@ -73,6 +71,24 @@ $(document).ready(function() {
 		})
 	});
 
+	// Crear Criterio (admin only)
+	$(".addcrit").on("click", function() {
+		url = "../Scripts/createcriterio.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
+	// Crear Criterio (admin only)
+	$(".editcrit").on("click", function() {
+		url = "../Scripts/editcriterio.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 	// Rubric Database
 	$("#rdb").on("click", function() {
 		url = "../Scripts/rubricdatabase.php";
@@ -81,15 +97,7 @@ $(document).ready(function() {
 			$("#content").replaceWith(html)
 		})
 	});
-/*
-	$('a').bind('click',function(event){
-	09.
-	event.preventDefault();
-	10.
-	$.get(this.href,{},function(response){
-	11.
-	$('#response').html(response)
-*/
+
 	// View Rubric from database
 	$("#viewrubric").on("click", function(event) {
 		event.preventDefault();
@@ -98,7 +106,5 @@ $(document).ready(function() {
 			$("#content").replaceWith(html)
 		})
 	});
-});
 
-
- 
+}); 
