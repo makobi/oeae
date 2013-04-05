@@ -2,10 +2,11 @@
 /*
 Christian A. Rodriguez Encarnacion
 Este script se encarga de crear la actividad con los credenciales de
-activity.php. Todavia falta ver si hace falta insertar informacion en otros
-lugares que no sean la tabla Actividades.
+activity.php.
 
-Revisado el 14 de marzo (Tahiri): Query para DB version 2
+Updates:
+	- Se modifico queries para DB version 2.
+	- Se guarda copia de la rubrica en RubricaLocal.
 */
 
 session_start();
@@ -25,21 +26,40 @@ $nombre_act = $_GET['nombre_act'];
 $rub_id = $_GET['rub_id'];
 $logro_esperado = $_GET['logro_esperado'];
 
+// Query to create an activity
+$actividad = mysql_query("INSERT INTO Actividades (nombre_act, rublocal_id, logro_esperado) values
+	('$nombre_act', '$rub_id','$logro_esperado')") or die(mysql_error());
 
-// Insert query
-//$actividad = "INSERT INTO Actividades (nombre_act, rub_id, logro_esperado) values ('$nombre_act', '$rub_id', '$logro_esperado')";
+// Query to fetch the act_id
+$newactivity = mysql_query("SELECT act_id from Actividades where nombre_act='$nombre_act'")
+	or die(mysql_error());
+$res = mysql_fetch_array($newactivity);
+$act_id = $res["act_id"];
 
+//$_SESSION['act_id'] = $act_id;
 
-$actividad = "INSERT INTO Actividades (nombre_act, rublocal_id, logro_esperado) values ('$nombre_act', '$rub_id', '$logro_esperado')";
+// Query to relate the activity to a course
+$curso = mysql_query("INSERT INTO ActividadesCurso (act_id, curso_id) values ('$act_id',
+	'$_SESSION[curso_id]')") or die (mysql_error());
 
-mysql_query($actividad);
+// Fetch the rubric from Rubricas and save it in RubricaLocal
+$query1 = mysql_query("SELECT crit_id FROM Rubricas WHERE rub_id='$rub_id'")
+	or die(mysql_error());
 
-$newactivity = mysql_query("SELECT act_id from Actividades where nombre_act='$nombre_act'");
+if (mysql_num_rows($query1) > 0) {
+	$cids = array();
+	while ($result = mysql_fetch_array($query1)) {
+		$cids[] = $result['crit_id'];	
+	}
+}
 
-$act_id = mysql_fetch_array($newactivity);
+$query2 = mysql_query("SELECT MAX(rublocal_id) AS ultima FROM RubricaLocal;") 
+	or die (mysql_error());
+	$result = mysql_fetch_array($query2);
+	$newrid = $result["ultima"] + 1;
 
-$curso = "INSERT INTO ActividadesCurso (act_id, curso_id) values (".intval($act_id[0]).",'$_SESSION[curso_id]')";
-
-mysql_query($curso);
-
- ?>
+foreach ($cids as $cid) {
+	$query3 = mysql_query("INSERT INTO RubricaLocal (rublocal_id, crit_id, prof_id) 
+		VALUES ('$newrid','$cid','$_SESSION[prof_id]')") or die (mysql_error());
+}
+?>

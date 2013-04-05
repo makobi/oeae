@@ -26,8 +26,8 @@ if ($db) {
 $curso_id = $_SESSION['course_id'];
 
 // Select students query
-$studentquery = "SELECT nombre_est, est_id FROM Estudiantes natural join Matricula where curso_id=$curso_id";
-$students = mysql_query($studentquery);
+$students = mysql_query("SELECT nombre_est, est_id FROM Estudiantes natural join Matricula where curso_id = 
+	'$curso_id'") or die(mysql_error());
 
 // Generar Rubrica
 		$aid = $_SESSION['act_id'];
@@ -112,7 +112,7 @@ while ($row = mysql_fetch_array($students)) {
 	// Primero el nombre del estudiante
 	$content = $content."<tr> <!-- Begins row -->
 										<td>
-											<p>$row[0]</p>
+											<p>$row['nombre_est']</p>
 										</td>";
 
 	for ($i=0; $i < $crit_qty; $i++) { 

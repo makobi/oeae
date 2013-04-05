@@ -55,7 +55,7 @@ $(document).ready(function() {
 		})
 	});
 
-	// Añadir profesor(admin only)
+	// Anadir profesor(admin only)
 	$(".prof").on("click", function() {
 		url = "../Scripts/prof.php";
 		$.get(url, function(html) {
@@ -73,6 +73,31 @@ $(document).ready(function() {
 		})
 	});
 
+	// Rubric Database
+	$("#rdb").on("click", function() {
+		url = "../Scripts/rubricdatabase.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+/*
+	$('a').bind('click',function(event){
+	09.
+	event.preventDefault();
+	10.
+	$.get(this.href,{},function(response){
+	11.
+	$('#response').html(response)
+*/
+	// View Rubric from database
+	$("#viewrubric").on("click", function(event) {
+		event.preventDefault();
+		$.get(this.href,{}, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
 });
 
 

@@ -10,12 +10,11 @@ $password       = 'oeaeavaluo2013';
 $database       = 'Avaluo';
 $link           = mysql_connect($server, $user, $password);
 
-//session_start();
 
 if ($link) {
 	mysql_select_db("Avaluo");
 } else {
-	echo "no salio";
+	echo "Access Denied!";
 	exit();
 }
 	
@@ -34,10 +33,10 @@ echo"<div id='content'> <center>
 	<p> Rubric Database
 	<p> Choose one of the rubrics:<br>";
 
-// 
 
 for ($i = 0; $i < mysql_num_rows($query); $i++) {
-echo"<link href= '../Scripts/view_rubric.php?rub_id=".$rubids[$i]."'>".$nombresrubricas[$i]."</a><br>"; 
+	echo"<a href= '../Scripts/view_rubric.php?rub_id=".$rubids[$i]."'>".$nombresrubricas[$i]."</a><br>"
+		."<div id='viewrubric'></div>"; 
 }
 // Boton de create rubric
 /*
@@ -45,7 +44,7 @@ echo"</p>
 
 	<form action='createrubric.php'>
 		<button type='submit' value='Create Rubric'>Create Rubric
-	</form>
+	</form> 
 */
 echo "
 	 </center></div>";

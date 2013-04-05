@@ -7,13 +7,11 @@ al profesor someter los credenciales de la actividad.
 
 FALTA MOSTRAR EL NOMBRE DE LAS RUBRICAS EN LA SELECCION. EL LOGRO ESPERADO TAMBIEN ESTA MEDIO ALGARETE.
 
-
-*/
-
-/*
 Revisado el 14 de marzo (Tahiri)
-Incluir query que permita escoger tambien de las Rubricas Locales. 
+Incluir query que permita escoger tambien de las Rubricas Locales.
+Esto debe redirigir al home de la actividad.
 */
+
 
 session_start();
 
@@ -29,7 +27,7 @@ if ($db) {
 }
 
 // Select the distinct Rubrics from the database
-$query = mysql_query("SELECT distinct rublocal_id FROM RubricaLocal");
+$query = mysql_query("SELECT distinct rub_id FROM Rubricas");
  
 $output = "
 <div id='content'>

@@ -3,7 +3,7 @@
 Tahiri Laboy De Jesus
 Archivo que trabaja los queries para ver una rubrica.
 
-Recibe el id de la actividad.
+Recibe el id de la rubrica.
 Devuelve los criterios de la rubrica y la informacion para cada escala.
 (La escala va del 1 a 8).
 ***************************************************************************************************/
@@ -14,18 +14,19 @@ $password       = 'oeaeavaluo2013';
 $database       = 'Avaluo';
 $link           = mysql_connect($server, $user, $password);
 
-//if (isset($_POST['rub_id'])) {
+if (isset($_GET['rub_id'])) {
 	if ($link) {
 		if(mysql_select_db($database)) {
 
-		$rid = 1;//$_POST['rub_id'];
+		$rid = $_GET['rub_id'];
 
 		// Busco el id de los criterios asociados a esa rubrica
 		$query1 = mysql_query("SELECT crit_id FROM Rubricas WHERE rub_id = '$rid'")
 					or die(mysql_error());
 
+		$crit_qty = mysql_num_rows($query1);
 		// Verifica que hayan resultados
-		if (mysql_num_rows($query1) > 0) {
+		if ($crit_qty > 0) {
 			$cids = array();
 			while ($result = mysql_fetch_array($query1)) {
 				$cids[] = $result["crit_id"];
@@ -54,23 +55,46 @@ $link           = mysql_connect($server, $user, $password);
 				}
 			}
 	
-			// Print Array desc
-			foreach ($descripcion as $critid => $descs) {
-			    foreach ($descs as $desc) {
-			        echo "Crit_id: {$critid}, desc: {$desc}\n";
-    }
-}
-		}
-	
-		
+			// Nombre de la rubrica
+			$query = mysql_query("SELECT nombre_rub FROM NombresRubricas WHERE rub_id = '$rid';")
+					or die(mysql_error());
+			$result = mysql_fetch_array($query);
 
+// Aqui se comienza a generar la tabla de la rubrica
+$table="<div id='content'><center>
+			<h1>".$result['nombre_rub']."</h1>
+				<table id='rubrica'><tr>
+				<td>  </td>
+				<td>1-2</td>
+				<td>3-4</td>
+				<td>5-6</td>
+				<td>7-8</td>
+			  </tr>";
+
+// Cada fila de la rubrica representa un criterio
+for ($i=0; $i < $crit_qty; $i++) {
+		$table=$table."<tr>
+				<td><p>".$criterios[$cids[$i]]."</p>
+				</td>
+				<td>".$descripcion[$cids[$i]][2]."</td>
+				<td>".$descripcion[$cids[$i]][4]."</td>
+				<td>".$descripcion[$cids[$i]][6]."</td>
+				<td>".$descripcion[$cids[$i]][8]."</td>
+			  </tr>
+			</table>
+						</center> 	</div>";
+}
+
+echo $table;
+}
+	
 		else echo "Rubric does not exist!";
 		
 		} // Termina el if select database
 
 	} // Termina if link al servidor
 
-//} // Termina el if rub_id isset
+} // Termina el if rub_id isset
 
 else { // Si no recibo el id de rubrica
 	echo "Access Denied"; 
