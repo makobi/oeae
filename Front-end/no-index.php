@@ -143,11 +143,11 @@ $cursos = mysql_query($cursosquery);
 					</ul>
 				</div>
 				<div class="title"> <p>Options</p></div>
-				<div class="secction1"> 
-					<a href="#" ><div class="secction"> 
+				<div class="secction1">
+					<a href="#" id="rdb"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Option Name Here</p>
-					</div></a>
+						<p>Rubric Database</p>
+					</div></a> 
 					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Option Name Here</p>

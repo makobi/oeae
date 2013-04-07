@@ -4,19 +4,33 @@
 	Script para ver todas las rubricas
 */
 
+/* Parametros para conexion a la base de datos */
 $server         = 'localhost';
 $user           = 'nosotros';
 $password       = 'oeaeavaluo2013';
 $database       = 'Avaluo';
 $link           = mysql_connect($server, $user, $password);
 
-
+/* Se intenta la conexion, de ser infructuosa se deniega el acceso. */
 if ($link) {
 	mysql_select_db("Avaluo");
 } else {
 	echo "Access Denied!";
 	exit();
 }
+
+// Funciones en JS
+/* ViewRubric(rubricID) - Muestra la rubrica seleccionada por el usuario
+   invocando el script view_rubric.php */
+echo "<script type='text/javascript'>
+		function ViewRubric(rubricID) {
+			url = '../Scripts/view_rubric.php?rub_id='+rubricID;
+			$.get(url, function(html) {
+				$('#content').hide()
+				$('#content').replaceWith(html)
+			})
+		}
+	  </script>";
 	
 $nombresrubricas = array();
 
@@ -28,24 +42,16 @@ while($result = mysql_fetch_array($query)) {
 	$rubids[] = $result["rub_id"];
 }
 
-// Desplegar
+// Se comienza a desplegar el contenido
 echo"<div id='content'> <center>
 	<p> Rubric Database
 	<p> Choose one of the rubrics:<br>";
 
-
+// Se muestran enlaces a todas las rubricas en la base de datos
 for ($i = 0; $i < mysql_num_rows($query); $i++) {
-	echo"<a href= '../Scripts/view_rubric.php?rub_id=".$rubids[$i]."'>".$nombresrubricas[$i]."</a><br>"
-		."<div id='viewrubric'></div>"; 
+	echo "<a href='#' onClick='ViewRubric(".$rubids[$i].")'>".$nombresrubricas[$i]."</a><br>";
 }
-// Boton de create rubric
-/*
-echo"</p>
 
-	<form action='createrubric.php'>
-		<button type='submit' value='Create Rubric'>Create Rubric
-	</form> 
-*/
 echo "
 	 </center></div>";
 ?>

@@ -30,9 +30,7 @@ if (isset($_GET['rub_id'])) {
 			$cids = array();
 			while ($result = mysql_fetch_array($query1)) {
 				$cids[] = $result["crit_id"];
-			} 
-			
-			//print_r($cids);		
+			} 		
 
 			$criterios = array();
 			foreach ($cids as $cid) {
@@ -46,8 +44,10 @@ if (isset($_GET['rub_id'])) {
 			$descripcion = array(array());
 			$valor = array();
 
+			// Se generan las descripciones para cada escala del criterio
 			foreach ($cids as $cid) {
-				$query3 = mysql_query("SELECT descripcion, valor FROM EscalaCriterio WHERE crit_id = $cid ORDER BY valor;")
+				$query3 = mysql_query("SELECT descripcion, valor FROM EscalaCriterio
+						WHERE crit_id = $cid ORDER BY valor;")
 						or die(mysql_error());
 				while ($result = mysql_fetch_array($query3)) {
 					$valor = $result["valor"];
@@ -60,16 +60,28 @@ if (isset($_GET['rub_id'])) {
 					or die(mysql_error());
 			$result = mysql_fetch_array($query);
 
+// Funciones en JS
+/* ReturnToRubricsDB - Permite volver al banco de Rubricas */
+echo "<script type='text/javascript'>
+		function ReturnToRubricsDB() {
+			url = '../Scripts/rubricdatabase.php';
+			$.get(url, function(html) {
+				$('#content').hide()
+				$('#content').replaceWith(html)
+			})
+		}
+	  </script>";
+
 // Aqui se comienza a generar la tabla de la rubrica
 $table="<div id='content'><center>
 			<h1>".$result['nombre_rub']."</h1>
-				<table id='rubrica'><tr>
+			<table id='rubrica'><tr>
 				<td>  </td>
 				<td>1-2</td>
 				<td>3-4</td>
 				<td>5-6</td>
 				<td>7-8</td>
-			  </tr>";
+				</tr>";
 
 // Cada fila de la rubrica representa un criterio
 for ($i=0; $i < $crit_qty; $i++) {
@@ -80,15 +92,18 @@ for ($i=0; $i < $crit_qty; $i++) {
 				<td>".$descripcion[$cids[$i]][4]."</td>
 				<td>".$descripcion[$cids[$i]][6]."</td>
 				<td>".$descripcion[$cids[$i]][8]."</td>
-			  </tr>
+				</tr>
 			</table>
-						</center> 	</div>";
+			<a href='#' onClick='ReturnToRubricsDB()'>Return to Rubric Database</a><br>
+		</center></div>";
 }
 
 echo $table;
 }
 	
-		else echo "Rubric does not exist!";
+		else echo "<div id='content'><center>
+					Rubric does not exist!
+					</center></div>";
 		
 		} // Termina el if select database
 
@@ -97,6 +112,6 @@ echo $table;
 } // Termina el if rub_id isset
 
 else { // Si no recibo el id de rubrica
-	echo "Access Denied"; 
+	echo "Access Denied!"; 
 }
 ?>

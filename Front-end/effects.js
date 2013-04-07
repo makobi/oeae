@@ -99,12 +99,12 @@ $(document).ready(function() {
 	});
 
 	// View Rubric from database
-	$("#viewrubric").on("click", function(event) {
+/*	$("#viewrubric").on("click", function(event) {
 		event.preventDefault();
 		$.get(this.href,{}, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)
 		})
 	});
-
+*/
 }); 
