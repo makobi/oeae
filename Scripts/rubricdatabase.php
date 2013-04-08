@@ -22,7 +22,7 @@ if ($link) {
 // Funciones en JS
 /* ViewRubric(rubricID) - Muestra la rubrica seleccionada por el usuario
    invocando el script view_rubric.php */
-echo "<script type='text/javascript'>
+$content = "<script type='text/javascript'>
 		function ViewRubric(rubricID) {
 			url = '../Scripts/view_rubric.php?rub_id='+rubricID;
 			$.get(url, function(html) {
@@ -43,15 +43,17 @@ while($result = mysql_fetch_array($query)) {
 }
 
 // Se comienza a desplegar el contenido
-echo"<div id='content'> <center>
+$content = $content."<div id='content'> <center>
 	<p> Rubric Database
 	<p> Choose one of the rubrics:<br>";
 
 // Se muestran enlaces a todas las rubricas en la base de datos
 for ($i = 0; $i < mysql_num_rows($query); $i++) {
-	echo "<a href='#' onClick='ViewRubric(".$rubids[$i].")'>".$nombresrubricas[$i]."</a><br>";
+	$content = $content. "<a href='#' onClick='ViewRubric(".$rubids[$i].")'>".$nombresrubricas[$i]."</a><br>";
 }
 
-echo "
+$content = $content. "
 	 </center></div>";
+
+echo $content;
 ?>

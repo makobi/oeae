@@ -34,7 +34,7 @@ while($result = mysql_fetch_array($query)) {
 }
 
 // Funcion para validar que el form no se someta en blanco
-echo "<script type='text/javascript'>
+$content = "<script type='text/javascript'>
 			function validateCheckBoxes() {
 		        var isValid = false; 
         		var allRows = document.getElementsByTagName('input');
@@ -68,26 +68,59 @@ echo "<script type='text/javascript'>
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$me = $_SERVER['PHP_SELF'];
 
-	echo "
+	$content = $content. "
 		<div id = 'content'>
 		<center>
 			<form name='nueva_rub' action='".$me."' method='POST' 
-			onSubmit = 'checkform()' class='form-inline'>
+			onSubmit = 'checkform()' class='form'>
 			<div><br>
-			Rubric Name: <input type = 'text' name = 'rname'><br><br>";
+			<table>
+			<tr>
+			<td>			
+			<p><strong>Indique el nombre de la rubrica y seleccione los criterios que desea tener</strong></p>
+			</td>
+			</tr>
+			<tr>
+			<td>
+			Rubric Name: <input type = 'text' name = 'rname'><br><br>
+			Criterio - Dominios(s)
+			<br><br>
+			</td>
+			</tr>";
 
 	for ($i = 0; $i < mysql_num_rows($query); $i++) {
-		echo "<label class='checkbox inline'>
-			<input type='checkbox' name='cr' value=".$idscriterios[$i].">".$criterios[$i]."
-			</label>";
+		$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$i])
+				or die(mysql_error());
+
+		$content = $content. "<tr>
+			<td>
+			<label class='checkbox'>
+			<input type='checkbox' name='cr' value=".$idscriterios[$i].">".$criterios[$i]." -";
+
+			$doms = "";
+		while ($row = mysql_fetch_array($domquery)) {
+			$doms = $doms." ".$row[0].",";
+		}
+
+		$content = $content.rtrim($doms,",");
+		$content = $content	."
+			</label>
+			</tr>
+			</td>";
 	}
-	echo"<br><br>
+	$content = $content."<br><br>
+			<tr>
+			<td>
 		<button type='submit' value='create'>Create!
+		</tr>
+			</td>
+		</table>
 			<br></div>
 			</form>
 			</center>
 		</div>
 		";
+echo $content;
 
 }
 // Una vez se ha sometido la peticion
@@ -108,6 +141,12 @@ else {
 	$result = mysql_fetch_array($query);
 	$newrid = $result["ultima"] + 1;
 
+	// Guardo nombre de la rubrica
+	$query = mysql_query("INSERT INTO NombresRubricas(rub_id, nombre_rub)
+		VALUES('$newrid','$rname');") or die (mysql_error());
+
+	header( 'Location: ../Front-end/admin.php' ) ;
+	
 	// Guardo la nueva rubrica
 	foreach ($crits as $cid) {
 		$query = mysql_query("INSERT INTO Rubricas(rub_id,crit_id) VALUES
@@ -115,18 +154,17 @@ else {
 			or die (mysql_error());
 	}
 
-	// Guardo nombre de la rubrica
-	$query = mysql_query("INSERT INTO NombresRubricas(rub_id, nombre_rub)
-		VALUES('$newrid','$rname');") or die (mysql_error());
 
-	header( 'Location: ../Front-end/admin.php' ) ;
 	
   }
   // Si no los tenemos, volvemos a mostrar el form.
   else {
 		$me = $_SERVER['PHP_SELF'];
-	
-		echo "
+		
+		// Arregle temporero al error de los credenciales vacio
+		header( 'Location: ../Front-end/admin.php' ) ;
+
+		$content = $content. "
 			<div id = 'content'>
 	
 				<form name='nueva_rub' action='".$me."' method='POST' 
@@ -135,14 +173,15 @@ else {
 				Rubric Name: <input type = 'text' name = 'rname'><br>";
 		
 		for ($i = 0; $i < mysql_num_rows($query); $i++) {
-			echo "<input type='checkbox' name='cr' value=".$idscriterios[$i].">".$criterios[$i]."<br>";
+			$content = $content. "<input type='checkbox' name='cr' value=".$idscriterios[$i].">".$criterios[$i]."<br>";
 		}
-		echo"
+		$content = $content."
 				<button type='submit' value='create'>Create!
 				<br></div>
 				</form>
 			</div>
 		";
+		echo $content;
   }
 }
 

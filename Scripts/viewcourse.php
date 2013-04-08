@@ -110,9 +110,13 @@ $table=				'<div id="content"><center>
 				</table>';
 
 // Aqui se comienza a generar la tabla de la rubrica
-$table=$table." <h1>".$_SESSION['nombre_act']."</h1>
+$table=$table." <h1>".$_SESSION['nombre_act']."
+				<form name='delete'>
+				<input type='submit' value='Eliminar Actividad' class='btn btn-danger'>
+				</form>
+				</h1>
 							<table id='rubrica'><tr>
-				<form>
+				<form name='edit'>
 				<td><input type='submit' value='Editar' class='btn btn-primary'></td>
 				</form>
 				<td>1-2</td>
@@ -147,12 +151,23 @@ echo $table."</table>
 				})
 			});
 
-			$('form').submit( function() {
+			$('form[name=edit]').submit( function() {
 				var url = '../Scripts/editrubric.php';
 
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)
+				})
+
+				return false;
+			});
+
+			$('form[name=delete]').submit( function() {
+				var url = '../Scripts/deleteactivity.php';
+
+				$.get(url, function(res) {
+					alert(res);
+					window.location.replace('./no-index.php');
 				})
 
 				return false;

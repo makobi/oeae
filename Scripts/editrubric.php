@@ -112,7 +112,7 @@ $table=				'<div id="content"><center>
 				</table>';
 
 // Aqui se comienza a generar la tabla de la rubrica
-$table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
+$table=$table." <h1>".$_SESSION['nombre_act']."</h1>
 							<form>
 							<table id='rubrica'><tr>
 				<td><input type='submit' value='Someter' class='btn btn-primary'></td>
