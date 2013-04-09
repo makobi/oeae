@@ -86,21 +86,18 @@ $table=				'<div id="content"><center>
 					<ul class="thumbnails">
 					  <li id="displayrubric">
 					    <a href="#" class="thumbnail">
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://renewable.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Rubrics</h3>
+					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>
 					   <li id="thumb2">
 					    <a href="#" class="thumbnail" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Graphs</h3>
+					    	<h3>Results</h3>
 					     </a>
 					  </li>
 
 					  <li id="students">
 					    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://ccom.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Students</h3>
+					    	<h3>Students</h3>
 					     </a>
 					  </li>
 					  

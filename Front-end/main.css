@@ -137,6 +137,7 @@ font-size: 18px;
 	border-right:1px solid black;
 	border-bottom:1px solid black;
 	box-shadow: 1px 1px 1px #888888;
+	height: 100%;
 }
 
 #nav_drop a{
