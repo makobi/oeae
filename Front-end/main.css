@@ -401,6 +401,8 @@ font-size: 18px;
 	display:-moz-box;
 	-moz-box-orient: vertical;
 	-moz-box-flex: 1;
+
+	height: 100%;
 }
 
 #top_main{
