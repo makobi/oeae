@@ -4,6 +4,8 @@
 	Script para ver todas las rubricas
 */
 
+session_start();
+
 /* Parametros para conexion a la base de datos */
 $server         = 'localhost';
 $user           = 'nosotros';

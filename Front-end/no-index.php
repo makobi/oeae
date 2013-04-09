@@ -148,9 +148,9 @@ $cursos = mysql_query($cursosquery);
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Rubric Database</p>
 					</div></a> 
-					<a href="#" ><div class="secction"> 
+					<a href="#" id="create"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Option Name Here</p>
+						<p>Create Rubric</p>
 					</div></a>
 					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
