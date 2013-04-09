@@ -90,7 +90,7 @@ $table = '<div id="content"><center>
 					  </li>
 					   <li id="thumb2">
 					    <a href="#" class="thumbnail" >
-					    	<h3>Graphs</h3>
+					    	<h3>Results</h3>
 					     </a>
 					  </li>
 
