@@ -111,7 +111,7 @@ $cursos = mysql_query($cursosquery);
 								<a href='#' id='".$row[2]."' onclick='abrir_cerrar($row[1]);'>
 									<div class='secction'> 
 										<div id='addactivity'><img src='class_img.jpg' id='effect'>
-											<p>".$row[0]." ".$row[1]."</p>
+											<p>".$row[1]."</p>
 											<a href='#' class='newactivity'><img class='add' src='add.png' width='10' height='10'></a>
 										</div>
 									</div>
