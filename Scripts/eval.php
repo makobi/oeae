@@ -84,7 +84,7 @@ $table = '<div id="content"><center>
 							<td>
 					<ul class="thumbnails">
 					  <li id="displayrubric">
-					    <a href="#" class="thumbnail">
+					    <a href="#" class="actividades">
 					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://renewable.uprrp.edu" alt="Captured by webthumbnail.org" />
 							<h3>Rubrics</h3>
 					     </a>
