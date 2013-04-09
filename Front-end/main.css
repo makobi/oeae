@@ -401,6 +401,8 @@ font-size: 18px;
 	display:-moz-box;
 	-moz-box-orient: vertical;
 	-moz-box-flex: 1;
+
+	height: 100%;
 }
 
 #top_main{
@@ -492,7 +494,7 @@ overflow-x:scroll;
 }
 
 #rubrica {
-margin: 10px;
+margin: 15px;
 	text-align: center;
 	border:1px solid blue;
 }
@@ -501,10 +503,10 @@ margin: 10px;
 
 
 border:1px solid blue;
-padding-top: 50px;
-padding-bottom: 50px;
-padding-right: 60px;
-padding-left: 60px; 
+padding-top: 10px;
+padding-bottom: 10px;
+padding-right: 15px;
+padding-left: 15px; 
 }
 
 #thumb0 {

@@ -5,7 +5,7 @@ session_start();
 // Connect to the Database
 $db = mysql_connect("localhost","nosotros","oeaeavaluo2013");
 
-// Choose the database 'Avaluo'
+// Choose the database 'Avaluo' 
 if ($db) {
   mysql_select_db("Avaluo");
 } else {
