@@ -34,14 +34,12 @@ body{
 
 #logout{
 
-	position: absolute;
 	text-decoration: none;
 	font-family: helvetica;
 	font-weight: bold;
 	color: gray;
 	font-size: 22px;
-	left:90%;
-	bottom: 91.5%	
+
 
 }
 
