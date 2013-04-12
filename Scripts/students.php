@@ -1,5 +1,5 @@
 <?php 
-
+ 
 /*
 Christian A. Rodriguez Encarnacion
 
@@ -62,7 +62,7 @@ $content='
 							<td>
 					<ul class="thumbnails">
 					  <li id="thumb1">
-					    <a href="#" class="thumbnail" >
+					    <a href="#" class="actividades" >
 					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>

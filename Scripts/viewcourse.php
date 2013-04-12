@@ -85,7 +85,7 @@ $table=				'<div id="content"><center>
 							<td>
 					<ul class="thumbnails">
 					  <li id="displayrubric">
-					    <a href="#" class="thumbnail">
+					    <a href="#" class="actividades">
 					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>

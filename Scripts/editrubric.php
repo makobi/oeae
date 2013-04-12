@@ -1,4 +1,4 @@
-<?php 
+<?php  
 
 /*
 Christian A. Rodriguez Encarnacion
@@ -82,12 +82,12 @@ $nombre_crit = mysql_query($criteriosquery);
 
 // Primero se despliegan los 3 thumbnails
 $table=				'<div id="content"><center>
-					<table id="thumb0">
+					<table id="thumb0" >
 						<tr>
 							<td>
 					<ul class="thumbnails">
 					  <li id="displayrubric">
-					    <a href="#" class="thumbnail">
+					    <a href="#" class="actividades">
 					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>
