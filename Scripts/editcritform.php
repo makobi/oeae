@@ -34,15 +34,15 @@ $output = " <div id='content'>
  	<center>
  		<h2>Create Criterio</h2>
  		<form>
- 			<h3>Nombre Criterio</h3> <br>
- 			<input type='text' name='nombre_crit' value='".$nombre_crit[0]."'> <br>";
+ 			<h4>Nombre Criterio</h4> 
+ 			<input type='text' name='nombre_crit' value='".$nombre_crit[0]."'> ";
 
  			while ($res = mysql_fetch_array($eval)) {
  				$output = $output."
- 				<h3>Comentario ".strval(intval($res['valor'])-1)."-".$res['valor']."</h3> <br>
- 			<textarea rows='4' name='comentario".$res['valor']."'>".$res['descripcion']."</textarea> <br>";
+ 				<h4>Comentario ".strval(intval($res['valor'])-1)."-".$res['valor']."</h4> 
+ 			<textarea rows='4' name='comentario".$res['valor']."'>".$res['descripcion']."</textarea> ";
  			}
- 			$output = $output."<h3>Dominios que pertenece</h3> <br>";
+ 			$output = $output."<h4>Dominios que pertenece</h4> ";
  			 
  			while ($row = mysql_fetch_array($domres)) {
  				$check = false;
@@ -62,8 +62,8 @@ $output = " <div id='content'>
 					</label>";
  				}
  			}
- 	$output = $output."	<br><br>
- 	<input type='submit' value='Someter Edición'>
+ 	$output = $output."	<br> <br>
+ 	<input type='submit' value='Someter Edición' class='btn btn-primary'>
  	</form>
  	</center>
  	<br>

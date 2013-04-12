@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	$content = $content."<br><br>
 			<tr>
 			<td>
-		<button type='submit' value='create'>Create!
+		<button type='submit' value='create' class='btn btn-primary'>Create!
 		</tr>
 			</td>
 		</table>
