@@ -72,10 +72,12 @@ $content='
 					     </a>
 					  </li>
 
-					  <li id="thumbnail">
-					    <a href="#" class="thumbnail" id="'.$curso_id[0].'" >
-					    	<h3>Students</h3>
-					     </a>
+					  <li id="students">
+					  	<div id="thumbnail">
+					    	<a href="#" class="thumbnail" id="'.$curso_id[0].'" >
+					    		<h3>Students</h3>
+					     	</a>
+					     </div>
 					  </li>
 					  
 					</ul>

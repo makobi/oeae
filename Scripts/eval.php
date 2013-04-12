@@ -94,10 +94,12 @@ $table = '<div id="content"><center>
 					     </a>
 					  </li>
 
-					  <li id="thumbnail">
-					    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
-					    	<h3>Students</h3>
-					     </a>
+					   <li id="students">
+					  	<div id="thumbnail">
+						    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
+						    	<h3>Students</h3>
+						     </a>
+						</div>
 					  </li>
 					  
 					</ul>
