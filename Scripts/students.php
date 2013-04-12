@@ -62,17 +62,17 @@ $content='
 							<td>
 					<ul class="thumbnails">
 					  <li id="thumb1">
-					    <a href="#" class="actividades" >
+					    <a href="#" class="actividades" id="thumbnail" >
 					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>
 					   <li id="thumb2">
-					    <a href="#" class="thumbnail" >
+					    <a href="#" class="thumbnail" id="thumbnail">
 					    	<h3>Results</h3>
 					     </a>
 					  </li>
 
-					  <li id="students">
+					  <li id="thumbnail">
 					    <a href="#" class="thumbnail" id="'.$curso_id[0].'" >
 					    	<h3>Students</h3>
 					     </a>

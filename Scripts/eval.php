@@ -84,17 +84,17 @@ $table = '<div id="content"><center>
 							<td>
 					<ul class="thumbnails">
 					  <li id="displayrubric">
-					    <a href="#" class="actividades">
+					    <a href="#" class="actividades" id="thumbnail">
 							<h3>Rubrics</h3>
 					     </a>
 					  </li>
 					   <li id="thumb2">
-					    <a href="#" class="thumbnail" >
+					    <a href="#" class="thumbnail" id="thumbnail">
 					    	<h3>Results</h3>
 					     </a>
 					  </li>
 
-					  <li id="students">
+					  <li id="thumbnail">
 					    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
 					    	<h3>Students</h3>
 					     </a>
