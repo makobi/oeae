@@ -34,14 +34,12 @@ body{
 
 #logout{
 
-	position: absolute;
 	text-decoration: none;
 	font-family: helvetica;
 	font-weight: bold;
 	color: gray;
 	font-size: 22px;
-	left:90%;
-	bottom: 91.5%	
+
 
 }
 
@@ -137,6 +135,7 @@ font-size: 18px;
 	border-right:1px solid black;
 	border-bottom:1px solid black;
 	box-shadow: 1px 1px 1px #888888;
+	height: 100%;
 }
 
 #nav_drop a{
@@ -401,6 +400,8 @@ font-size: 18px;
 	display:-moz-box;
 	-moz-box-orient: vertical;
 	-moz-box-flex: 1;
+
+	height: 100%;
 }
 
 #top_main{
@@ -492,19 +493,20 @@ overflow-x:scroll;
 }
 
 #rubrica {
-margin: 10px;
+margin: 15px;
 	text-align: center;
 	border:1px solid blue;
+	margin-bottom: 142px;
 }
 
 #rubrica tr td{
 
 
 border:1px solid blue;
-padding-top: 50px;
-padding-bottom: 50px;
-padding-right: 60px;
-padding-left: 60px; 
+padding-top: 10px;
+padding-bottom: 10px;
+padding-right: 15px;
+padding-left: 15px; 
 }
 
 #thumb0 {
@@ -512,6 +514,6 @@ padding-left: 60px;
 }
 
 
-#checkboxes input{
+/*#checkboxes input{
 	float: left;
-}
+}*/

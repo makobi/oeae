@@ -1,5 +1,5 @@
 <?php 
-
+ 
 /*
 Christian A. Rodriguez Encarnacion
 
@@ -62,23 +62,22 @@ $content='
 							<td>
 					<ul class="thumbnails">
 					  <li id="thumb1">
-					    <a href="#" class="thumbnail" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://renewable.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Rubrics</h3>
+					    <a href="#" class="actividades" id="thumbnail" >
+					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>
 					   <li id="thumb2">
-					    <a href="#" class="thumbnail" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Graphs</h3>
+					    <a href="#" class="thumbnail" id="thumbnail">
+					    	<h3>Results</h3>
 					     </a>
 					  </li>
 
 					  <li id="students">
-					    <a href="#" class="thumbnail" id="'.$curso_id[0].'" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://ccom.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Students</h3>
-					     </a>
+					  	<div id="thumbnail">
+					    	<a href="#" class="thumbnail" id="'.$curso_id[0].'" >
+					    		<h3>Students</h3>
+					     	</a>
+					     </div>
 					  </li>
 					  
 					</ul>

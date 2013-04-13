@@ -1,4 +1,4 @@
-<?php 
+<?php  
 
 /*
 Christian A. Rodriguez Encarnacion
@@ -82,28 +82,27 @@ $nombre_crit = mysql_query($criteriosquery);
 
 // Primero se despliegan los 3 thumbnails
 $table=				'<div id="content"><center>
-					<table id="thumb0">
+					<table id="thumb0" >
 						<tr>
 							<td>
 					<ul class="thumbnails">
 					  <li id="displayrubric">
-					    <a href="#" class="thumbnail">
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://renewable.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Rubrics</h3>
+					    <a href="#" class="actividades" id="thumbnail">
+					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>
 					   <li id="thumb2">
-					    <a href="#" class="thumbnail" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Graphs</h3>
+					    <a href="#" class="thumbnail" id="thumbnail">
+					    	<h3>Results</h3>
 					     </a>
 					  </li>
 
-					  <li id="students">
-					    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://ccom.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Students</h3>
-					     </a>
+					   <li id="students">
+					  	<div id="thumbnail">
+						    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
+						    	<h3>Students</h3>
+						     </a>
+						</div>
 					  </li>
 					  
 					</ul>
@@ -112,7 +111,7 @@ $table=				'<div id="content"><center>
 				</table>';
 
 // Aqui se comienza a generar la tabla de la rubrica
-$table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
+$table=$table." <h1>".$_SESSION['nombre_act']."</h1>
 							<form>
 							<table id='rubrica'><tr>
 				<td><input type='submit' value='Someter' class='btn btn-primary'></td>
@@ -125,7 +124,7 @@ $table=$table." <h1>".$_SESSION['nombre_act']." ".$_SESSION['act_id']."</h1>
 // Cada fila de la rubrica representa un criterio
 for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
-				<td><p>".$criterios[$cids[$i]]." <br> <input type='checkbox' name='".$cids[$i]."' value='".$cids[$i]."'> </p>
+				<td><p>".$criterios[$cids[$i]]." <br> <br> <input type='checkbox' name='".$cids[$i]."' value='".$cids[$i]."'>   <strong> Eliminar </strong> </p>
 				</td>
 				<td>".$descripcion[$cids[$i]][2]."</td>
 				<td>".$descripcion[$cids[$i]][4]."</td>
@@ -170,9 +169,8 @@ echo $table."</table></form>
 				console.log(data);
 
 				$.get(url, function(html) {
-					$('#content').hide()
-					$('#content').replaceWith(html)
-					console.log(html);
+					alert(html);
+					window.location.replace('./no-index.php');
 				})
 
 				return false;

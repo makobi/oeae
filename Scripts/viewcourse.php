@@ -85,23 +85,22 @@ $table=				'<div id="content"><center>
 							<td>
 					<ul class="thumbnails">
 					  <li id="displayrubric">
-					    <a href="#" class="thumbnail">
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://renewable.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Rubrics</h3>
+					    <a href="#" class="actividades" id="thumbnail">
+					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>
 					   <li id="thumb2">
-					    <a href="#" class="thumbnail" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Graphs</h3>
+					    <a href="#" class="thumbnail" id="thumbnail">
+					    	<h3>Results</h3>
 					     </a>
 					  </li>
 
 					  <li id="students">
-					    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
-					    	<img src="http://api.webthumbnail.org?width=275&height=175&screen=1280&format=png&url=http://ccom.uprrp.edu" alt="Captured by webthumbnail.org" />
-							<h3>Students</h3>
-					     </a>
+					  	<div id="thumbnail">
+						    <a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
+						    	<h3>Students</h3>
+						     </a>
+						</div>
 					  </li>
 					  
 					</ul>
@@ -110,9 +109,13 @@ $table=				'<div id="content"><center>
 				</table>';
 
 // Aqui se comienza a generar la tabla de la rubrica
-$table=$table." <h1>".$_SESSION['nombre_act']."</h1>
+$table=$table." <h1>".$_SESSION['nombre_act']."
+				<form name='delete'>
+				<input type='submit' value='Eliminar Actividad' class='btn btn-danger'>
+				</form>
+				</h1>
 							<table id='rubrica'><tr>
-				<form>
+				<form name='edit'>
 				<td><input type='submit' value='Editar' class='btn btn-primary'></td>
 				</form>
 				<td>1-2</td>
@@ -147,12 +150,23 @@ echo $table."</table>
 				})
 			});
 
-			$('form').submit( function() {
+			$('form[name=edit]').submit( function() {
 				var url = '../Scripts/editrubric.php';
 
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)
+				})
+
+				return false;
+			});
+
+			$('form[name=delete]').submit( function() {
+				var url = '../Scripts/deleteactivity.php';
+
+				$.get(url, function(res) {
+					alert(res);
+					window.location.replace('./no-index.php');
 				})
 
 				return false;

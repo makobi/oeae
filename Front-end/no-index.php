@@ -1,11 +1,11 @@
 <?php 
-
+ 
 session_start(); 
 
 // Connect to the Database
 $db = mysql_connect("localhost","nosotros","oeaeavaluo2013");
 
-// Choose the database 'Avaluo'
+// Choose the database 'Avaluo' 
 if ($db) {
   mysql_select_db("Avaluo");
 } else {
@@ -111,7 +111,7 @@ $cursos = mysql_query($cursosquery);
 								<a href='#' id='".$row[2]."' onclick='abrir_cerrar($row[1]);'>
 									<div class='secction'> 
 										<div id='addactivity'><img src='class_img.jpg' id='effect'>
-											<p>".$row[0]." ".$row[1]."</p>
+											<p>".$row[1]."</p>
 											<a href='#' class='newactivity'><img class='add' src='add.png' width='10' height='10'></a>
 										</div>
 									</div>
@@ -148,9 +148,9 @@ $cursos = mysql_query($cursosquery);
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Rubric Database</p>
 					</div></a> 
-					<a href="#" ><div class="secction"> 
+					<a href="#" id="create"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Option Name Here</p>
+						<p>Create Rubric</p>
 					</div></a>
 					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>

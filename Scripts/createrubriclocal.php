@@ -1,9 +1,8 @@
 <?php
 /*
-	Tahiri Laboy De Jesus
-	Script para crear rubrica (Administrativo)
-
-	Revisado el 14 de marzo - Se necesita implementar para profesores. 
+	Christian A. Rodriguez
+	
+	Script de crear rubricas para profesores
 */
 
 $server         = 'localhost';
@@ -39,7 +38,7 @@ $content = "<script type='text/javascript'>
 		        var isValid = false; 
         		var allRows = document.getElementsByTagName('input');
         		for (var i=0; i < allRows.length; i++) {
-        		    if (allRows[i].type == 'checkbox' && allRows[i].name == 'cr') {
+        		    if (allRows[i].type == 'checkbox' && allRows[i].name == 'cr[]') {
         		        if (allRows[i].checked == true) {
         		               return true;
         		        }
@@ -128,7 +127,7 @@ else {
   // Si tenemos los parametros necesarios, procedemos a crear.
   if (!empty($_POST['rname']) && !empty($_POST['cr'])) {
 	$crits = array();
-
+	$prof_id = $_SESSION['prof_id'];
 	$rname = array_shift($_POST);
 
 	foreach($_POST['cr'] as $critid) {
@@ -136,24 +135,24 @@ else {
 	}
 
 	// Busco el id de la ultima rubrica en la base de datos
-	$query = mysql_query("SELECT MAX(rub_id) AS ultima FROM Rubricas;") 
+	$query = mysql_query("SELECT MAX(rublocal_id) AS ultima FROM RubricaLocal;") 
 	or die (mysql_error());
 	$result = mysql_fetch_array($query);
 	$newrid = $result["ultima"] + 1;
 
 	// Guardo nombre de la rubrica
-	$query = mysql_query("INSERT INTO NombresRubricas(rub_id, nombre_rub)
+	$query = mysql_query("INSERT INTO NombresRubricasLocal(rublocal_id, nombre_rub)
 		VALUES('$newrid','$rname');") or die (mysql_error());
 
 	
 	// Guardo la nueva rubrica
 	foreach ($crits as $cid) {
-		$query = mysql_query("INSERT INTO Rubricas(rub_id,crit_id) VALUES
-			('$newrid','$cid');") 
+		$query = mysql_query("INSERT INTO RubricaLocal(rublocal_id,crit_id,prof_id) VALUES
+			('$newrid','$cid','$prof_id');") 
 			or die (mysql_error());
 	}
 
-	header( 'Location: ../Front-end/admin.php' ) ;
+	header( 'Location: ../Front-end/no-index.php' ) ;
 	
   }
   // Si no los tenemos, volvemos a mostrar el form.
@@ -161,7 +160,7 @@ else {
 		$me = $_SERVER['PHP_SELF'];
 		
 		// Arregle temporero al error de los credenciales vacio
-		header( 'Location: ../Front-end/admin.php' ) ;
+		header( 'Location: ../Front-end/no-index.php' ) ;
 
 		$content = $content. "
 			<div id = 'content'>

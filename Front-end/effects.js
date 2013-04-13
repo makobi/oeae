@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function() { 
 
 	var h = $(window).height(); 
 
@@ -92,6 +92,15 @@ $(document).ready(function() {
 	// Rubric Database
 	$("#rdb").on("click", function() {
 		url = "../Scripts/rubricdatabase.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
+	// Crear Rubrica local (Professor only)
+	$("#create").on("click", function() {
+		url = "../Scripts/createrubriclocal.php";
 		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)
