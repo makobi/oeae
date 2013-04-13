@@ -21,7 +21,7 @@ if ($link) {
 
 session_start();
 
-$aid =1; $_SESSION['act_id'];
+$aid = $_SESSION['act_id'];
 
 /* Se obtiene el logro esperado. */
 $query = mysql_query("SELECT logro_esperado FROM Actividades where act_id='$aid';")
@@ -29,7 +29,7 @@ $query = mysql_query("SELECT logro_esperado FROM Actividades where act_id='$aid'
 $result = mysql_fetch_array($query);
 $logroesperado = $result["logro_esperado"];
 
-echo "Actividad: ".$aid."\n Logro esperado: ".$logroesperado."\n";
+//echo "Actividad: ".$aid."\n Logro esperado: ".$logroesperado."\n";
 
 /* Se obtienen los ids y nombres de los criterios en la rubrica. */
 $query = mysql_query("SELECT crit_id, nombre_crit FROM RubricaLocal NATURAL JOIN 
@@ -72,16 +72,64 @@ for($criterio=0; $criterio<$crit_qty; $criterio++) { // Criterios - Filas
 		}
 	}
 	// Se halla el porciento de estudiantes que aprobaron el criterio
-	$totales[$criterio][9] = (($totales[$criterio][9])/$estudiantes)*100;
+	if ($estudiantes > 0) {
+		$totales[$criterio][9] = (($totales[$criterio][9])/$estudiantes)*100;
+	}
+	else
+		$totales[$criterio][9] = 0; 
 }
 
 //print_r($totales);
 
-echo "<div id='content'><center>
-	<h1>Resultados para la actividad ".$aid."</h1>";
+echo "<script type='text/javascript'>
+			$('#students a').on('click', function() {
+				var course = $(this).attr('id');
+				var url = '../Scripts/students.php?course_id='+course;
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+			});
+	</script>
 
-// Se comienza a generar la tabla de los totales
-$tabla ="<table id = totales>
+	<div id='content'><center>";
+echo '					<table id="thumb0">
+						<tr>
+							<td>
+					<ul class="thumbnails">
+					  <li id="thumb1">
+					    <a href="#" class="actividades" id="thumbnail" >
+					    	<h3>Rubrics</h3>
+					     </a>
+					  </li>
+					   <li id="thumb2">
+					    <a href="#" class="thumbnail" id="thumbnail">
+					    	<h3>Results</h3>
+					     </a>
+					  </li>
+
+					  <li id="students">
+					  	<div id="thumbnail">
+					    	<a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
+					    		<h3>Students</h3>
+					     	</a>
+					     </div>
+					  </li>
+					  
+					</ul>
+				</td>
+				</tr>
+				</table>';
+echo "
+	<h3>Resultados para la actividad ".$aid."</h3>";
+echo "  <p> Logro esperado: ".$logroesperado."\n";
+
+$tabla = "";
+
+/* Si se han evaluado estudiantes, desplegamos la tabla */
+if ($estudiantes != 0) {
+  // Se comienza a generar la tabla de los totales
+  $tabla.="<table id = totales>
 	 <caption>Tabla de distribución de puntuaciones</caption>
             <tr>
 	       <th>Criterios</th>
@@ -101,18 +149,22 @@ $tabla ="<table id = totales>
 		<td> </td> 
             </tr>";
 
-// Se llena la tabla con los resultados
-for ($i=0; $i<$crit_qty; $i++) {
+  // Se llena la tabla con los resultados
+  for ($i=0; $i<$crit_qty; $i++) {
     $tabla.="<tr><td><p>".$criterios[$i]."</p>";
     for($j=0; $j<=9; $j++) {
 	$tabla.="</td>
                  <td>".$totales[$i][$j]."</td>";
     }
     $tabla.="</tr>";
-}
+  }
 
-$tabla.="</table>   
-	 </center></div>";
+  $tabla.="</table>";
+}
+else { // No se han evaluado estudiantes
+  $tabla.="Error: No se han realizado evaluaciones.";
+}   
+  $tabla.="</center></div>";
 
 echo $tabla;
 

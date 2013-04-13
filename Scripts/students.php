@@ -66,7 +66,7 @@ $content='
 					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>
-					   <li id="thumb2">
+					   <li id="results">
 					    <a href="#" class="thumbnail" id="thumbnail">
 					    	<h3>Results</h3>
 					     </a>
@@ -177,6 +177,14 @@ $content = $content."</tbody>
 					$('#content').replaceWith(html)
 				})
 
+			});
+
+			$('#results a').on('click', function() {
+				var url = '../Scripts/resultsforact.php';
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
 			});
 
 			$('form').submit(function () {

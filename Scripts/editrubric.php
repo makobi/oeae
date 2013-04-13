@@ -91,7 +91,7 @@ $table=				'<div id="content"><center>
 					    	<h3>Rubrics</h3>
 					     </a>
 					  </li>
-					   <li id="thumb2">
+					   <li id="results">
 					    <a href="#" class="thumbnail" id="thumbnail">
 					    	<h3>Results</h3>
 					     </a>
@@ -157,6 +157,14 @@ echo $table."</table></form>
 			$('#students a').on('click', function() {
 				var course = $(this).attr('id');
 				var url = '../Scripts/students.php?course_id='+course;
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+			});
+
+			$('#results a').on('click', function() {
+				var url = '../Scripts/resultsforact.php';
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)
