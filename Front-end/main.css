@@ -4,7 +4,7 @@ html{
     min-height: 100%;
     min-width: 100%;
 } 
-
+ 
 body{
 
 	max-width: 100%;
@@ -29,6 +29,8 @@ body{
 	background: #95d788;
         background-image: -webkit-linear-gradient(#AAD6EF, #81C7EF);
         background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #81C7EF),color-stop(1, #AAD6EF));
+         background-image: -moz-linear-gradient(#AAD6EF, #81C7EF);
+        background-image: -moz-gradient(linear,left bottom,left top,color-stop(0, #81C7EF),color-stop(1, #AAD6EF));
         box-shadow: 1px 1px 1px #888888;
 }
 
@@ -117,6 +119,9 @@ font-size: 18px;
 	display:-webkit-box;
 	-webkit-box-orient: horizontal;
 	-webkit-box-flex: 1;
+	display:-moz-box;
+	-moz-box-orient: horizontal;
+	-moz-box-flex: 1;
 	max-width: 100%;
     max-height: 100%;
     min-height: 100%;
@@ -128,6 +133,8 @@ font-size: 18px;
 	position: relative;
 	display:-webkit-box;
 	-webkit-box-orient: vertical;
+	display:-moz-box;
+	-moz-box-orient: vertical;
 	width: 25%;
 	overflow-y:scroll;
 	background-color: #D9DBD5;
@@ -183,7 +190,8 @@ font-size: 18px;
 		background: #95d788;
         background-image: -webkit-linear-gradient(#AAD6EF, #81C7EF);
         background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #81C7EF),color-stop(1, #AAD6EF));
-
+        background-image: -moz-linear-gradient(#AAD6EF, #81C7EF);
+        background-image: -moz-gradient(linear,left bottom,left top,color-stop(0, #81C7EF),color-stop(1, #AAD6EF));
 }
 
 #grading thead p{
