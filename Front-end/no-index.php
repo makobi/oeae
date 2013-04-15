@@ -91,7 +91,7 @@ $cursos = mysql_query($cursosquery);
 
 				</td>
 				<td style="width:50px; text-align:right;">
-					<a href="" id="logout"><p style="margin-right:50px; margin-top:10px;">Logout</p></a>
+					<a href="index.php" id="logout"><p style="margin-right:50px; margin-top:10px;">Logout</p></a>
 				</td>
 			</tr>
 		</table>
