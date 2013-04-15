@@ -111,7 +111,7 @@ $cursos = mysql_query($cursosquery);
 			</div></a>
 			<div class="secction1" id="major"> 
 				<div class="title"> <p>Classes</p></div>
-				<div class="secction1"> 
+				<div class="secction1">  
 					<ul>
 					<?php
 						while ($row=mysql_fetch_array($cursos)) {
@@ -119,9 +119,22 @@ $cursos = mysql_query($cursosquery);
 							<li class='cursos'>
 								<a href='#' id='".$row[2]."' onclick='abrir_cerrar($row[1]);'>
 									<div class='secction'> 
-										<div id='addactivity'><img src='class_img.jpg' id='effect'>
-											<p>".$row[1]."</p>
-											<a href='#' class='newactivity'><img class='add' src='add.png' width='10' height='10'></a>
+										<div id='addactivity'>
+											<table>
+												<tr>
+													<td>
+														<img src='class_img.jpg' id='effect'>
+													</td>
+
+													<td>
+														<p>".$row[1]."</p>
+													</td>
+
+													<td>
+														<a href='#' class='newactivity'><img class='add' src='add.png' width='10' height='10'></a>
+													</td>
+												</tr>
+											</table>
 										</div>
 									</div>
 								</a>
