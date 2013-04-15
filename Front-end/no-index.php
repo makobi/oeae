@@ -85,7 +85,16 @@ $cursos = mysql_query($cursosquery);
 	<!-- Esto es la barra de arriba, que tiene el log-out -->
 	<div id="top_bar">
 		
-		<a href="index.php" id="logout"><p>Logout</p></a>
+		<table style="width:100%; height:50px;">
+			<tr>
+				<td style="width:50px;">
+
+				</td>
+				<td style="width:50px; text-align:right;">
+					<a href="" id="logout"><p style="margin-right:50px; margin-top:10px;">Logout</p></a>
+				</td>
+			</tr>
+		</table>
 	</div>
 	<!-- Termina la barra -->
 
@@ -102,7 +111,7 @@ $cursos = mysql_query($cursosquery);
 			</div></a>
 			<div class="secction1" id="major"> 
 				<div class="title"> <p>Classes</p></div>
-				<div class="secction1"> 
+				<div class="secction1">  
 					<ul>
 					<?php
 						while ($row=mysql_fetch_array($cursos)) {
@@ -110,9 +119,22 @@ $cursos = mysql_query($cursosquery);
 							<li class='cursos'>
 								<a href='#' id='".$row[2]."' onclick='abrir_cerrar($row[1]);'>
 									<div class='secction'> 
-										<div id='addactivity'><img src='class_img.jpg' id='effect'>
-											<p>".$row[1]."</p>
-											<a href='#' class='newactivity'><img class='add' src='add.png' width='10' height='10'></a>
+										<div id='addactivity'>
+											<table>
+												<tr>
+													<td>
+														<img src='class_img.jpg' id='effect'>
+													</td>
+
+													<td>
+														<p>".$row[1]."</p>
+													</td>
+
+													<td>
+														<a href='#' class='newactivity'><img class='add' src='add.png' width='10' height='10'></a>
+													</td>
+												</tr>
+											</table>
 										</div>
 									</div>
 								</a>
@@ -154,7 +176,7 @@ $cursos = mysql_query($cursosquery);
 					</div></a>
 					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Option Name Here</p>
+						<a href="Manual_de_Usuario_Profesor.pdf" target = "_blank"><p>Manual de Usuario</p></a>
 					</div></a>
 					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
