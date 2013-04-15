@@ -176,7 +176,7 @@ $cursos = mysql_query($cursosquery);
 					</div></a>
 					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Option Name Here</p>
+						<a href="Manual_de_Usuario_Profesor.pdf" target = "_blank"><p>Manual de Usuario</p></a>
 					</div></a>
 					<a href="#" ><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
