@@ -158,7 +158,16 @@ $cursos = mysql_query($cursosquery);
 									echo $act;
 								}
 							}
-							echo "</ul></li>";						
+							echo "<li>
+										<a href='#' class='courseresults'>
+											<div class='secction2'>
+												<div><img src='class_img.jpg' id='effect'>	</div>
+												<p id='".$row[2]."'>Results for course</p>
+											</div>
+										</a>
+								</li>
+
+									</ul></li>";						
 
 						}	
 						?>

@@ -19,36 +19,46 @@ if ($link) {
 	exit();
 }
 
-//session_start();
+session_start();
 
-$curso_id = 1;// $_SESSION['curso_id'];
+$curso_id = $_GET['course_id'];
+
+$query = "SELECT codificacion from Cursos where curso_id=".$curso_id;
+$result = mysql_fetch_array(mysql_query($query));
+$codif = $result[0];
 
 $logrosesperados = array();
 $act_ids = array(); 
-
 
 /* Se obtienen los logros esperados para cada actividad asociada a un curso. */
 $query = mysql_query("SELECT act_id, logro_esperado from Actividades natural join 
 	ActividadesCurso where curso_id='$curso_id';")
 	or die(mysql_error());
 
-while ($result = mysql_fetch_array($query)) {
-	$act_ids[] = $result["act_id"];
+/************************ SI HAY ACTIVIDADES... ************************/
+if (mysql_num_rows($query)>0) { 
+
+ while ($result = mysql_fetch_array($query)) {
+ 	$act_ids[] = $result["act_id"];
 	$logrosesperados[] = $result["logro_esperado"];
-}
+ } 
 
-$i = 0;
+ $i = 0;
 
-$a_evaluadas = array();
-$cr_aprobados = array();
-$nombres_crs = array();
+ $a_evaluadas = array();	// Retendra ids las actividades que fueron evaluadas
+ $nombres_crs = array(); 	// Nombres de los criterios de todas las actividad
+ $cr_aprobados = array();	// Indica si se aprobo o no cada criterio en $nombre_crs
 
-foreach ($act_ids as $aid) {
+ $contador_estudiantes = 0; /* Lleva record de los estudiantes evaluados en 
+							todas las actividades*/
+
+ foreach ($act_ids as $aid) {
 
 	/* Se obtiene el total de estudiantes en la actividad. */
 	$query = mysql_query("SELECT distinct mat_id FROM Evaluacion WHERE act_id='$aid';")
 		or die(mysql_error());
 	$estudiantes = mysql_num_rows($query);
+	$contador_estudiantes += $estudiantes;
 
 	if ($estudiantes>0) {
 		/* Se obtienen los ids y nombres de los criterios en la rubrica. */
@@ -100,34 +110,33 @@ foreach ($act_ids as $aid) {
 					$totales[$criterio][10] = 'No aprobado';
 				}			
 			}
-
+			// Copio los resultados que necesito de la tabla 2D a arreglos sencillos.
 			for($k=0; $k<$crit_qty; $k++){
 				$a_evaluadas[] = $aid;
 				$cr_aprobados[] = $totales[$k][10];
 				$nombres_crs[] = $criterios[$k];
 			}
 		}
-		$i++;
+		$i++;	// Para iterar sobre los logros esperados de las actividades
 	}
-}
-/*
-print_r($cr_aprobados);
-print_r($nombres_crs);
-*/
+ } 
+
 // DOMINIOS
 
-$query = mysql_query("Select distinct nombre_dom, nombre_crit from Dominios natural join 
-	Criterios natural join Evaluacion natural join CriterioPertenece natural join 
+if ($contador_estudiantes > 0) { // Si se ha evaluado algun estudiante...
+
+ $query = mysql_query("Select distinct nombre_dom, nombre_crit from Dominios natural 
+	join Criterios natural join Evaluacion natural join CriterioPertenece natural join 
 	ActividadesCurso where curso_id='$curso_id';") or die(mysql_error());
 
-$dominios = array();	// Nombres de los dominios
-$d_span = array();		/* Span de cada dominio (para efecto rowspan en tabla html) -
+ $dominios = array();	// Nombres de los dominios
+ $d_span = array();		/* Span de cada dominio (para efecto rowspan en tabla html) -
 						   Almacena la cantidad de criterios asociados al dominio */
-$criterios2 = array();	/* Nombres de los criterios (esta vez en el orden asociado 
+ $criterios2 = array();	/* Nombres de los criterios (esta vez en el orden asociado 
 						   a los dominios) */
-$i = -1;	
+ $i = -1;	
 
-while ($result = mysql_fetch_array($query)) {
+ while ($result = mysql_fetch_array($query)) {
 	
 	$criterios2[] = $result['nombre_crit'];
 
@@ -140,19 +149,19 @@ while ($result = mysql_fetch_array($query)) {
 	else {
 		$d_span[$i]++;
 	}
-}
+ }
 
-$aprobados = array(); // Acumulador de criterios aprobados por dominio.
-for ($i = 0; $i < sizeof($dominios); $i++) $aprobados[$i] = 0; // Inicializacion
+ $aprobados = array(); // Acumulador de criterios aprobados por dominio.
+ for ($i = 0; $i < sizeof($dominios); $i++) $aprobados[$i] = 0; // Inicializacion
 
-$porciento = array(); // Almacena el porciento de criterios aprobados
-$dom_alcanzado = array(); // Retiene si se alcanzo o no el dominio
+ $porciento = array(); // Almacena el porciento de criterios aprobados
+ $dom_alcanzado = array(); // Retiene si se alcanzo o no el dominio
 
-$first = 0; // Donde se comienza a iterar 
-$last = 0;  // Donde se termina de iterar
-$iter = 0;  // Contador de iteraciones - Cada iteracion corresponde a un dominio
+ $first = 0; // Donde se comienza a iterar 
+ $last = 0;  // Donde se termina de iterar
+ $iter = 0;  // Contador de iteraciones - Cada iteracion corresponde a un dominio
 
-foreach ($d_span as $asociados) {
+ foreach ($d_span as $asociados) {
 	$last += $asociados; /* Termina cuando se itere por todos los criterios
 							asociados al dominio. */
 	
@@ -176,44 +185,57 @@ foreach ($d_span as $asociados) {
 
 	$first = $last; // Establezco desde donde comienza la nueva iteracion.
 	$iter++; // Vamos al proximo dominio
-}
-/*
-print_r($criterios2);
-print_r($aprobados);
-*/
+ }
 
-$tabla2 ="<p> Actividades evaluadas: ".count($a_evaluadas)."
-	<table id = ag_dominios border='1'>
-	 <caption>Tabla de agregados por dominios</caption>
-        <tr>
-	       <th>Dominios</th>
-	       <th>Criterios Alineados</th>
-	       <th>Criterios Aprobados</th>
-		   <th>Porcentaje</th>
-		   <th>Aprobado o no aprobado</th>
-	    </tr>";
 
-$dom_i = 0;
-$span = 0;
+ $tabla2 ="<p> Actividades evaluadas: ".count($a_evaluadas)."
+	<table id = grading>
+	 <caption><h4>Tabla de agregados por dominios</h4></caption>
+        <thead>
+	       <td><p>Dominios</p></td>
+	       <td><p>Criterios Alineados</p></td>
+	       <td><p>Criterios Aprobados</p></td>
+		   <td><p>Porcentaje</p></td>
+		   <td><p>Aprobado o no aprobado</p></td>
+	    </thead><tbody>";
 
-for ($i=0; $i<sizeof($criterios2); $i++) {
+ $dom_i = 0;
+ $span = 0;
+
+ // Se despliega el contenido de la tabla
+ for ($i=0; $i<sizeof($criterios2); $i++) {
 	if($i == $span) {
-		$tabla2.="<tr><td rowspan=".$d_span[$dom_i].">".$dominios[$dom_i]."</td>";
+		$tabla2.="<tr><td rowspan=".$d_span[$dom_i]."><p>".$dominios[$dom_i]."</p></td>";
 	}
-    $tabla2.="<td>".$criterios2[$i]."</td>";
+    $tabla2.="<td><p>".$criterios2[$i]."</p></td>";
 	if($i == $span) {
-		$tabla2.="<td rowspan=".$d_span[$dom_i].">".$aprobados[$dom_i]." de ".$d_span[$dom_i]." </td>";
-		$tabla2.="<td rowspan=".$d_span[$dom_i].">".$porciento[$dom_i]."</td> 
-		<td rowspan=".$d_span[$dom_i].">".$dom_alcanzado[$dom_i]."</td>" ;
+		$tabla2.="<td rowspan=".$d_span[$dom_i]."><p>".$aprobados[$dom_i]." de ".$d_span[$dom_i]."</p></td>";
+		$tabla2.="<td rowspan=".$d_span[$dom_i]."><p>".$porciento[$dom_i]."</p></td> 
+		<td rowspan=".$d_span[$dom_i]."><p>".$dom_alcanzado[$dom_i]."</p></td>" ;
 		$span += $d_span[$dom_i];
 		$dom_i++;
 	}
 	$tabla2.="</tr>";
+ }
+ $tabla2.="</tbody></table>"; 
+
 }
 
+else { 
+	$tabla2.="<p> Error: Aún no se han realizado evaluaciones para las actividades
+ 		de este curso.";
+}
 
+}
+/************************ SI NO HAY ACTIVIDADES... ************************/
+else {
+	$tabla2.="<p> Error: Aún no se han realizado actividades para este curso.";
+}
+
+echo "<div id='content'><center>
+		<h3>Resultados para curso ".$codif."</h3>"; 
 
 echo $tabla2;
-echo "</html>"
+echo "</center></div>";
 
 ?>

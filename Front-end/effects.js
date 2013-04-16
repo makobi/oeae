@@ -33,6 +33,18 @@ $(document).ready(function() {
 		})
 	});
 
+	$(".courseresults").on("click", function() {
+
+		var id = $(this).find('p').attr('id');
+
+		var url = "../Scripts/resultsforcourse.php?course_id="+id;
+
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 	// Información del perfil del profesor
 	$("#profile").on("click", function () {
 		$.get("../Scripts/profile.php", function(html) {
