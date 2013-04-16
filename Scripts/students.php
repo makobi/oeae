@@ -23,6 +23,11 @@ if ($db) {
   exit();
 }
 
+$name = $_SESSION['nombre_act'];
+$id = $_SESSION['act_id'];
+
+$rubrics = '../Scripts/viewcourse.php?nombre_act='.$name.'&act_id='.$id;
+
 $curso_id = $_SESSION['course_id'];
 
 // Select students query
@@ -61,7 +66,7 @@ $content='
 						<tr>
 							<td>
 					<ul class="thumbnails">
-					  <li id="thumb1">
+					  <li id="rubrics">
 					    <a href="#" class="actividades" id="thumbnail" >
 					    	<h3>Rubrics</h3>
 					     </a>
@@ -181,6 +186,14 @@ $content = $content."</tbody>
 
 			$('#results a').on('click', function() {
 				var url = '../Scripts/resultsforact.php';
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+			});
+
+			$('#rubrics a').on('click', function() {
+				var url = '".$rubrics."';
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)

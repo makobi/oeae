@@ -27,6 +27,10 @@ if ($db) {
   exit();
 }
 
+$name = $_SESSION['nombre_act'];
+$id = $_SESSION['act_id'];
+
+$rubrics = '../Scripts/viewcourse.php?nombre_act='.$name.'&act_id='.$id;
 
 // Buscar el curso al cual pertenece la actividad
 $courseidquery = "SELECT curso_id from ActividadesCurso where act_id=$_SESSION[act_id]";
@@ -86,7 +90,7 @@ $table=				'<div id="content"><center>
 						<tr>
 							<td>
 					<ul class="thumbnails">
-					  <li id="displayrubric">
+					  <li id="rubrics">
 					    <a href="#" class="actividades" id="thumbnail">
 					    	<h3>Rubrics</h3>
 					     </a>
@@ -165,6 +169,14 @@ echo $table."</table></form>
 
 			$('#results a').on('click', function() {
 				var url = '../Scripts/resultsforact.php';
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+			});
+
+			$('#rubrics a').on('click', function() {
+				var url = '".$rubrics."';
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)

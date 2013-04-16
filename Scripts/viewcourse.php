@@ -32,11 +32,16 @@ $_SESSION['nombre_act'] = $_GET['nombre_act'];
 $_SESSION['act_id'] = $_GET['act_id'];
 
 // Buscar el curso al cual pertenece la actividad
-$courseidquery = "SELECT curso_id from ActividadesCurso where act_id=$_SESSION[act_id]";
+$courseidquery = "SELECT curso_id from ActividadesCurso where act_id=".$_SESSION['act_id'];
 $courseid = mysql_fetch_array(mysql_query($courseidquery));
 
 // Guardar el id del curso de la actividad
 $_SESSION['course_id'] = $courseid[0];
+
+$name = $_SESSION['nombre_act'];
+$id = $_SESSION['act_id'];
+
+$rubrics = '../Scripts/viewcourse.php?nombre_act='.$name.'&act_id='.$id;
 
 /***************************************************************************************************/
 // Generar Rubrica
@@ -84,7 +89,7 @@ $table=				'<div id="content"><center>
 						<tr>
 							<td>
 					<ul class="thumbnails">
-					  <li id="displayrubric">
+					  <li id="rubrics">
 					    <a href="#" class="actividades" id="thumbnail">
 					    	<h3>Rubrics</h3>
 					     </a>
@@ -152,6 +157,14 @@ echo $table."</table>
 
 			$('#results a').on('click', function() {
 				var url = '../Scripts/resultsforact.php';
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+			});
+
+			$('#rubrics a').on('click', function() {
+				var url = '".$rubrics."';
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)

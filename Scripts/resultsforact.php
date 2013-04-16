@@ -21,8 +21,18 @@ if ($link) {
 
 session_start();
 
+
+$name = $_SESSION['nombre_act'];
+$id = $_SESSION['act_id'];
+
+$rubrics = '../Scripts/viewcourse.php?nombre_act='.$name.'&act_id='.$id;
+
+
+
 $aid = $_SESSION['act_id'];
 $nombre = $_SESSION['nombre_act'];
+
+
 
 /* Se obtiene el logro esperado. */
 $query = mysql_query("SELECT logro_esperado FROM Actividades where act_id='$aid';")
@@ -102,7 +112,7 @@ echo '					<table id="thumb0">
 						<tr>
 							<td>
 					<ul class="thumbnails">
-					  <li id="thumb1">
+					  <li id="rubrics">
 					    <a href="#" class="actividades" id="thumbnail" >
 					    	<h3>Rubrics</h3>
 					     </a>
@@ -265,7 +275,37 @@ $tabla.="</tbody></table>";
 else { // No se han evaluado estudiantes
   $tabla.="<p> Error: Aún no se han realizado evaluaciones para esta actividad.";
 }   
-  $tabla.="<br><br><br><br><br><br></center></div>";
+  $tabla.="<br><br><br><br><br><br></center></div>
+
+  			<script type='text/javascript'>
+
+			$('#students a').on('click', function() {
+				var course = $(this).attr('id');
+				var url = '../Scripts/students.php?course_id='+course;
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+
+			});
+
+			$('#results a').on('click', function() {
+				var url = '../Scripts/resultsforact.php';
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+			});
+
+			$('#rubrics a').on('click', function() {
+				var url = '".$rubrics."';
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+			});
+
+</script>";
 
 echo $tabla;
 
