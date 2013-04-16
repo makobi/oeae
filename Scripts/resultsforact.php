@@ -265,7 +265,7 @@ $tabla.="</tbody></table>";
 else { // No se han evaluado estudiantes
   $tabla.="<p> Error: Aún no se han realizado evaluaciones para esta actividad.";
 }   
-  $tabla.="</center></div>";
+  $tabla.="<br><br><br><br><br><br></center></div>";
 
 echo $tabla;
 
