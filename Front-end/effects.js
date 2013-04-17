@@ -55,7 +55,7 @@ $(document).ready(function() {
 
 	// Crear una actividad nueva
 	$(".newactivity").on("click", function() {
-		var curso_id = $(this).prev().attr("id");
+		var curso_id = $(this).attr("id");
 
 		var url= "../Scripts/activity.php?curso_id="+curso_id ;
 

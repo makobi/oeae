@@ -117,7 +117,7 @@ $cursos = mysql_query($cursosquery);
 						while ($row=mysql_fetch_array($cursos)) {
 							$string = "
 							<li class='cursos'>
-								<a href='#' id='".$row[2]."' onclick='abrir_cerrar($row[1]);'>
+								<a href='#' onclick='abrir_cerrar($row[1]);'>
 									<div class='secction'> 
 										<div id='addactivity'>
 											<table>
@@ -131,7 +131,7 @@ $cursos = mysql_query($cursosquery);
 													</td>
 
 													<td>
-														<a href='#' class='newactivity'><img class='add' src='add.png' width='10' height='10'></a>
+														<a href='#' class='newactivity' id='".$row[2]."'><img class='add' src='add.png' width='10' height='10'></a>
 													</td>
 												</tr>
 											</table>
