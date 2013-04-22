@@ -43,8 +43,7 @@ $logroesperado = $result["logro_esperado"];
 //echo "Actividad: ".$aid."\n Logro esperado: ".$logroesperado."\n";
 
 /* Se obtienen los ids y nombres de los criterios en la rubrica. */
-$query = mysql_query("SELECT crit_id, nombre_crit FROM RubricaLocal NATURAL JOIN 
-		Actividades NATURAL JOIN Criterios WHERE act_id = '$aid';") or die(mysql_error());
+$query = mysql_query("SELECT crit_id, nombre_crit FROM RubricaLocal NATURAL JOIN Actividades NATURAL JOIN Criterios WHERE act_id = '$aid';") or die(mysql_error());
 
 $crit_qty = mysql_num_rows($query);
 
@@ -64,10 +63,12 @@ $estudiantes = mysql_num_rows($query);
 
 if ($estudiantes > 0) {
 	$totales = array(array());
-
+	$acumulador = array(); /* Acumulador por criterio - Para detectar si un criterio no ha sido
+							evaluado */
 	/* Se obtienen los totales para cada escala en la rubrica. */
 	for($criterio=0; $criterio<$crit_qty; $criterio++) { // Criterios - Filas
 		$totales[$criterio][9] = 0; // Retiene el total de estudiantes con 6 o mas.
+		$totales[$criterio][11] = 0; // Para verificar si se han hecho evaluaciones o no.
 
 		for ($escala=0; $escala<=8; $escala++) { // Escala - Columnas
     		$query = mysql_query("Select count(ptos_obtenidos) from Evaluacion where 
@@ -76,8 +77,16 @@ if ($estudiantes > 0) {
 			if(mysql_num_rows($query) > 0) {
 				$result = mysql_fetch_array($query);
 				$totales[$criterio][$escala] = $result[0];
-			} else  $totales[$criterio][$escala] = 0;
-	
+//				$acumulador[$criterio] += $result[0];
+			} 
+			else {
+				$totales[$criterio][$escala] = 0;
+//				$acumulador[$criterio] += 0;
+			}		
+
+			// Acumulador para detectar si el criterio fue evaluado.
+			$totales[$criterio][11]+=$totales[$criterio][$escala];
+
 			// Se generan los totales de estudiantes que obtuvieron 6 o mas.
 			if ($escala >= 6) {
 				$totales[$criterio][9]+=$totales[$criterio][$escala];
@@ -86,8 +95,12 @@ if ($estudiantes > 0) {
 	
 		$totales[$criterio][9] = (($totales[$criterio][9])/$estudiantes)*100;
 
-		// Verificar si el criterio fue aprobado
-		if ($totales[$criterio][9] >= $logroesperado) {
+		// Verificar si el criterio fue evaluado y de ser asi, si fue aprobado.
+		if ($totales[$criterio][11] == 0) {
+			$totales[$criterio][9] = 'x';
+			$totales[$criterio][10] = 'No evaluado';
+		}
+		else if ($totales[$criterio][9] >= $logroesperado) {
 			$totales[$criterio][10] = 'Aprobado';
 		}
 		else $totales[$criterio][10] = 'No aprobado';
@@ -179,22 +192,29 @@ if ($estudiantes != 0) {
 /***************************** AGREGADOS POR DOMINIOS *****************************/
 
 // Obtengo los nombres de los diferentes dominios
-$query = mysql_query("Select distinct nombre_dom, nombre_crit from Dominios natural join 
+/*$query = mysql_query("Select distinct nombre_dom, nombre_crit from Dominios natural join 
 	Criterios natural join Evaluacion natural join CriterioPertenece where 	
 	act_id='$aid';") or 	
 	die(mysql_error());
+*/
+/*
+$query = mysql_query("Select nombre_dom, nombre_crit, ptos_obtenidos from Actividades
+	natural join ActividadesCurso natural join Cursos natural join Evaluacion natural join
+	Criterios natural join Dominios natural join CriterioPertenece where act_id = '$aid';")
+	or die(mysql_error());
 
 $dominios = array();	// Nombres de los dominios
 $d_span = array();		/* Span de cada dominio (para efecto rowspan en tabla html) -
 						   Almacena la cantidad de criterios asociados al dominio */
-$criterios2 = array();	/* Nombres de los criterios (esta vez en el orden asociado 
+/*$criterios = array();	/* Nombres de los criterios (esta vez en el orden asociado 
 						   a los dominios) */
-$i = -1;	
+/*$i = -1;	
 
 while ($result = mysql_fetch_array($query)) {
-	
-	$criterios2[] = $result['nombre_crit'];
-
+	$dominios[] = $result['nombre_dom'];
+	$criterios[] = $result['nombre_crit'];
+	$ptos_obtenidos[] = $result['ptos_obtenidos'];
+/*
 	// Si el dominio no esta ya en el arreglo, se guarda
 	if (!in_array($result['nombre_dom'], $dominios)) { 
 		$dominios[] = $result['nombre_dom'];
@@ -204,7 +224,10 @@ while ($result = mysql_fetch_array($query)) {
 	else {
 		$d_span[$i]++;
 	}
-}
+*//*}
+
+$d_span = array_count_values($dominios);	// Cuento repeticiones
+//$dominios = array_unique($dominios);		// Remuevo repeticiones
 
 $aprobados = array(); // Acumulador de criterios aprobados por dominio.
 for ($i = 0; $i < sizeof($dominios); $i++) $aprobados[$i] = 0; // Inicializacion
@@ -216,12 +239,17 @@ $first = 0; // Donde se comienza a iterar
 $last = 0;  // Donde se termina de iterar
 $iter = 0;  // Contador de iteraciones - Cada iteracion corresponde a un dominio
 
+for ($i = 0; $i < $criterios; $i++) {
+	if ($criterios[$i] > )
+}
+
+/*
 foreach ($d_span as $asociados) {
 	$last += $asociados; /* Termina cuando se itere por todos los criterios
 							asociados al dominio. */
 	
-	/* Se verifica cuantos de los criterios alineados a los dominios fueron aprobados. */
-	for ($i = $first; $i < $last; $i++) {
+	// Se verifica cuantos de los criterios alineados a los dominios fueron aprobados. 
+/*	for ($i = $first; $i < $last; $i++) {
 		$fila = array_search($criterios2[$i], $criterios);
 		if ($totales[$fila][10] == 'Aprobado') {
 			$aprobados[$iter]++; // Aumento el conteo de criterios aprobados
@@ -239,9 +267,9 @@ foreach ($d_span as $asociados) {
 	$first = $last; // Establezco desde donde comienza la nueva iteracion.
 	$iter++; // Vamos al proximo dominio
 }
-
+*/
 //print_r($aprobados); 
-
+/*
 $tabla.="<table id = grading>
 	 <caption><h4>Tabla de agregados por dominios</h4></br></caption>
         <thead>
@@ -270,7 +298,7 @@ for ($i=0; $i<sizeof($criterios2); $i++) {
 	$tabla.="</tr>";
 }
 $tabla.="</tbody></table>";
- 
+*/ 
 }
 else { // No se han evaluado estudiantes
   $tabla.="<p> Error: Aún no se han realizado evaluaciones para esta actividad.";
