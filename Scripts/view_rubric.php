@@ -83,7 +83,6 @@ $table="<div id='content'><center>
 				<td>7-8</td>
 				</tr>";
 
-echo $crit_qty;
 
 // Cada fila de la rubrica representa un criterio
 for ($i=0; $i < $crit_qty; $i++) {
