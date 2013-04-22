@@ -83,20 +83,22 @@ $table="<div id='content'><center>
 				<td>7-8</td>
 				</tr>";
 
+echo $crit_qty;
+
 // Cada fila de la rubrica representa un criterio
 for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
-				<td><p>".$criterios[$cids[$i]]."</p>
-				</td>
+				<td><p>".$criterios[$cids[$i]]."</p></td>
 				<td>".$descripcion[$cids[$i]][2]."</td>
 				<td>".$descripcion[$cids[$i]][4]."</td>
 				<td>".$descripcion[$cids[$i]][6]."</td>
 				<td>".$descripcion[$cids[$i]][8]."</td>
-				</tr>
-			</table>
+				</tr>";
+}
+
+$table.="</table>
 			<a href='#' onClick='ReturnToRubricsDB()'>Return to Rubric Database</a><br>
 		</center></div>";
-}
 
 echo $table;
 }
