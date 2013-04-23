@@ -191,25 +191,24 @@ if ($estudiantes != 0) {
 	Dominios natural join CriterioPertenece natural join Criterios natural join Actividades
 	where act_id='$aid';") or die(mysql_error());
 
+  $d = array();
   $dominios = array();	// Nombres de los dominios
   $d_span = array();		/* Span de cada dominio (para efecto rowspan en tabla html) -
 						   Almacena la cantidad de criterios asociados al dominio */
   $criterios_alineados = array();	/* Nombres de los criterios (esta vez en el orden asociado 
 						   a los dominios) */
-
-
-//$i = -1;	
-
+	
   while ($result = mysql_fetch_array($query)) {
-	$dominios[] = $result['nombre_dom'];
+	$d[] = $result['nombre_dom']; // En algun momento se me ocurrira una manera mas elegante de resolver esto
+	if (!in_array($result['nombre_dom'], $dominios)) { 
+		$dominios[] = $result['nombre_dom'];
+	}
 	$criterios_alineados[] = $result['nombre_crit'];
-	//$ptos_obtenidos[] = $result['ptos_obtenidos'];
   }
 
-  $d_span = array_count_values($dominios);
-  $dominios = array_unique($dominios);		// Remuevo repeticiones
+  $d_span = array_count_values($d); // Relaciona el dominio con su span
 
-  $aprobados = array(); // Acumulador de criterios aprobados por dominio.
+  $aprobados = array(); // Acumulador de criterios aprobados por dominio
   $noevaluados = array(); // Acumulador de criterios no evaluados
 
   for ($i = 0; $i < sizeof($dominios); $i++) {
@@ -237,6 +236,8 @@ if ($estudiantes != 0) {
 		}
 		else if ($totales[$fila][10] == 'No evaluado') {
 			$noevaluados[$iter]++; // Aumento el conteo de criterios no evaluados
+			$criterios_alineados[$i] .= "*";
+			$mensaje = "<br><p>*Criterio no evaluado.";
 		}
 	}
 	// Se computa el porciento de criterios aprobados
@@ -260,36 +261,36 @@ if ($estudiantes != 0) {
   }
 
 
-/*
-$tabla.="<table id = grading>
+  $tabla.="<table id = grading>
 	 <caption><h4>Tabla de agregados por dominios</h4></br></caption>
         <thead>
 	       <td><p>Dominios</p></td>
 	       <td><p>Criterios Alineados</p></td>
-	       <td><p>Criterios Aprobados</p></td>
+	       <td><p>Criterios Alcanzados</p></td>
 		   <td><p>Porcentaje</p></td>
-		   <td><p>Aprobado o no aprobado</p></td>
+		   <td><p>Alcanzado o no alcanzado</p></td>
 	    </thead><tbody>";
 
-$dom_i = 0;
-$span = 0;
+  $dom_i = 0;
+  $span = 0;
 
-for ($i=0; $i<sizeof($criterios2); $i++) {
+  for ($i = 0; $i < sizeof($criterios_alineados); $i++) {
 	if($i == $span) {
-		$tabla.="<tr><td rowspan=".$d_span[$dom_i].">".$dominios[$dom_i]."</td>";
+		$tabla.="<tr><td rowspan=".$d_span[$dominios[$dom_i]].">".$dominios[$dom_i]."</td>";
 	}
-    $tabla.="<td>".$criterios2[$i]."</td>";
+    $tabla.="<td>".$criterios_alineados[$i]."</td>";
 	if($i == $span) {
-		$tabla.="<td rowspan=".$d_span[$dom_i].">".$aprobados[$dom_i]." de ".$d_span[$dom_i]." </td>";
-		$tabla.="<td rowspan=".$d_span[$dom_i].">".$porciento[$dom_i]."</td> 
-		<td rowspan=".$d_span[$dom_i].">".$dom_alcanzado[$dom_i]."</td>" ;
-		$span += $d_span[$dom_i];
+		$tabla.="<td rowspan=".$d_span[$dominios[$dom_i]].">".$aprobados[$dom_i]." de "
+			.($d_span[$dominios[$dom_i]]-$noevaluados[$dom_i])." </td>";
+		$tabla.="<td rowspan=".$d_span[$dominios[$dom_i]].">".$porciento[$dom_i]."</td> 
+			<td rowspan=".$d_span[$dominios[$dom_i]].">".$dom_alcanzado[$dom_i]."</td>" ;
+		$span += $d_span[$dominios[$dom_i]];
 		$dom_i++;
 	}
 	$tabla.="</tr>";
-}
-$tabla.="</tbody></table>";
-*/ 
+  }
+  $tabla.="</tbody></table>";
+  if (isset($mensaje)) $tabla.=$mensaje;
 }
 else { // No se han evaluado estudiantes
   $tabla.="<p> Error: Aún no se han realizado evaluaciones para esta actividad.";
