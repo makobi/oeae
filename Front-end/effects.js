@@ -119,6 +119,15 @@ $(document).ready(function() {
 		})
 	});
 
+	// Rubric Database
+	$("#newcourse").on("click", function() {
+		url = "../Scripts/newcourse.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 	// View Rubric from database
 /*	$("#viewrubric").on("click", function(event) {
 		event.preventDefault();
