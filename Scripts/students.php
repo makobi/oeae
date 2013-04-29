@@ -31,7 +31,7 @@ $rubrics = '../Scripts/viewcourse.php?nombre_act='.$name.'&act_id='.$id;
 $curso_id = $_SESSION['course_id'];
 
 // Select students query
-$students = mysql_query("SELECT nombre_est, est_id FROM Estudiantes natural join Matricula where curso_id='$curso_id'") or die(mysql_error());
+$students = mysql_query("SELECT nombre_est, est_id FROM Estudiantes natural join Matricula where curso_id='$curso_id' and baja=0") or die(mysql_error());
 
 // Generar Rubrica
 		$aid = $_SESSION['act_id'];

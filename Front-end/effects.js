@@ -119,9 +119,17 @@ $(document).ready(function() {
 		})
 	});
 
-	// Rubric Database
+	// Add a course
 	$("#newcourse").on("click", function() {
 		url = "../Scripts/newcourse.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
+	$("#managestudents").on("click", function() {
+		url = "../Scripts/managestudents.php";
 		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)

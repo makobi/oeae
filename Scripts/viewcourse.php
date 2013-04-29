@@ -184,12 +184,14 @@ echo $table."</table>
 
 			$('form[name=delete]').submit( function() {
 				var url = '../Scripts/deleteactivity.php';
+				flag = confirm('Are you sure you want to delete the activity');
 
-				$.get(url, function(res) {
+				if(flag) {
+					$.get(url, function(res) {
 					alert(res);
 					window.location.replace('./no-index.php');
-				})
-
+					})
+				}
 				return false;
 			});
 			</script>
