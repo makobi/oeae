@@ -119,7 +119,7 @@ $table=$table." <h1>".$_SESSION['nombre_act']."
 				<input type='submit' value='Eliminar Actividad' class='btn btn-danger'>
 				</form>
 				</h1>
-							<table id='rubrica'><tr>
+				<table id='rubrica'><tr>
 				<form name='edit'>
 				<td><input type='submit' value='Editar' class='btn btn-primary'></td>
 				</form>
