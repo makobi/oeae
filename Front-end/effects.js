@@ -119,6 +119,23 @@ $(document).ready(function() {
 		})
 	});
 
+	// Add a course
+	$("#newcourse").on("click", function() {
+		url = "../Scripts/newcourse.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
+	$("#managestudents").on("click", function() {
+		url = "../Scripts/managestudents.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 	// View Rubric from database
 /*	$("#viewrubric").on("click", function(event) {
 		event.preventDefault();

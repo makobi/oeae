@@ -183,13 +183,17 @@ $cursos = mysql_query($cursosquery);
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Create Rubric</p>
 					</div></a>
-					<a href="#" ><div class="secction"> 
+					<a href="#" ><div class="secction">
 						<div ><img src="option_icon.png" id="effect"></div>
 						<a href="Manual_de_Usuario_Profesor.pdf" target = "_blank"><p>Manual de Usuario</p></a>
 					</div></a>
-					<a href="#" ><div class="secction"> 
+					<a href="#" id="newcourse"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Option Name Here</p>
+						<p>Add a course</p>
+					</div></a>
+					<a href="#" id="managestudents"><div class="secction"> 
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p>Manage students</p>
 					</div></a>
 
 				</div>

@@ -21,41 +21,63 @@ if ($link) {
 	exit();
 }
 
-// Funciones en JS
-/* ViewRubric(rubricID) - Muestra la rubrica seleccionada por el usuario
-   invocando el script view_rubric.php */
-$content = "<script type='text/javascript'>
-		function ViewRubric(rubricID) {
-			url = '../Scripts/view_rubric.php?rub_id='+rubricID;
+$globals = mysql_query("SELECT * FROM NombresRubricas ORDER BY nombre_rub;")
+	or die(mysql_error());
+
+if ($_SESSION['nombre_prof'] == 'Administrador') {
+	$locals = mysql_query("SELECT * FROM NombresRubricasLocal NATURAL JOIN RubricaCreadaPor NATURAL JOIN Profesores order by prof_id")
+		or die(mysql_error()); 	
+} else {
+	$locals = mysql_query("SELECT * FROM NombresRubricasLocal NATURAL JOIN RubricaCreadaPor where prof_id='$_SESSION[prof_id]'")
+		or die(mysql_error()); 	
+}
+
+
+
+?>
+
+<div id='content'> 
+	<center>
+
+	<h3> Rubric Database (Choose a rubric to view more information) </h3> <br> <br>	
+
+	<h4>
+
+	<p>Global Rubrics:</p>	
+
+	<?php while($res = mysql_fetch_array($globals)) : ?>	
+
+		<a href='#' onClick='ViewRubric(<?php echo $res['rub_id']; ?>,"global")'><?php echo $res['nombre_rub']; ?></a><br>	
+
+	<?php endwhile; ?>	
+
+	<br><br><br>
+		
+	<?php if(mysql_num_rows($locals)>0) : ?>	
+
+		<p>Local Rubrics:</p>		
+
+		<?php while($res = mysql_fetch_array($locals)) :?>		
+
+			<a href='#' onClick='ViewRubric(<?php echo $res['rublocal_id']; ?>, "local")'><?php echo $res['nombre_rub']; ?></a><br>		
+
+		<?php endwhile; ?>	
+
+	<?php endif; ?>	
+
+	</h4>
+
+	</center>
+</div>
+
+<script type='text/javascript'>
+		function ViewRubric(rubricID, type) {
+			if (type == 'local') {flag = 1};
+			url = '../Scripts/view_rubric.php?rub_id='+rubricID'&type='+flag;
 			$.get(url, function(html) {
 				$('#content').hide()
 				$('#content').replaceWith(html)
 			})
 		}
-	  </script>";
-	
-$nombresrubricas = array();
 
-// Se generan todos los nombres de las rubricas
-$query = mysql_query("SELECT * FROM NombresRubricas ORDER BY nombre_rub;")
-	or die(mysql_error());
-while($result = mysql_fetch_array($query)) {
-	$nombresrubricas[] = $result["nombre_rub"];
-	$rubids[] = $result["rub_id"];
-}
-
-// Se comienza a desplegar el contenido
-$content = $content."<div id='content'> <center>
-	<p> Rubric Database
-	<p> Choose one of the rubrics:<br>";
-
-// Se muestran enlaces a todas las rubricas en la base de datos
-for ($i = 0; $i < mysql_num_rows($query); $i++) {
-	$content = $content. "<a href='#' onClick='ViewRubric(".$rubids[$i].")'>".$nombresrubricas[$i]."</a><br>";
-}
-
-$content = $content. "
-	 </center></div>";
-
-echo $content;
-?>
+</script>
