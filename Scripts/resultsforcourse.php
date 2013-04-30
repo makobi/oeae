@@ -52,7 +52,7 @@ if (mysql_num_rows($query)>0) {
  $nombres_crs = array(); 	// Nombres de los criterios de todas las actividad
  $cr_aprobados = array();	// Indica si se aprobo o no cada criterio en $nombre_crs
  
-
+ // NO SE PA QUE RAYOS ESTOY HACIENDO ESTO
  $contador_estudiantes = 0; /* Lleva record de los estudiantes evaluados en 
 							todas las actividades*/
 
@@ -69,7 +69,7 @@ if (mysql_num_rows($query)>0) {
 	  <h3>Resultados para curso ".$codif." (".$nombre_curso.")</h3>";
 
  $tabla1 ="<table id = grading>
-	 <caption><h4>Resumen de actividades</h4><br>
+	 <caption><h4>Resumen de actividades</h4>
 	</caption>
 	       <thead><td><p>Nombre de la actividad</p></td>
 	       <td><p>Logro Esperado</p></td>
@@ -77,32 +77,34 @@ if (mysql_num_rows($query)>0) {
 		   </thead>
 	    <tbody>"; 	
 
-
  for ($i = 0; $i < sizeof($actividades); $i++) {
 	$tabla1.="<tr><td><p>".$nombresact[$i]."</p></td>
  				  <td><p>".$logrosesperados[$i]."</p></td>";
 	if (in_array($actividades[$i] ,array_diff($actividades, $a_evaluadas))) {
 		$tabla1.="<td><p>No evaluada</p></td>";
 	}
-	else $tabla1.="<td><p>Evaluada</p></td>";
+	else {
+		$tabla1.="<td><p>Evaluada</p></td>";
+		
+	}
 	$tabla1.="</tr>";
  }
  $tabla1.="</tbody></table>";
-/* 
-
- foreach ($act_ids as $aid) {
-
-	/* Se obtiene el total de estudiantes en la actividad. */
-/*	$query = mysql_query("SELECT distinct mat_id FROM Evaluacion WHERE act_id='$aid';")
+ 
+ // Para las actividades que han sido evaluados
+ for ($i = 0; $i < sizeof($a_evaluadas); $i++) {
+	// Se obtiene el total de estudiantes evaluados en la actividad
+	$query = mysql_query("SELECT distinct mat_id FROM Evaluacion WHERE act_id='$a_evaluadas[$i]';")
 		or die(mysql_error());
 	$estudiantes = mysql_num_rows($query);
 	$contador_estudiantes += $estudiantes;
 
-	if ($estudiantes>0) {
-		/* Se obtienen los ids y nombres de los criterios en la rubrica. */
-/*		$query = mysql_query("SELECT crit_id, nombre_crit FROM RubricaLocal NATURAL 
-		JOIN Actividades NATURAL JOIN Criterios WHERE act_id = '$aid';")
-		or die(mysql_error());
+	if ($estudiantes > 0) {
+
+		// Se obtienen los ids y nombres de los criterios en la rubrica. 
+		$query = mysql_query("SELECT crit_id, nombre_crit FROM RubricaLocal NATURAL 
+			JOIN Actividades NATURAL JOIN Criterios WHERE act_id = '$a_evaluadas[$i]';")
+			or die(mysql_error());
 
 		$crit_qty = mysql_num_rows($query);
 
@@ -115,58 +117,127 @@ if (mysql_num_rows($query)>0) {
 				$cids[] = $result["crit_id"];
 				$criterios[] = $result["nombre_crit"]; 
 			}
-		
-			$totales = array(array());
-			/* Se obtienen los totales para cada escala en la rubrica. */
-/*			for($criterio=0; $criterio<$crit_qty; $criterio++) { // Criterios - Filas
-				$totales[$criterio][9] = 0;
-				// Retiene el total de estudiantes con 6 o mas.	
 
-				for ($escala=0; $escala<=8; $escala++) { // Escala - Columnas
-			    	$query = mysql_query("Select count(ptos_obtenidos) from Evaluacion 
-						where ptos_obtenidos=".$escala." && crit_id=".$cids[$criterio]." 
-						&& act_id=".$aid.";") or die(mysql_error());
-					if(mysql_num_rows($query) > 0) {
-						$result = mysql_fetch_array($query);
-						$totales[$criterio][$escala] = $result[0];
-					} else  $totales[$criterio][$escala] = 0;
-	
-					// Se generan los totales de estudiantes que obtuvieron 6 o mas.
-					if ($escala >= 6) {
-						$totales[$criterio][9]+=$totales[$criterio][$escala];
-					}
-				}	
-				// Se halla el porciento de estudiantes que aprobaron el criterio
-				$totales[$criterio][9] = round((($totales[$criterio][9])/
-					$estudiantes)*100,2);
+		$totales = array(array());
 
-				// Verificar si el criterio fue aprobado
-				if ($totales[$criterio][9] >= $logrosesperados[$i]) {
-					$totales[$criterio][10] = 'Aprobado'; 
-				}
+		/* Se obtienen los totales para cada escala en la rubrica. */
+		for($criterio=0; $criterio<$crit_qty; $criterio++) { // Criterios - Filas
+			$totales[$criterio][9] = 0; // Retiene el total de estudiantes con 6 o mas.
+			$totales[$criterio][11] = 0; // Para verificar si se han hecho evaluaciones o no.
+
+			for ($escala=0; $escala<=8; $escala++) { // Escala - Columnas
+	    		$query = mysql_query("Select count(ptos_obtenidos) from Evaluacion where 
+					ptos_obtenidos=".$escala." && crit_id=".$cids[$criterio]." 
+					&& act_id=".$a_evaluadas[$i].";") or die(mysql_error());
+				if(mysql_num_rows($query) > 0) {
+					$result = mysql_fetch_array($query);
+					$totales[$criterio][$escala] = $result[0];
+				} 
 				else {
-					$totales[$criterio][10] = 'No aprobado';
-				}			
+					$totales[$criterio][$escala] = 0;
+				}		
+
+				// Acumulador para detectar si el criterio fue evaluado.
+				$totales[$criterio][11]+=$totales[$criterio][$escala];
+
+				// Se generan los totales de estudiantes que obtuvieron 6 o mas.
+				if ($escala >= 6) {
+					$totales[$criterio][9]+=$totales[$criterio][$escala];
+				}
 			}
-			// Copio los resultados que necesito de la tabla 2D a arreglos sencillos.
-			for($k=0; $k<$crit_qty; $k++){
-				$a_evaluadas[] = $aid;
-				$cr_aprobados[] = $totales[$k][10];
-				$nombres_crs[] = $criterios[$k];
+	
+			$totales[$criterio][9] = (($totales[$criterio][9])/$estudiantes)*100;
+
+			// Verificar si el criterio fue evaluado y de ser asi, si fue aprobado.
+			if ($totales[$criterio][11] == 0) {
+				$totales[$criterio][9] = 'x';
+				$totales[$criterio][10] = 'No evaluado';
 			}
+			else if ($totales[$criterio][9] >= $logrosesperados[$i]) {
+				$totales[$criterio][10] = 'Alcanzado';
+			}
+			else $totales[$criterio][10] = 'No alcanzado';
+		} 
+		// Copio los resultados que necesito de la tabla 2D a arreglos sencillos.
+		for($k = 0; $k < $crit_qty; $k++) {
+			$cr_aprobados[] = $totales[$k][10];
+			$nombres_crs[] = $criterios[$k];
 		}
-		$i++;	// Para iterar sobre los logros esperados de las actividades
 	}
- } 
+  }
+}
 
+$criterios_norep = array_unique($nombres_crs);
+
+/* Genero tabla de resumen de criterios */
+ $tabla2 ="<br><br><br><br><table id = grading>
+	 <caption><h4>Resumen de criterios para actividades evaluadas</h4>
+	</caption>
+	       <thead><td><p>Criterio</p></td>
+	       <td><p>Veces que se evaluó</p></td>
+	       <td><p>Aprobado</p></td>
+		   <td><p>No aprobado</p></td>
+		   </thead>
+	    <tbody>"; 	
+
+ $alcanzado = 0;
+ $noalcanzado = 0;
+
+print_r($nombres_crs);
+print_r($criterios_norep);
+
+ foreach ($criterios_norep as $criterio) {
+	// Criterio
+	$tabla2.="<tr><td><p>".$criterio."</p></td>";
+	$result = array_keys($nombres_crs, $criterio);
+//	echo "\n\n".$criterio.": ";
+//	print_r($result);  
+	foreach ($result as $status) {
+		if ($cr_aprobados[$status] == "Alcanzado") $alcanzado++;
+		else if ($cr_aprobados[$status] == "No alcanzado") $noalcanzado++;
+	}
+	$veces = $alcanzado + $noalcanzado;
+	if ($veces == 0) {
+		$veces = "No evaluado";
+		$alcanzado = "-";
+		$noalcanzado = "-";
+	}
+
+	// Veces que se evaluo
+	$tabla2.="<td><p>".($alcanzado + $noalcanzado)."</p></td>";
+	// Alcanzado
+	$tabla2.="<td><p>".$alcanzado."</p></td>";
+	// No alcanzado
+	$tabla2.="<td><p>".$noalcanzado."</p></td>";			
+	$tabla2.="</tr>";
+
+	$alcanzado = 0;
+	$noalcanzado = 0;
+ }
+ $tabla2.="</tbody></table>";
+ 
 // DOMINIOS
-
+/*
 if ($contador_estudiantes > 0) { // Si se ha evaluado algun estudiante...
 
+	$query = mysql_query("Select distinct nombre_dom, nombre_crit from Dominios natural 
+	join CriterioPertenece natural join Criterios Evaluacion natural join Actividades natural join 
+	ActividadesCurso natural join Cursos where curso_id='$curso_id';") or die(mysql_error());
+/*
  $query = mysql_query("Select distinct nombre_dom, nombre_crit from Dominios natural 
 	join Criterios natural join Evaluacion natural join CriterioPertenece natural join 
 	ActividadesCurso where curso_id='$curso_id';") or die(mysql_error());
+*//*
+select distinct nombre_dom, nombre_crit from RubricaLocal natural join Dominios natural join CriterioPertenece natural join Criterios natural join Actividades natural join Cursos natural join ActividadesCurso natural join Evaluacion where curso_id=1;
+*/
+/*
+$query = mysql_query("select nombre_dom, nombre_crit from RubricaLocal natural join
+	Dominios natural join CriterioPertenece natural join Criterios natural join Actividades
+	where act_id='$aid';") or die(mysql_error());
+*/
 
+
+/*
  $dominios = array();	// Nombres de los dominios
  $d_span = array();		/* Span de cada dominio (para efecto rowspan en tabla html) -
 						   Almacena la cantidad de criterios asociados al dominio */
@@ -184,7 +255,7 @@ if ($contador_estudiantes > 0) { // Si se ha evaluado algun estudiante...
 		$i++;	
 		$d_span[$i] = 1;
 	}
-	else {
+	else { 
 		$d_span[$i]++;
 	}
  }
@@ -270,7 +341,7 @@ else {
 	$tabla2 ="<p> Error: Aún no se han realizado actividades para este curso.";
 } 
 
-echo $tabla1/*.$tabla2*/;
-echo "</center></div>";
+echo $tabla1.$tabla2;
+echo "<br><br><br><br><br><br></center></div>";
 
 ?>
