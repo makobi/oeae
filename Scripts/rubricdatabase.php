@@ -36,6 +36,17 @@ if ($_SESSION['nombre_prof'] == 'Administrador') {
 
 ?>
 
+<script type='text/javascript'>
+		function ViewRubric(rubricID, type) {
+			//if (type == 'local') {flag = 1};
+			url = '../Scripts/view_rubric.php?rub_id='+rubricID;
+			$.get(url, function(html) {
+				$('#content').hide()
+				$('#content').replaceWith(html)
+			})
+		};
+</script>
+
 <div id='content'> 
 	<center>
 
@@ -70,14 +81,3 @@ if ($_SESSION['nombre_prof'] == 'Administrador') {
 	</center>
 </div>
 
-<script type='text/javascript'>
-		function ViewRubric(rubricID, type) {
-			if (type == 'local') {flag = 1};
-			url = '../Scripts/view_rubric.php?rub_id='+rubricID'&type='+flag;
-			$.get(url, function(html) {
-				$('#content').hide()
-				$('#content').replaceWith(html)
-			})
-		}
-
-</script>
