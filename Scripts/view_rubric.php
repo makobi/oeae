@@ -19,10 +19,30 @@ if (isset($_GET['rub_id'])) {
 		if(mysql_select_db($database)) {
 
 		$rid = $_GET['rub_id'];
+		$type= $_GET['type'];
 
-		// Busco el id de los criterios asociados a esa rubrica
-		$query1 = mysql_query("SELECT crit_id FROM Rubricas WHERE rub_id = '$rid'")
+		// Si la rubrica es global
+		if ($type == '0') {
+			// Busco el id de los criterios asociados a esa rubrica
+			$query1 = mysql_query("SELECT crit_id FROM Rubricas WHERE rub_id = '$rid'")
 					or die(mysql_error());
+
+			// Nombre de la rubrica
+			$query = mysql_query("SELECT nombre_rub FROM NombresRubricas WHERE rub_id = '$rid';")
+					or die(mysql_error());
+			$nombre = mysql_fetch_array($query);
+		// Si la rubrica es local
+		} else {
+			// Busco el id de los criterios asociados a esa rubrica local
+			$query1 = mysql_query("SELECT crit_id FROM RubricaLocal WHERE rublocal_id = '$rid'")
+					or die(mysql_error());
+
+			// Nombre de la rubrica local
+			$query = mysql_query("SELECT nombre_rub FROM NombresRubricasLocal WHERE rublocal_id = '$rid';")
+					or die(mysql_error());
+			$nombre = mysql_fetch_array($query);
+		}
+		
 
 		$crit_qty = mysql_num_rows($query1);
 		// Verifica que hayan resultados
@@ -54,11 +74,6 @@ if (isset($_GET['rub_id'])) {
 					$descripcion[$cid][$valor] = $result["descripcion"];
 				}
 			}
-	
-			// Nombre de la rubrica
-			$query = mysql_query("SELECT nombre_rub FROM NombresRubricas WHERE rub_id = '$rid';")
-					or die(mysql_error());
-			$result = mysql_fetch_array($query);
 
 // Funciones en JS
 /* ReturnToRubricsDB - Permite volver al banco de Rubricas */
@@ -74,7 +89,8 @@ echo "<script type='text/javascript'>
 
 // Aqui se comienza a generar la tabla de la rubrica
 $table="<div id='content'><center>
-			<h1>".$result['nombre_rub']."</h1>
+<a href='#' onClick='ReturnToRubricsDB()'>Return to Rubric Database</a>
+			<h1>".$nombre['nombre_rub']."</h1>
 			<table id='rubrica'><tr>
 				<td>  </td>
 				<td>1-2</td>
@@ -96,7 +112,7 @@ for ($i=0; $i < $crit_qty; $i++) {
 }
 
 $table.="</table>
-			<a href='#' onClick='ReturnToRubricsDB()'>Return to Rubric Database</a><br>
+			<br>
 		</center></div>";
 
 echo $table;

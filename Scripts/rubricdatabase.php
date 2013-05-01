@@ -38,8 +38,12 @@ if ($_SESSION['nombre_prof'] == 'Administrador') {
 
 <script type='text/javascript'>
 		function ViewRubric(rubricID, type) {
-			//if (type == 'local') {flag = 1};
-			url = '../Scripts/view_rubric.php?rub_id='+rubricID;
+			if (type == 'local') {
+				flag = 1;
+			} else {
+				flag = 0;
+			};
+			url = '../Scripts/view_rubric.php?rub_id='+rubricID+'&type='+flag;
 			$.get(url, function(html) {
 				$('#content').hide()
 				$('#content').replaceWith(html)
