@@ -26,8 +26,11 @@ if ($db) {
 }
 
 // Select the distinct Rubrics from the database
-$query = mysql_query("SELECT rublocal_id, nombre_rub FROM NombresRubricasLocal");
+$query = mysql_query("SELECT rublocal_id, nombre_rub FROM NombresRubricasLocal natural join RubricaCreadaPor where prof_id='$_SESSION[prof_id]'");
 $cursoquery = mysql_query("SELECT nombre_curso FROM Cursos where curso_id=".$_SESSION['curso_id']);
+$query2 = mysql_query("SELECT rub_id, nombre_rub FROM NombresRubricas");
+
+
 
 $curso = mysql_fetch_array($cursoquery);
 
@@ -42,8 +45,12 @@ $output = "
 	<select name='rub_id'>";
 
 while ($row = mysql_fetch_array($query)) {
-		$output = $output."<option value='".$row[0]."'>".$row[1]."</option><br>";
+		$output = $output."<option value='l,".$row[0]."'>Local - ".$row[1]."</option><br>";
 	} 
+
+while ($res = mysql_fetch_array($query2)) {
+	$output = $output."<option value='g,".$res[0]."'>Global - ".$res[1]."</option><br>";
+}
 
 $output = $output."</select> <br>
 	Logro Esperado (1-100) <br>
@@ -60,16 +67,18 @@ $output = $output."</select> <br>
 $('form').submit(function() {
   var data = $(this).serializeArray();
   var nombre_act = data[0].value;
-  var rub_id = data[1].value;
+  var rubrica = data[1].value.split(',');
+  var rub_id = rubrica[1];
+  var type = rubrica[0];
   var logro_esperado = data[2].value;
   var estudiantes_logro = data[3].value;
 
-  var url = '../Scripts/add.php?nombre_act='+nombre_act+'&rub_id='+rub_id+'&logro_esperado='+logro_esperado+'&estudiantes_logro='+estudiantes_logro;
+  var url = '../Scripts/add.php?nombre_act='+nombre_act+'&rub_id='+rub_id+'&logro_esperado='+logro_esperado+'&estudiantes_logro='+estudiantes_logro+'&type='+type;
 
-  $.get(url, function(res) {
-  	alert(res);
- 	window.location.replace('../Front-end/no-index.php');
-  })
+  // $.get(url, function(res) {
+  // 	alert(res);
+ 	// window.location.replace('../Front-end/no-index.php');
+  // })
 
   return false;
 });

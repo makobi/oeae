@@ -17,8 +17,8 @@ echo '<div id="content">
 						<h1>'.$_SESSION['nombre_prof'].'</h1>
 						<h2>'.$_SESSION['email'].'</h2>
 						<h2>'.$_SESSION['fac_prof'].'</h2>
-						<h2>'.$_SESSION['dpto_prof'].'</h2> <br>
-
+						<h2>'.$_SESSION['dpto_prof'].'</h2> 
+						<h2><a href="../Front-end/changepass.php">Click here to change your password</a></h2> <br>
 						</center>
 					</div>'
 

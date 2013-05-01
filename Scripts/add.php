@@ -25,10 +25,11 @@ $nombre_act = $_GET['nombre_act'];
 $rub_id = $_GET['rub_id'];
 $logro_esperado = $_GET['logro_esperado'];
 $estudiantes_logro = $_GET['estudiantes_logro'];
+$type = $_GET['type'];
 
-
-// Insert query
-//$actividad = "INSERT INTO Actividades (nombre_act, rub_id, logro_esperado) values ('$nombre_act', '$rub_id', '$logro_esperado')";
+if ($type = 'g') {
+	// Tengo que guardar la rubrica en las locales para luego continuar con el insert
+}
 
 
 $actividad = "INSERT INTO Actividades (nombre_act, rublocal_id, logro_esperado, estudiantes_logro) values ('$nombre_act', '$rub_id', '$logro_esperado', '$estudiantes_logro')";

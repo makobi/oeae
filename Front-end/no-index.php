@@ -223,8 +223,8 @@ $cursos = mysql_query($cursosquery);
 						<h1><? echo "$_SESSION[nombre_prof]"; ?></h1>
 						<h2> <?php echo "$_SESSION[email]"; ?></h2>
 						<h2> <?php echo "$_SESSION[fac_prof]"; ?></h2>
-						<h2> <?php echo "$_SESSION[dpto_prof]"; ?></h2> <br>
-
+						<h2> <?php echo "$_SESSION[dpto_prof]"; ?></h2>
+						<h2><a href="../Front-end/changepass.php">Click here to change your password</a></h2> <br>
 						</center>
 					</div>
 					<!-- Aqui termina el div -->
