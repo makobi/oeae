@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			<p>Enter the information for the new course:</p>
 				Course Name:	<br><input type='text' name='nombre'> <br>
 				Course Code: 	<br><input type='text' name='codificacion'> <br>
-				Secction: 		<br><input type='text' name='seccion' value='OU1'> <br>
+				Seccion: 		<br><input type='text' name='seccion' value='OU1'> <br>
 				College: 		<br>
 				<select name = 'facultad' id = 'select1'>
 					<option value='ARQU'>Architecture</option>
