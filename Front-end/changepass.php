@@ -42,7 +42,7 @@
 						<input type="submit" value="Submit"> 
 					</form>
 					
-					<a href="index.html" > <p id = "recovery">Go Back</p> </a>
+					<a href="index.php" > <p id = "recovery">Go Back</p> </a>
 			
 		</div>
 		<!-- Termina el navegador drop down -->
