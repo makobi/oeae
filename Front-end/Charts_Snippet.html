@@ -1,0 +1,86 @@
+<!--
+  Snippets (en su mayoria) para las graficas de los agregados. Me base en las plantillas que ellos nos dieron en Excel.
+  Tenemos que buscar una forma de crear las tablas que se utilizaran para crear la graficas, ya que la
+  cantidad de criterios puede variar. Despues de decifrar como hacer eso, es cuestion de copy/paste el codigo.
+
+
+  Lo que se me ocurre es hacer una tabla completamente vacia (sin filas o columnas), luego un query a la rubrica que se esta utilizando y utilizar las funcion addColumn
+  para crear las columnas, y luego addRow para popular la tabla.
+
+  Pagina con info sobre esas funciones: https://developers.google.com/chart/interactive/docs/reference#addrow
+
+  Mas tarde juego haber que tanto se puede automatizar el proceso, pero por ahora para que tengan una idea de como se ve las tablas
+  y de los queries que se tengan que hacer.
+-->
+
+<html>
+  <head>
+
+    <!--Tienen que pegar estas librerías en el 'head'. En el head tabien se crea las tablas con los datos-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      
+
+      /*En esta tabla debe ir los datos con los que se contruira la primera grafica.
+      La table contiene el porcentaje de estudiates que saco X cantidad de puntos para cada
+      criterio. Por lo tanto, la suma de pocentajes en cada fila debe ser igual a 100% (1)*/
+      function drawChart() {
+        
+        var data = google.visualization.arrayToDataTable([
+          ['Criterio', '0 pts', '1 pts',  '2 pts',  '3 pts',  '4 pts',  '5pts', '6 pts',  '7 pts',  '8 pts'],
+          ['Criterio 1',  0,    .10,       .20,       .10,       .10,      .10,     .10,       .30,       .0],
+          ['Criterio 2',  0,    .10,       .10,       .20,       .30,      .10,     .10,       .10,       .0],
+          ['Criterio 3',  0,    .10,       .20,       .10,       .10,      .10,     .10,       .30,       .0],
+          ['Criterio 4',  0,    .10,       .20,       .10,       .10,      .10,     .10,       .30,       .0],
+          ['Criterio 5',  0,    .10,       .20,       .10,       .10,      .10,     .10,       .0,       .30],
+        ]);
+
+
+      /*En esta tabla debe ir el porciento de estudiantes que alcanzo el logro esperado por criterio y los que no.
+      Redundante, pero eso fue lo que pidieron.*/
+        var data2 = google.visualization.arrayToDataTable([
+          ['Criterio', 'Sobre Logro Esperado', 'Menor al Logro Esperado'],
+          ['Criterio 1',  .50,                  .50],
+          ['Criterio 2',  .587,                 .413],
+          ['Criterio 3',  .10,                  .90],
+          ['Criterio 4',  .85,                  .15],
+          ['Criterio 5',  0,                    1],
+        ]);
+
+        /*Existe dos funciones, 'addRows' y 'addColumns', que probablemente son las que tengamos que utilizar para
+        añadir criterios y puntos a la tabla cuando la creemos. Es decir, crear una tabla en blanco y añadir columnas y/o filas
+        de acuerdo a como se haya creado la rúbrica*/ 
+
+
+
+        //Opcione de como se ve la grafica visualmente
+        var options = {
+          title: 'Distribucion de Valores',
+          hAxis: {title: 'Criterios',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Porcentajes', format:'#%',titleTextStyle: {color: 'black'}}
+        };
+
+        var options2 = {
+          title: 'Resultados agrupados',
+          hAxis: {title: 'Criterios',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Porcentajes', format:'#%',titleTextStyle: {color: 'black'}}
+        };
+
+        //Aqui se crea la variable que contiene la grafica y luego se dibuja con la funcion 'draw'. 
+        //En 'getElementById' deben poner el id que van a utilizar para el div donde se dibujara la grafica.
+        var chart = new google.visualization.ColumnChart(document.getElementById('column_div'));
+        chart.draw(data, options);
+
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('column2_div'));
+        chart2.draw(data2, options2);
+      }
+    </script>
+  </head>
+  <body>
+    <!-- La grafica aparecera donde aparezca su id-->
+    <div id="column_div" style="width: 900px; height: 700px;"></div>
+    <div id="column2_div" style="width: 900px; height: 700px;"></div>
+  </body>
+</html>
