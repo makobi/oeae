@@ -195,6 +195,10 @@ $cursos = mysql_query($cursosquery);
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Manage students</p>
 					</div></a>
+					<a href="#" class="addcrit"><div class="secction"> 
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p>Add Criterio</p>
+					</div></a>
 
 				</div>
 			</div>
