@@ -144,6 +144,9 @@ else {
 	$query = mysql_query("INSERT INTO NombresRubricasLocal(rublocal_id, nombre_rub)
 		VALUES('$newrid','$rname');") or die (mysql_error());
 
+	$query = mysql_query("INSERT INTO RubricaCreadaPor(prof_id,rub_id) values ('$prof_id', $newrid)")
+						or die (mysql_error());
+
 	
 	// Guardo la nueva rubrica
 	foreach ($crits as $cid) {

@@ -1,0 +1,104 @@
+<!--Snippets para las graficas de los agregados. -->
+
+<html>
+  <head>
+
+    <!--Tienen que pegar estas librerías en el 'head'. En el head tabien se crea las tablas con los datos-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      
+
+      function drawChart() {
+
+
+      /*
+      En esta tabla debe ir los datos con los que se contruira la primera grafica.
+      La tabla contiene el porcentaje de estudiates que saco X cantidad de puntos para cada
+      criterio.
+
+      Hay que añadir:
+      - Numero de Criterios
+			- Porciento de Estudiantes que sacaron X pts en cada puntuacion
+      */
+
+        var distr = new google.visualization.DataTable();
+
+        distr.addColumn('string', 'Criterio');
+        distr.addColumn('number', '0 pts');
+        distr.addColumn('number', '1 pts');
+        distr.addColumn('number', '2 pts');
+        distr.addColumn('number', '3 pts');
+        distr.addColumn('number', '4 pts');
+        distr.addColumn('number', '5 pts');
+        distr.addColumn('number', '6 pts');
+        distr.addColumn('number', '7 pts');
+        distr.addColumn('number', '8 pts');
+
+        for (var i = 1; i <= /*INSERTAR NUMERO DE CRITERIOS*/; i++) {
+          distr.addRow(['Criterio '+ i,  
+            /*INSERTAR PORCIENTO 0 pts*/,   
+            /*INSERTAR PORCIENTO 1 pts*/,
+            /*INSERTAR PORCIENTO 2 pts*/,
+            /*INSERTAR PORCIENTO 3 pts*/,
+            /*INSERTAR PORCIENTO 4 pts*/,
+            /*INSERTAR PORCIENTO 5 pts*/,
+            /*INSERTAR PORCIENTO 6 pts*/,
+            /*INSERTAR PORCIENTO 7 pts*/,
+            /*INSERTAR PORCIENTO 8 pts*/, 
+          ]);
+        }
+        //FIN DE LA PRIMERA TABLA
+
+
+      /*
+      En esta tabla debe ir, por cada criterio, el porciento de estudiantes que alcanzo el logro esperado y los que no.
+      Hay que añadir:
+      - El total de criterios,
+      - Porciento de estudiantes que alcanzaron el logro esperado
+      - Porciento de estudiantes que NO alcanzaon el logro     
+      */
+        var agrupados = new google.visualization.DataTable();
+
+        agrupados.addColumn('string', 'Criterio');
+        agrupados.addColumn('number', 'Logro Esperado');
+        agrupados.addColumn('number', 'Menor al Logro Esperado');
+
+        for (var i = 1; i <= /*INSERTAR NUMERO DE CRITERIOS*/; i++) {
+          agrupados.addRow(['Criterio'+ i,  /*INSERTAR PORCIENTO QUE ALCANZO EL LOGRO ESPERADO*/,   /*INSERTAR PORCIENTO QUE NO ALCANZO EL LOGRO*/ ]);
+        }
+
+       //FIN DE SEGUNDA TABLA
+
+
+        //Opciones de como se ve la grafica visualmente
+        var options = {
+          title: 'Distribucion de Valores',
+          hAxis: {title: 'Criterios',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Porcentajes', format:'#%',titleTextStyle: {color: 'black'}}
+        };
+
+        var options2 = {
+          title: 'Resultados agrupados',
+          hAxis: {title: 'Criterios',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Porcentajes', format:'#%',titleTextStyle: {color: 'black'}}
+        };
+
+
+        //Aqui se crea la variable que contiene la grafica y luego se dibuja con la funcion 'draw'. 
+        //En 'getElementById' deben poner el id que van a utilizar para el div donde se dibujara la grafica.
+        var chart = new google.visualization.ColumnChart(document.getElementById('column_div'));
+        chart.draw(distr, options);
+
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('column2_div'));
+        chart2.draw(agrupados, options2);
+      }
+    </script>
+  </head>
+  <body>
+    <!-- La grafica aparecera donde aparezca su id-->
+    <div id="column_div" style="width: 900px; height: 700px;"></div>
+    <div id="column2_div" style="width: 900px; height: 700px;"></div>
+  </body>
+</html>

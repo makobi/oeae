@@ -195,6 +195,10 @@ $cursos = mysql_query($cursosquery);
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Manage students</p>
 					</div></a>
+					<a href="#" class="addcrit"><div class="secction"> 
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p>Add Criterio</p>
+					</div></a>
 
 				</div>
 			</div>
@@ -223,8 +227,8 @@ $cursos = mysql_query($cursosquery);
 						<h1><? echo "$_SESSION[nombre_prof]"; ?></h1>
 						<h2> <?php echo "$_SESSION[email]"; ?></h2>
 						<h2> <?php echo "$_SESSION[fac_prof]"; ?></h2>
-						<h2> <?php echo "$_SESSION[dpto_prof]"; ?></h2> <br>
-
+						<h2> <?php echo "$_SESSION[dpto_prof]"; ?></h2>
+						<h2><a href="../Front-end/changepass.php">Click here to change your password</a></h2> <br>
 						</center>
 					</div>
 					<!-- Aqui termina el div -->

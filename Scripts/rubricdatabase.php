@@ -25,14 +25,12 @@ $globals = mysql_query("SELECT * FROM NombresRubricas ORDER BY nombre_rub;")
 	or die(mysql_error());
 
 if ($_SESSION['nombre_prof'] == 'Administrador') {
-	$locals = mysql_query("SELECT * FROM NombresRubricasLocal NATURAL JOIN RubricaCreadaPor NATURAL JOIN Profesores order by prof_id")
+	$locals = mysql_query("SELECT * FROM NombresRubricasLocal NATURAL JOIN RubricaCreadaPor NATURAL JOIN Profesores order by prof_id and rublocal_id=rub_id")
 		or die(mysql_error()); 	
 } else {
-	$locals = mysql_query("SELECT * FROM NombresRubricasLocal NATURAL JOIN RubricaCreadaPor where prof_id='$_SESSION[prof_id]'")
+	$locals = mysql_query("SELECT * FROM NombresRubricasLocal NATURAL JOIN RubricaCreadaPor where prof_id='$_SESSION[prof_id]' and rublocal_id=rub_id")
 		or die(mysql_error()); 	
 }
-
-
 
 ?>
 
