@@ -75,10 +75,10 @@ $('form').submit(function() {
 
   var url = '../Scripts/add.php?nombre_act='+nombre_act+'&rub_id='+rub_id+'&logro_esperado='+logro_esperado+'&estudiantes_logro='+estudiantes_logro+'&type='+type;
 
-  // $.get(url, function(res) {
-  // 	alert(res);
- 	// window.location.replace('../Front-end/no-index.php');
-  // })
+   $.get(url, function(res) {
+   	alert(res);
+ 	 window.location.replace('../Front-end/no-index.php');
+   })
 
   return false;
 });
