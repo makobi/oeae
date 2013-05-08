@@ -51,10 +51,6 @@ if (mysql_num_rows($query)>0) {
  $a_evaluadas = array();	// Retendra ids las actividades que fueron evaluadas
  $nombres_crs = array(); 	// Nombres de los criterios de todas las actividad
  $cr_aprobados = array();	// Indica si se aprobo o no cada criterio en $nombre_crs
- 
- // NO SE PA QUE RAYOS ESTOY HACIENDO ESTO
- $contador_estudiantes = 0; /* Lleva record de los estudiantes evaluados en 
-							todas las actividades*/
 
  // Query para verificar que actividades han sido evaluadas
  $query = mysql_query("Select distinct act_id from Actividades natural join ActividadesCurso
@@ -97,7 +93,6 @@ if (mysql_num_rows($query)>0) {
 	$query = mysql_query("SELECT distinct mat_id FROM Evaluacion WHERE act_id='$a_evaluadas[$i]';")
 		or die(mysql_error());
 	$estudiantes = mysql_num_rows($query);
-	$contador_estudiantes += $estudiantes;
 
 	if ($estudiantes > 0) {
 
@@ -169,7 +164,9 @@ if (mysql_num_rows($query)>0) {
 
 $criterios_norep = array_unique($nombres_crs);
 
-/* Genero tabla de resumen de criterios */
+/*--------------------- Genero tabla de resumen de criterios ---------------------*/
+
+if (sizeof($a_evaluadas)>0) {
  $tabla2 ="<br><br><br><br><table id = grading>
 	 <caption><h4>Resumen de criterios para actividades evaluadas</h4>
 	</caption>
@@ -180,31 +177,38 @@ $criterios_norep = array_unique($nombres_crs);
 		   </thead>
 	    <tbody>"; 	
 
- $alcanzado = 0;
- $noalcanzado = 0;
+ $alcanzado = 0;	// Contador de veces que se alcanzo el criterio
+ $noalcanzado = 0;	// Contador de veces que no se alcanzo
 
-print_r($nombres_crs);
-print_r($criterios_norep);
+ /* Arreglos para retener data a utilizarse en agregados por dominio */
+ $cr_evaluados = array();
+ $total = array();
+ $aprobado = array();
 
  foreach ($criterios_norep as $criterio) {
 	// Criterio
 	$tabla2.="<tr><td><p>".$criterio."</p></td>";
-	$result = array_keys($nombres_crs, $criterio);
-//	echo "\n\n".$criterio.": ";
-//	print_r($result);  
+	$result = array_keys($nombres_crs, $criterio);  
 	foreach ($result as $status) {
 		if ($cr_aprobados[$status] == "Alcanzado") $alcanzado++;
 		else if ($cr_aprobados[$status] == "No alcanzado") $noalcanzado++;
 	}
+
 	$veces = $alcanzado + $noalcanzado;
 	if ($veces == 0) {
 		$veces = "No evaluado";
 		$alcanzado = "-";
 		$noalcanzado = "-";
 	}
+	// Data para los agregados por dominio
+	else {
+		$cr_evaluados[] = $criterio;
+		$aprobado[] = $alcanzado;
+		$total[] = $veces; 	
+	}
 
 	// Veces que se evaluo
-	$tabla2.="<td><p>".($alcanzado + $noalcanzado)."</p></td>";
+	$tabla2.="<td><p>".$veces."</p></td>";
 	// Alcanzado
 	$tabla2.="<td><p>".$alcanzado."</p></td>";
 	// No alcanzado
@@ -215,101 +219,73 @@ print_r($criterios_norep);
 	$noalcanzado = 0;
  }
  $tabla2.="</tbody></table>";
- 
-// DOMINIOS
-/*
-if ($contador_estudiantes > 0) { // Si se ha evaluado algun estudiante...
 
-	$query = mysql_query("Select distinct nombre_dom, nombre_crit from Dominios natural 
-	join CriterioPertenece natural join Criterios Evaluacion natural join Actividades natural join 
-	ActividadesCurso natural join Cursos where curso_id='$curso_id';") or die(mysql_error());
-/*
- $query = mysql_query("Select distinct nombre_dom, nombre_crit from Dominios natural 
-	join Criterios natural join Evaluacion natural join CriterioPertenece natural join 
-	ActividadesCurso where curso_id='$curso_id';") or die(mysql_error());
-*//*
-select distinct nombre_dom, nombre_crit from RubricaLocal natural join Dominios natural join CriterioPertenece natural join Criterios natural join Actividades natural join Cursos natural join ActividadesCurso natural join Evaluacion where curso_id=1;
-*/
-/*
-$query = mysql_query("select nombre_dom, nombre_crit from RubricaLocal natural join
-	Dominios natural join CriterioPertenece natural join Criterios natural join Actividades
-	where act_id='$aid';") or die(mysql_error());
-*/
+}
+else {
+ $tabla2 = "<p><br><br>Para ver resultados por criterios debe evaluar al menos una actividad.<br>";
+}
+/*--------------------- Genero tabla de criterios alineados a dominios ---------------------*/ 
 
+$dominios = array(); // Tabla para retener relacion "dominio" => "cr1","cr2",...
+$cont_dom = 0; // Retiene la cantidad de dominios distintos
 
-/*
- $dominios = array();	// Nombres de los dominios
- $d_span = array();		/* Span de cada dominio (para efecto rowspan en tabla html) -
-						   Almacena la cantidad de criterios asociados al dominio */
-/* $criterios2 = array();	/* Nombres de los criterios (esta vez en el orden asociado 
-						   a los dominios) */
-/* $i = -1;	
+if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
+ foreach ($cr_evaluados as $criterio) {
+	// Relaciono dominios con criterios
+	$query = mysql_query("Select nombre_dom from Dominios natural join CriterioPertenece
+		where crit_id in (Select crit_id from Criterios where nombre_crit='$criterio');")
+	 	or die(mysql_error());
 
- while ($result = mysql_fetch_array($query)) {
-	
-	$criterios2[] = $result['nombre_crit'];
-
-	// Si el dominio no esta ya en el arreglo, se guarda
-	if (!in_array($result['nombre_dom'], $dominios)) { 
-		$dominios[] = $result['nombre_dom'];
-		$i++;	
-		$d_span[$i] = 1;
-	}
-	else { 
-		$d_span[$i]++;
-	}
- }
-
- $aprobados = array(); // Acumulador de criterios aprobados por dominio.
- for ($i = 0; $i < sizeof($dominios); $i++) $aprobados[$i] = 0; // Inicializacion
-
- $porciento = array(); // Almacena el porciento de criterios aprobados
- $dom_alcanzado = array(); // Retiene si se alcanzo o no el dominio
-
- $first = 0; // Donde se comienza a iterar 
- $last = 0;  // Donde se termina de iterar
- $iter = 0;  // Contador de iteraciones - Cada iteracion corresponde a un dominio
-
- foreach ($d_span as $asociados) {
-	$last += $asociados; /* Termina cuando se itere por todos los criterios
-							asociados al dominio. */
-	
-	/* Se verifica cuantos de los criterios alineados a los dominios fueron aprobados. */
-/*	for ($i = $first; $i < $last; $i++) {
-		$filas = array_keys($nombres_crs, $criterios2[$i]);
-		foreach ($filas as $fila) {
-			if ($cr_aprobados[$fila] == 'Aprobado') {
-				$aprobados[$iter]++; // Aumento el conteo de criterios aprobados
-			}
+	// Verifica que hayan resultados
+	if (mysql_num_rows($query) > 0) {
+		while ($result = mysql_fetch_array($query)) {
+			$dom = $result["nombre_dom"];				
+			$dominios[$dom][] = $criterio;
 		}
 	}
-	// Se computa el porciento de criterios aprobados
-	$porciento[] = round(($aprobados[$iter]/$asociados)*100,2);
-
-	// Se verifica si el dominio se alcanzo 
-	if (round($porciento[$iter],-1) >= 70) {
-		$dom_alcanzado[] = 'Aprobado';
-	}
-	else $dom_alcanzado[] = 'No aprobado';
-
-	$first = $last; // Establezco desde donde comienza la nueva iteracion.
-	$iter++; // Vamos al proximo dominio
  }
 
+   
+ $tabla3 = "<br><br><br><br><table id = grading>
+	 <caption><h4>Agregados por dominios para el curso</h4>
+	</caption>
+	       <thead>
+		   <td><p>Dominios</p></td>
+	       <td><p>Criterios alineados</p></td>
+	       <td><p>Criterios alcanzados</p></td>
+   		   <td><p>Porciento</p></td>
+		   <td><p>Alcanzado o no alcanzado</p></td>
+		   </thead>
+	    <tbody>"; 	
 
- $tabla2 ="<p> Actividades evaluadas: ".count($a_evaluadas)."
-	<table id = grading>
-	 <caption><h4>Tabla de agregados por dominios</h4></caption>
-        <thead>
-	       <td><p>Dominios</p></td>
-	       <td><p>Criterios Alineados</p></td>
-	       <td><p>Criterios Aprobados</p></td>
-		   <td><p>Porcentaje</p></td>
-		   <td><p>Aprobado o no aprobado</p></td>
-	    </thead><tbody>";
-
- $dom_i = 0;
- $span = 0;
+ foreach ($dominios as $dom => $lista_criterios) { 
+	$apr = 0;
+	$tot = 0;
+	$tabla3.="<tr>";
+ 	if ($span = sizeof($lista_criterios) != 0) {
+		// Agrupar data para el dominio
+		$tabla3.= "<td rowspan = $span><p> $dom </p></td>";
+		$tabla3.= "<td>";
+			foreach($lista_criterios as $criterio) {
+        		$tabla3.= "<p> $criterio </p>";
+				$key = array_search($criterio, $cr_evaluados);
+				$apr += $aprobado[$key];
+				$tot += $total[$key];
+			}
+		$tabla3.= "</td>";
+		$tabla3.= "<td rowspan = $span><p> $apr de $tot </p></td>
+		   		   <td rowspan = $span><p>".round(($apr/$tot)*100,2)."</p></td>";
+			if (round(($apr/$tot)*100,2) > 70) {
+				$tabla3.= "<td rowspan = $span><p> Aprobado </p></td>";
+			}
+			else {
+				$tabla3.= "<td rowspan = $span><p> No aprobado </p></td>";
+			}						
+ 	}
+	$tabla3.="</tr>";
+ }	
+ $tabla3.="</tbody></table>";
+/*
 
  // Se despliega el contenido de la tabla
  for ($i=0; $i<sizeof($criterios2); $i++) {
@@ -335,13 +311,15 @@ else {
  		de este curso.";
 }
 */
+} // Termina if actividades evaluadas
+
 }
 /************************ SI NO HAY ACTIVIDADES... ************************/
 else {
 	$tabla2 ="<p> Error: Aún no se han realizado actividades para este curso.";
 } 
 
-echo $tabla1.$tabla2;
+echo $tabla1.$tabla2.$tabla3;
 echo "<br><br><br><br><br><br></center></div>";
 
 ?>
