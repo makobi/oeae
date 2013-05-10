@@ -21,9 +21,7 @@ if ($link) {
 
 session_start();
 
-$curso_id = $_GET['course_id'];
-$_SESSION['course_id'] = $curso_id;
-
+$curso_id = $_SESSION['course_id'];
 
 $query = "SELECT codificacion, nombre_curso from Cursos where curso_id=".$curso_id;
 $result = mysql_fetch_array(mysql_query($query));
@@ -64,11 +62,8 @@ if (mysql_num_rows($query)>0) {
  }
 
  echo "<div id='content'><center>
-	  <h3>Resultados para curso ".$codif." (".$nombre_curso.")</h3>
-	  <a href=../Front-end/coursechart.php>Ver Graficas para estos resultados</a>";
+	  <h3>Resultados para curso ".$codif." (".$nombre_curso.")</h3>";
 
- /* Se genera tabla con resumen de actividades para el curso - Incluye los nombres
-	de las actividades, su logro esperado y si estas han sido evaluadas o no */
  $tabla1 ="<table id = grading>
 	 <caption><h4>Resumen de actividades</h4>
 	</caption>
@@ -170,6 +165,7 @@ if (mysql_num_rows($query)>0) {
 $criterios_norep = array_unique($nombres_crs);
 
 /*--------------------- Genero tabla de resumen de criterios ---------------------*/
+
 if (sizeof($a_evaluadas)>0) {
  $tabla2 ="<br><br><br><br><table id = grading>
 	 <caption><h4>Resumen de criterios para actividades evaluadas</h4>
@@ -198,7 +194,7 @@ if (sizeof($a_evaluadas)>0) {
 		else if ($cr_aprobados[$status] == "No alcanzado") $noalcanzado++;
 	}
 
-	$veces = $alcanzado + $noalcanzado; // Cuantas veces fue evaluado el criterio
+	$veces = $alcanzado + $noalcanzado;
 	if ($veces == 0) {
 		$veces = "No evaluado";
 		$alcanzado = "-";
@@ -229,6 +225,7 @@ else {
  $tabla2 = "<p><br><br>Para ver resultados por criterios debe evaluar al menos una actividad.<br>";
 }
 /*--------------------- Genero tabla de criterios alineados a dominios ---------------------*/ 
+
 $dominios = array(); // Tabla para retener relacion "dominio" => "cr1","cr2",...
 $cont_dom = 0; // Retiene la cantidad de dominios distintos
 
@@ -248,7 +245,7 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 	}
  }
 
- // Se comienza a generar la tabla  
+   
  $tabla3 = "<br><br><br><br><table id = grading>
 	 <caption><h4>Agregados por dominios para el curso</h4>
 	</caption>
@@ -262,15 +259,13 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 	    <tbody>"; 	
 
  foreach ($dominios as $dom => $lista_criterios) { 
-	$apr = 0;	// Contador de criterios alineados aprobados
-	$tot = 0;	// Contador del total de criterios alineados evaluados
+	$apr = 0;
+	$tot = 0;
 	$tabla3.="<tr>";
  	if ($span = sizeof($lista_criterios) != 0) {
-		// Despliego nombre del dominio
+		// Agrupar data para el dominio
 		$tabla3.= "<td rowspan = $span><p> $dom </p></td>";
 		$tabla3.= "<td>";
-			/* Despliego criterios alineados y verifico cuantas veces se aprobaron
-			   y el total de veces que fueron evaluados. */
 			foreach($lista_criterios as $criterio) {
         		$tabla3.= "<p> $criterio </p>";
 				$key = array_search($criterio, $cr_evaluados);
@@ -280,22 +275,43 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 		$tabla3.= "</td>";
 		$tabla3.= "<td rowspan = $span><p> $apr de $tot </p></td>
 		   		   <td rowspan = $span><p>".round(($apr/$tot)*100,2)."</p></td>";
-			// Si el porcentaje es mayor que 70, se alcanzo.
 			if (round(($apr/$tot)*100,2) > 70) {
-				$tabla3.= "<td rowspan = $span><p> Alcanzado </p></td>";
+				$tabla3.= "<td rowspan = $span><p> Aprobado </p></td>";
 			}
 			else {
-				$tabla3.= "<td rowspan = $span><p> No alcanzado </p></td>";
+				$tabla3.= "<td rowspan = $span><p> No aprobado </p></td>";
 			}						
  	}
 	$tabla3.="</tr>";
  }	
  $tabla3.="</tbody></table>";
+/*
 
-} // Termina if actividades evaluadas
-else {
-	$tabla3 = "";
+ // Se despliega el contenido de la tabla
+ for ($i=0; $i<sizeof($criterios2); $i++) {
+	if($i == $span) {
+		$tabla2.="<tr><td rowspan=".$d_span[$dom_i]."><p>".$dominios[$dom_i]."</p></td>";
+	}
+    $tabla2.="<td><p>".$criterios2[$i]."</p></td>";
+	if($i == $span) {
+		$tabla2.="<td rowspan=".$d_span[$dom_i]."><p>".$aprobados[$dom_i]." de ".$d_span[$dom_i]."</p></td>";
+		$tabla2.="<td rowspan=".$d_span[$dom_i]."><p>".$porciento[$dom_i]."</p></td> 
+		<td rowspan=".$d_span[$dom_i]."><p>".$dom_alcanzado[$dom_i]."</p></td>" ;
+		$span += $d_span[$dom_i];
+		$dom_i++;
+	}
+	$tabla2.="</tr>";
+ }
+ $tabla2.="</tbody></table>"; 
+
 }
+
+else { 
+	$tabla2.="<p> Error: Aún no se han realizado evaluaciones para las actividades
+ 		de este curso.";
+}
+*/
+} // Termina if actividades evaluadas
 
 }
 /************************ SI NO HAY ACTIVIDADES... ************************/
@@ -303,7 +319,56 @@ else {
 	$tabla2 ="<p> Error: Aún no se han realizado actividades para este curso.";
 } 
 
-echo $tabla1.$tabla2.$tabla3;
-echo "<br><br><br><br><br><br></center></div>";
-
 ?>
+
+
+ <html>
+ <head>
+ 	<title>Course Chart</title>
+ 	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+ 	 <script type='text/javascript'>
+  	  google.load('visualization', '1', {packages:['corechart']});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+
+        var dominios = new google.visualization.DataTable();
+
+        dominios.addColumn('string', 'Dominio');
+        dominios.addColumn('number', 'Logro Esperado');
+        dominios.addColumn('number', 'Menor al Logro Esperado');
+
+        <?php 
+        foreach ($dominios as $dom => $lista_criterios) { 
+        	$apr = 0;
+			$tot = 0;
+				foreach($lista_criterios as $criterio) {
+        			$tabla3.= "<p> $criterio </p>";
+					$key = array_search($criterio, $cr_evaluados);
+					$apr += $aprobado[$key];
+					$tot += $total[$key];
+				}
+        	echo 'dominios.addRow(["'.$dom.'",'.(round(($apr/$tot)*100,2)).','.strval((100-round(($apr/$tot)*100,2))).']);';
+        }
+
+         ?>
+
+		var options3 = {
+			<?php echo "title: 'Resultados de dominios para el curso:',"; ?>
+          
+          hAxis: {title: 'Dominio',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Porcentaje de Criterios',titleTextStyle: {color: 'black'}}
+        };
+
+        var chart3 = new google.visualization.ColumnChart(document.getElementById('column3_div'));
+        chart3.draw(dominios, options3);
+
+    	}
+</script>
+
+ </head>
+ <body>
+ 	<div id='column3_div' style='width: 700px; height: 500px;'></div>
+ </body>
+ </html>
