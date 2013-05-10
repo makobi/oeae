@@ -83,6 +83,15 @@ $(document).ready(function() {
 		})
 	});
 
+	// Agregados para administrador
+	$(".results").on("click", function() {
+		url = "../Scripts/resultsby.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 	// Crear Criterio (admin only)
 	$(".addcrit").on("click", function() {
 		url = "../Scripts/createcriterio.php";

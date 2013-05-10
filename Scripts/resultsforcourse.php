@@ -64,6 +64,8 @@ if (mysql_num_rows($query)>0) {
  echo "<div id='content'><center>
 	  <h3>Resultados para curso ".$codif." (".$nombre_curso.")</h3>";
 
+ /* Se genera tabla con resumen de actividades para el curso - Incluye los nombres
+	de las actividades, su logro esperado y si estas han sido evaluadas o no */
  $tabla1 ="<table id = grading>
 	 <caption><h4>Resumen de actividades</h4>
 	</caption>
@@ -165,7 +167,6 @@ if (mysql_num_rows($query)>0) {
 $criterios_norep = array_unique($nombres_crs);
 
 /*--------------------- Genero tabla de resumen de criterios ---------------------*/
-
 if (sizeof($a_evaluadas)>0) {
  $tabla2 ="<br><br><br><br><table id = grading>
 	 <caption><h4>Resumen de criterios para actividades evaluadas</h4>
@@ -194,7 +195,7 @@ if (sizeof($a_evaluadas)>0) {
 		else if ($cr_aprobados[$status] == "No alcanzado") $noalcanzado++;
 	}
 
-	$veces = $alcanzado + $noalcanzado;
+	$veces = $alcanzado + $noalcanzado; // Cuantas veces fue evaluado el criterio
 	if ($veces == 0) {
 		$veces = "No evaluado";
 		$alcanzado = "-";
@@ -225,7 +226,6 @@ else {
  $tabla2 = "<p><br><br>Para ver resultados por criterios debe evaluar al menos una actividad.<br>";
 }
 /*--------------------- Genero tabla de criterios alineados a dominios ---------------------*/ 
-
 $dominios = array(); // Tabla para retener relacion "dominio" => "cr1","cr2",...
 $cont_dom = 0; // Retiene la cantidad de dominios distintos
 
@@ -245,7 +245,7 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 	}
  }
 
-   
+ // Se comienza a generar la tabla  
  $tabla3 = "<br><br><br><br><table id = grading>
 	 <caption><h4>Agregados por dominios para el curso</h4>
 	</caption>
@@ -259,13 +259,15 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 	    <tbody>"; 	
 
  foreach ($dominios as $dom => $lista_criterios) { 
-	$apr = 0;
-	$tot = 0;
+	$apr = 0;	// Contador de criterios alineados aprobados
+	$tot = 0;	// Contador del total de criterios alineados evaluados
 	$tabla3.="<tr>";
  	if ($span = sizeof($lista_criterios) != 0) {
-		// Agrupar data para el dominio
+		// Despliego nombre del dominio
 		$tabla3.= "<td rowspan = $span><p> $dom </p></td>";
 		$tabla3.= "<td>";
+			/* Despliego criterios alineados y verifico cuantas veces se aprobaron
+			   y el total de veces que fueron evaluados. */
 			foreach($lista_criterios as $criterio) {
         		$tabla3.= "<p> $criterio </p>";
 				$key = array_search($criterio, $cr_evaluados);
@@ -275,43 +277,22 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 		$tabla3.= "</td>";
 		$tabla3.= "<td rowspan = $span><p> $apr de $tot </p></td>
 		   		   <td rowspan = $span><p>".round(($apr/$tot)*100,2)."</p></td>";
+			// Si el porcentaje es mayor que 70, se alcanzo.
 			if (round(($apr/$tot)*100,2) > 70) {
-				$tabla3.= "<td rowspan = $span><p> Aprobado </p></td>";
+				$tabla3.= "<td rowspan = $span><p> Alcanzado </p></td>";
 			}
 			else {
-				$tabla3.= "<td rowspan = $span><p> No aprobado </p></td>";
+				$tabla3.= "<td rowspan = $span><p> No alcanzado </p></td>";
 			}						
  	}
 	$tabla3.="</tr>";
  }	
  $tabla3.="</tbody></table>";
-/*
 
- // Se despliega el contenido de la tabla
- for ($i=0; $i<sizeof($criterios2); $i++) {
-	if($i == $span) {
-		$tabla2.="<tr><td rowspan=".$d_span[$dom_i]."><p>".$dominios[$dom_i]."</p></td>";
-	}
-    $tabla2.="<td><p>".$criterios2[$i]."</p></td>";
-	if($i == $span) {
-		$tabla2.="<td rowspan=".$d_span[$dom_i]."><p>".$aprobados[$dom_i]." de ".$d_span[$dom_i]."</p></td>";
-		$tabla2.="<td rowspan=".$d_span[$dom_i]."><p>".$porciento[$dom_i]."</p></td> 
-		<td rowspan=".$d_span[$dom_i]."><p>".$dom_alcanzado[$dom_i]."</p></td>" ;
-		$span += $d_span[$dom_i];
-		$dom_i++;
-	}
-	$tabla2.="</tr>";
- }
- $tabla2.="</tbody></table>"; 
-
-}
-
-else { 
-	$tabla2.="<p> Error: Aún no se han realizado evaluaciones para las actividades
- 		de este curso.";
-}
-*/
 } // Termina if actividades evaluadas
+else {
+	$tabla3 = "";
+}
 
 }
 /************************ SI NO HAY ACTIVIDADES... ************************/
