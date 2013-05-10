@@ -300,10 +300,13 @@ else {
 }
 /************************ SI NO HAY ACTIVIDADES... ************************/
 else {
-	$tabla2 ="<p> Error: Aún no se han realizado actividades para este curso.";
+	$tabla2 ="<center><p> Error: Aún no se han realizado actividades para este curso.</center>";
 } 
 
-echo $tabla1.$tabla2.$tabla3;
+if (isset($tabla1)) echo $tabla1;
+if (isset($tabla2)) echo $tabla2;
+if (isset($tabla3)) echo $tabla3;
+
 echo "<br><br><br><br><br><br></center></div>";
 
 ?>
