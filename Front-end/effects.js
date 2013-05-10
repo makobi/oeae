@@ -83,7 +83,7 @@ $(document).ready(function() {
 		})
 	});
 
-	// Crear Criterio (admin only)
+	// Crear Criterio
 	$(".addcrit").on("click", function() {
 		url = "../Scripts/createcriterio.php";
 		$.get(url, function(html) {
@@ -92,9 +92,19 @@ $(document).ready(function() {
 		})
 	});
 
-	// Crear Criterio (admin only)
+	// Crear Criterio
 	$(".editcrit").on("click", function() {
 		url = "../Scripts/editcriterio.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
+	// Crear Dominio (admin only)
+	$(".adddom").on("click", function() {
+		url = "../Scripts/createdom.php";
+		console.log("llegamos");
 		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)

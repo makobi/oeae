@@ -87,10 +87,15 @@ if($_SESSION['nombre_prof']!='Administrador') {
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Editar Criterios</p>
 					</div></a>
+					<a href="#" class="adddom"><div class="secction"> 
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p>Add Dominio</p>
+					</div></a>
 					<a href="#"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<a href="Manual_de_Usuario_Admin.pdf" target = "_blank"><p>Manual de Usuario</p></a>
 					</div></a>
+
 
 				</div>
 			</div>
