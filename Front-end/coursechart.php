@@ -21,9 +21,7 @@ if ($link) {
 
 session_start();
 
-$curso_id = $_GET['course_id'];
-$_SESSION['course_id'] = $curso_id;
-
+$curso_id = $_SESSION['course_id'];
 
 $query = "SELECT codificacion, nombre_curso from Cursos where curso_id=".$curso_id;
 $result = mysql_fetch_array(mysql_query($query));
@@ -64,8 +62,7 @@ if (mysql_num_rows($query)>0) {
  }
 
  echo "<div id='content'><center>
-	  <h3>Resultados para curso ".$codif." (".$nombre_curso.")</h3>
-	  <a href=../Front-end/coursechart.php>Ver Graficas para estos resultados</a>";
+	  <h3>Resultados para curso ".$codif." (".$nombre_curso.")</h3>";
 
  $tabla1 ="<table id = grading>
 	 <caption><h4>Resumen de actividades</h4>
@@ -322,7 +319,48 @@ else {
 	$tabla2 ="<p> Error: Aún no se han realizado actividades para este curso.";
 } 
 
-echo $tabla1.$tabla2.$tabla3;
-echo "<br><br><br><br><br><br></center></div>";
-
 ?>
+
+
+ <html>
+ <head>
+ 	<title>Course Chart</title>
+ 	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+ 	 <script type='text/javascript'>
+  	  google.load('visualization', '1', {packages:['corechart']});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+
+        var dominios = new google.visualization.DataTable();
+
+        dominios.addColumn('string', 'Dominio');
+        dominios.addColumn('number', 'Logro Esperado');
+        dominios.addColumn('number', 'Menor al Logro Esperado');
+
+        <?php 
+        foreach ($dominios as $dom => $lista_criterios) { 
+        	echo 'dominios.addRow(["'.$dom.'",'.(round(($apr/$tot)*100,2)).','.strval((100-round(($apr/$tot)*100,2))*0.01).']);';
+        }
+
+         ?>
+
+		var options3 = {
+			<?php echo "title: 'Resultados de dominios para el curso:',"; ?>
+          
+          hAxis: {title: 'Dominio',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Porcentaje de Criterios',titleTextStyle: {color: 'black'}}
+        };
+
+        var chart3 = new google.visualization.ColumnChart(document.getElementById('column3_div'));
+        chart3.draw(dominios, options3);
+
+    	}
+</script>
+
+ </head>
+ <body>
+ 	<div id='column3_div' style='width: 700px; height: 500px;'></div>
+ </body>
+ </html>
