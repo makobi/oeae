@@ -1,7 +1,7 @@
 <?php
 /*
 	Tahiri Laboy De Jesus
-	Script para ver agregados por curso
+	Script para ver agregados por curso - Recibe por el id del curso.
 */
 
 /* Parametros para conexion a la base de datos */
