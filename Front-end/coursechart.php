@@ -341,7 +341,15 @@ else {
 
         <?php 
         foreach ($dominios as $dom => $lista_criterios) { 
-        	echo 'dominios.addRow(["'.$dom.'",'.(round(($apr/$tot)*100,2)).','.strval((100-round(($apr/$tot)*100,2))*0.01).']);';
+        	$apr = 0;
+			$tot = 0;
+				foreach($lista_criterios as $criterio) {
+        			$tabla3.= "<p> $criterio </p>";
+					$key = array_search($criterio, $cr_evaluados);
+					$apr += $aprobado[$key];
+					$tot += $total[$key];
+				}
+        	echo 'dominios.addRow(["'.$dom.'",'.(round(($apr/$tot)*100,2)).','.strval((100-round(($apr/$tot)*100,2))).']);';
         }
 
          ?>
