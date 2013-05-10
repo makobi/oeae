@@ -75,17 +75,21 @@ if($_SESSION['nombre_prof']!='Administrador') {
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Rubric Database</p>
 					</div></a>
+					<a href="#" class="addcrit"><div class="secction"> 
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p>Add Criteria</p>
+					</div></a>
+					<a href="#" class="editcrit"><div class="secction"> 
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p>Edit Criteria</p>
+					</div></a>
 					<a href="#" class="rub"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Create Rubric</p>
 					</div></a>
-					<a href="#" class="addcrit"><div class="secction"> 
+					<a href="#" class="results"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Add Criterio</p>
-					</div></a>
-					<a href="#" class="editcrit"><div class="secction"> 
-						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Editar Criterios</p>
+						<p>Agregados</p>
 					</div></a>
 					<a href="#" class="adddom"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>

@@ -43,8 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 				College: 		<br>
 				<select name = 'facultad' id = 'select1'>
 					<option value='ARQU'>Architecture</option>
-					<option value='ADMI'>Bussiness Administration</option>
-					<option value='COMU'>Comunication</option>
+					<option value='ADMI'>Business Administration</option>
+					<option value='COMU'>Communication</option>
 					<option value='EDUC'>Education</option>
 					<option value='GENR'>General Studies</option>
 					<option value='HUMA'>Humanities</option>
