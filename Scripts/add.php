@@ -39,6 +39,7 @@ if ($type = 'g') {
 	while($res = mysql_fetch_array($crits)) {
 		mysql_query("INSERT INTO RubricaLocal (rublocal_id,crit_id,prof_id) values ('$rublocal_id','$res[0]','$_SESSION[prof_id]')");
 	}
+	mysql_query("INSERT INTO RubricaCreadaPor (rub_id,prof_id) values ('$rublocal_id', '$_SESSION[prof_id]')");
 }
 
 
