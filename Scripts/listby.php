@@ -157,15 +157,18 @@ else if ($type == "course") {
 			// Despliego nombre del programa
 			$list.= "<p><i> $prog </i></p>";
 
-			$courses = mysql_query("Select distinct codificacion, nombre_curso from Cursos where 
-			prog_curso = '$prog' order by codificacion;") or die(mysql_error());
+			$courses = mysql_query("Select distinct codificacion, curso_id, nombre_curso from Cursos where
+				prog_curso = '$prog' order by codificacion;") or die(mysql_error());
 
 			// Para todas los programas asociados a esa facultad...
 			while ($courses_res = mysql_fetch_array($courses)) {
 				$cod = $courses_res['codificacion'];
 				$nombre = $courses_res['nombre_curso'];
-				// Despliego cursos correspondientes
-				$list.= "<p> $cod : $nombre </p>";
+				$id = $courses_res['curso_id'];
+				// Despliego link a agregados de cursos correspondientes
+				$list.= "<p>
+						 <a href='#' onClick='ViewResults(\"$type\",$id)'> $cod : $nombre </a>
+						 </p>";
 			}
 			$list.="<br>";
 		}
@@ -175,6 +178,26 @@ else if ($type == "course") {
 else $list = "<p> Error: List type not set. </p>";
 
 ?>
+
+<script type='text/javascript'>
+	// Funcion que genera el url donde se genera la lista por tipo
+	function ViewResults(type, id) {
+		if (type == "course") {
+			url = "../Scripts/resultsforcourse.php?course_id="+id;
+		}
+		else if (type == "program") {
+			url = "";
+		}
+		else { // type == "college"
+			url = "";
+		};
+
+		$.get(url, function(html) {
+			$('#content').hide()
+			$('#content').replaceWith(html)
+		})
+	};
+</script>
 
 <div id='content'> 
 	<center>
