@@ -126,10 +126,10 @@ for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
 				<td><p>".$criterios[$cids[$i]]." <br> <br> <input type='checkbox' name='".$cids[$i]."' value='".$cids[$i]."'>   <strong> Eliminar </strong> </p>
 				</td>
-				<td><textarea name=".$cids[$i].',2'.">".$descripcion[$cids[$i]][2]."</textarea></td>
-				<td><textarea name=".$cids[$i].',4'.">".$descripcion[$cids[$i]][4]."</textarea></td>
-				<td><textarea name=".$cids[$i].',6'.">".$descripcion[$cids[$i]][6]."</textarea></td>
-				<td><textarea name=".$cids[$i].',8'.">".$descripcion[$cids[$i]][8]."</textarea></td>
+				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][2]."</textarea></td>
+				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][4]."</textarea></td>
+				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][6]."</textarea></td>
+				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][8]."</textarea></td>
 			  </tr>";
 }
 
