@@ -35,94 +35,119 @@ if ($type == "college") {
 		";
 }
 
-// Listado por programa
+/* Listado por programa - 
+Para record, ese else if me da verguenza ajena... */
+
 else if ($type == "program") {
+
+	$programs = array();
+
+	// Query para verificar los diferentes programas en la base de datos
+	$prog_query = mysql_query("Select distinct prog_curso from Cursos;") or die(mysql_error());
+	while ($result = mysql_fetch_array($prog_query)) {
+		$programs[] = $result['prog_curso'];
+	}
+
+	// Verifica si el programa existe en la base de datos. De ser cierto, activa url para ver agregados.
+	function CheckProgram($type, $program, $programs) {
+		
+		if (in_array($program, $programs)) {
+			$url="<p>
+					<a href='#' onClick='ViewResults(\"$type\",\"$program\")'> $program </a>
+				 </p>";
+		}
+		else $url = "<p> $program </p>";
+
+		return $url;
+	}
+
 	$list="	<h2> Select a Program: </h2>
 		  <br>
 			<p><b> School of Architecture </b></p>
-				<p> Environmental Design </p>
+				".CheckProgram ($type, 'Environmental Design',$programs)."
 			<br>
 			<p><b> School of Communication  </b></p>
-				<p> Audiovisual Communication </p>
-				<p> Information and Journalist </p>
-				<p> Public Relations and Advertisement </p>
+				".CheckProgram ($type, 'Audiovisual Communication',$programs)."
+				".CheckProgram ($type, 'Information and Journalist',$programs)."
+				".CheckProgram ($type, 'Public Relations and Advertisement',$programs)."
 			<br>
 			<p><b> College of General Studies  </b></p>
-				<p> Interdisciplinary Program in General Studies </p>
+				".CheckProgram ($type, 'Interdisciplinary Program in General Studies ',$programs)."
 			<br>
 			<p><b> College of Humanities  </b></p>
-				<p> Art History </p>
-				<p> Comparative Literature </p>
-				<p> Performing Arts </p>
-				<p> English Linguistics and Communication </p>
-				<p> English Literature </p>
-				<p> History of Europe </p>
-				<p> History of the Americas </p>
-				<p> Fine Arts </p>
-				<p> Modern Languages </p>
-				<p> Interdisciplinary Studies </p>
-				<p> Hispanics Studies </p>
-				<p> Music </p>
-				<p> Philosophy </p>
+				".CheckProgram ($type, 'Art History',$programs)."
+				".CheckProgram ($type, 'Comparative Literature',$programs)."
+				".CheckProgram ($type, 'Performing Arts',$programs)."
+				".CheckProgram ($type, 'English Linguistics and Communication',$programs)."
+				".CheckProgram ($type, 'English Literature',$programs)."
+				".CheckProgram ($type, 'History of Europe',$programs)."
+				".CheckProgram ($type, 'History of the Americas',$programs)."
+				".CheckProgram ($type, 'Fine Arts',$programs)."
+				".CheckProgram ($type, 'Modern Languages',$programs)."
+				".CheckProgram ($type, 'Interdisciplinary Studies',$programs)."
+				".CheckProgram ($type, 'Hispanics Studies',$programs)."
+				".CheckProgram ($type, 'Music',$programs)."
+				".CheckProgram ($type, 'Philosophy',$programs)."
 			<br>
 			<p><b> College of Education  </b></p>
-				<p> Family Ecology - Pre-School Education </p>
-				<p> Elementary Education – K-3 </p>
-				<p> Elementary Education – 4-6 </p>
-				<p> Elementary Education – TESOL </p>
-				<p> Elementary Education – Special Education </p>
-				<p> Secondary Education – Art </p>
-				<p> Secondary Education – Biology </p>
-				<p> Secondary Education – Family Ecology </p>
-				<p> Secondary Education – Business Office Management Education </p>
-				<p> Secondary Education – Technical Industrial Education </p>
-				<p> Secondary Education – Spanish </p>
-				<p> Secondary Education – Physics </p>
-				<p> Secondary Education – Mathematics </p>
-				<p> Secondary Education – Chemistry </p>
-				<p> Secondary Education – Industrial Arts </p>
-				<p> Secondary Education – General Science </p>
-				<p> Secondary Education – Business Accounting Education </p>
-				<p> Secondary Education – Physical Education </p>
-				<p> Secondary Education – TESOL </p>
-				<p> Secondary Education – Social Sciences </p>
-				<p> Secondary Education – History </p>
-				<p> Secondary Education – Music </p>
-				<p> Secondary Education – Theater </p>
-				<p> Recreation </p>
-				<p> Family and Community Education </p>
+				".CheckProgram ($type, 'Family Ecology - Pre-School Education',$programs)."
+				".CheckProgram ($type, 'Elementary Education – K-3',$programs)."
+				".CheckProgram ($type, 'Elementary Education – 4-6',$programs)."
+				".CheckProgram ($type, 'Elementary Education – TESOL',$programs)."
+				".CheckProgram ($type, 'Elementary Education – Special Education',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Art',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Biology',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Family Ecology',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Business Office Management Education',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Technical Industrial Education',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Spanish',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Physics',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Mathematics',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Chemistry',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Industrial Arts',$programs)."
+				".CheckProgram ($type, 'Secondary Education – General Science',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Business Accounting Education',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Physical Education',$programs)."
+				".CheckProgram ($type, 'Secondary Education – TESOL',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Social Sciences',$programs)."
+				".CheckProgram ($type, 'Secondary Education – History',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Music',$programs)."
+				".CheckProgram ($type, 'Secondary Education – Theater',$programs)."
+				".CheckProgram ($type, 'Recreation',$programs)."
+				".CheckProgram ($type, 'Family and Community Education',$programs)."
 			<br>
 			<p><b> College of Business Administration  </b></p>
-				<p> Office System Management </p>
-				<p> Accounting </p>
-				<p> Computerized Information Systems </p>
-				<p> Marketing </p>
-				<p> Finance </p>
-				<p> Operations Management </p>
-				<p> Human Resources </p>
-				<p> Statistics </p>
-				<p> General Program </p>
+				".CheckProgram ($type, 'Office System Management',$programs)."
+				".CheckProgram ($type, 'Accounting',$programs)."
+				".CheckProgram ($type, 'Computerized Information Systems',$programs)."
+				".CheckProgram ($type, 'Marketing',$programs)."
+				".CheckProgram ($type, 'Finance',$programs)."
+				".CheckProgram ($type, 'Operations Management',$programs)."
+				".CheckProgram ($type, 'Human Resources',$programs)."
+				".CheckProgram ($type, 'Statistics',$programs)."
+				".CheckProgram ($type, 'General Program',$programs)."
 			<br>
 			<p><b> College of Natural Sciences  </b></p>
-				<p> Biology </p>
-				<p> Interdisciplinary Program in Natural Sciences </p>
-				<p> Chemistry </p>
-				<p> Computer Science </p>
-				<p> Mathematics </p>
-				<p> Environmental Sciences </p>
-				<p> Nutrition and Dietetics </p>
-				<p> Physics </p>
+				".CheckProgram ($type, 'Biology',$programs)."
+				".CheckProgram ($type, 'Interdisciplinary Program in Natural Sciences',$programs)."
+				".CheckProgram ($type, 'Chemistry',$programs)."
+				".CheckProgram ($type, 'Computer Science',$programs)."
+				".CheckProgram ($type, 'Mathematics',$programs)."
+	            ".CheckProgram ($type, 'Environmental Sciences',$programs)."
+				".CheckProgram ($type, 'Nutrition and Dietetics',$programs)."
+				".CheckProgram ($type, 'Physics',$programs)."
+
 			<br>
 			<p><b> College of Social Sciences  </b></p>
-				<p> Anthropology </p>
-				<p> Economics </p>
-				<p> Geography </p>
-				<p> General Program in Social Sciences </p>
-				<p> Labor Relations </p>
-				<p> Political Science </p>
-				<p> Psychology </p>
-				<p> Social Work </p>
-				<p> Sociology </p>
+				".CheckProgram ($type, 'Anthropology ',$programs)."
+				".CheckProgram ($type, 'Economics ',$programs)."
+				".CheckProgram ($type, 'Geography ',$programs)."
+				".CheckProgram ($type, 'General Program in Social Sciences ',$programs)."
+				".CheckProgram ($type, 'Labor Relations ',$programs)."
+				".CheckProgram ($type, 'Political Science ',$programs)."
+				".CheckProgram ($type, 'Psychology ',$programs)."
+				".CheckProgram ($type, 'Social Work ',$programs)."
+				".CheckProgram ($type, 'Sociology ',$programs)."
 ";
 				
 }
@@ -186,7 +211,7 @@ else $list = "<p> Error: List type not set. </p>";
 			url = "../Scripts/resultsforcourse.php?course_id="+id;
 		}
 		else if (type == "program") {
-			url = "";
+			url = "../Scripts/resultsforprogram.php?prog_id="+id;
 		}
 		else { // type == "college"
 			url = "";
