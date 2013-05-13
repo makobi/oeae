@@ -28,7 +28,7 @@ $output = " <div id='content'>
  			<h4>Nombre Dominio</h4>
  			<input type='text' name='nombre_dom'>";
  	$output = $output."	<br><br>
- 	<input type='submit' value='Crear Dominio' class='btn btn-primary'>
+ 	<input type='submit' value='Crear Dominio' class='btn btn-danger'>
  	</form>
  	</center>
  	<br>

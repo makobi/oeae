@@ -75,6 +75,7 @@ a:focus {
   outline: thin dotted #333;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
+
 }
 
 a:hover,
@@ -231,13 +232,13 @@ body {
 }
 
 a {
-  color: #0088cc;
+  color: red;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #005580;
+  color: #6d0019;
   text-decoration: underline;
 }
 
@@ -742,7 +743,7 @@ h6 {
   font-family: inherit;
   font-weight: bold;
   line-height: 20px;
-  color: inherit;
+  color: black;
   text-rendering: optimizelegibility;
 }
 
@@ -5564,7 +5565,7 @@ input[type="submit"].btn.btn-mini {
 
 a#thumbnail:hover,
 a#thumbnail:focus {
-  border-color: #0088cc;
+  border-color: red;
   -webkit-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
      -moz-box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);
           box-shadow: 0 1px 4px rgba(0, 105, 214, 0.25);

@@ -34,7 +34,7 @@ while ($row = mysql_fetch_array($crits)) {
 	$output = $output."<option value='".$row['crit_id']."'>".$row['nombre_crit']."</option>";
 }
 $output = $output."</select><br>
-			<input type='submit' value='Seleccionar Criterio' class='btn btn-primary'>
+			<input type='submit' value='Seleccionar Criterio' class='btn btn-danger'>
 			</form>
 			</center>
 			</div>
