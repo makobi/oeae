@@ -509,7 +509,7 @@ overflow-x:scroll;
 #rubrica {
 margin: 15px;
 	text-align: center;
-	border:1px solid blue;
+	border:1px solid red;
 	margin-bottom: 142px;
 }
 
@@ -525,4 +525,10 @@ padding-left: 15px;
 
 #thumb0 {
 	text-align: center;
+}
+
+.thumbnail h3{
+
+	color: red;
+
 }
