@@ -225,6 +225,11 @@ else {
 				<button type='submit' value='create'>Create!
 				<br></div>
 				</form>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
 			</div>
 		";
 		echo $content;
