@@ -30,10 +30,9 @@ echo "<div id='content'>
 	$('form').submit( function() {
 			var data = $(this).serialize();
 			var url = '../Scripts/newprof.php?'+data;
-			console.log(data);
 
 		$.get(url, function(html) {
-				alert('Professor in Database. Password: '+html);
+				alert(html);
 				window.location.replace('./admin.php');
 			})
 

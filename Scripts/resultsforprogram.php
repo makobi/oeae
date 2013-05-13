@@ -1,7 +1,8 @@
 <?php
 /*
 	Tahiri Laboy De Jesus
-	Script para ver agregados por curso - Recibe por el id del curso.
+	Script para ver agregados por programa - Recibe el nombre del programa.
+	Genera tablas de actividades por curso, criterios evaluados y dominios.
 */
 
 /* Parametros para conexion a la base de datos */
@@ -21,77 +22,98 @@ if ($link) {
 
 session_start();
 
-$curso_id = $_GET['course_id'];
-$_SESSION['course_id'] = $curso_id;
+$prog_id = $_GET['prog_id'];
+//$_SESSION['prog_id'] = $prog_id;
 
+$nombres_cursos = array();
+//$cids = array();	// ids de los cursos
+$codifs = array();	// codificaciones
+$a_evaluadas = array(); // actividades que han sido evaluadas
 
-$query = "SELECT codificacion, nombre_curso from Cursos where curso_id=".$curso_id;
-$result = mysql_fetch_array(mysql_query($query));
-$codif = $result[0];
-$nombre_curso = $result[1];
+// Se busca informacion de los cursos pertenecientes al programa
+$courses_data = mysql_query("SELECT distinct codificacion, nombre_curso from Cursos where 
+	prog_curso = '$prog_id';") or die(mysql_error());
 
-$logrosesperados = array(); // Logros esperados
-$actividades = array(); 		// Ids de las actividades
-$nombresact = array();		// Nombres de la actividades
-
-/* Se obtienen los logros esperados para cada actividad asociada a un curso. */
-$query = mysql_query("SELECT act_id, nombre_act, logro_esperado from Actividades natural join 
-	ActividadesCurso where curso_id='$curso_id';")
-	or die(mysql_error());
-
-/************************ SI HAY ACTIVIDADES... ************************/
-if (mysql_num_rows($query)>0) { 
-
- while ($result = mysql_fetch_array($query)) {
- 	$actividades[] = $result["act_id"];
-	$nombresact[] = $result["nombre_act"];
-	$logrosesperados[] = $result["logro_esperado"];
- } 
-
- $i = 0;
-
- $a_evaluadas = array();	// Retendra ids las actividades que fueron evaluadas
- $nombres_crs = array(); 	// Nombres de los criterios de todas las actividad
- $cr_aprobados = array();	// Indica si se aprobo o no cada criterio en $nombre_crs
-
- // Query para verificar que actividades han sido evaluadas
- $query = mysql_query("Select distinct act_id from Actividades natural join ActividadesCurso
-	natural join Evaluacion where curso_id ='$curso_id';") or die(mysql_error());
- if (mysql_num_rows($query)>0) { // Si hay actividades evaluadas...
- 	while ($result = mysql_fetch_array($query)) {
- 		$a_evaluadas[] = $result["act_id"];
+// Si no se encontro ningun curso, generamos un error.
+if (mysql_num_rows($courses_data) == 0) {
+	$error = "No hay cursos asociados a ese programa.";
+}
+else { // Si hay cursos...
+	while ($result = mysql_fetch_array($courses_data)) {
+		$nombres_cursos[] = $result['nombre_curso'];
+		$codifs[] = $result["codificacion"];
 	}
- }
 
- echo "<div id='content'><center>
-	  <h3>Resultados para curso ".$codif." (".$nombre_curso.")</h3>
-	  <a href=../Front-end/coursechart.php>Ver Graficas para estos resultados</a>";
-
- /* Se genera tabla con resumen de actividades para el curso - Incluye los nombres
+	/* Generamos tabla con resumen de actividades para los cursos - Incluye los curso, nombres
 	de las actividades, su logro esperado y si estas han sido evaluadas o no */
- $tabla1 ="<table id = grading>
-	 <caption><h4>Resumen de actividades</h4>
-	</caption>
-	       <thead><td><p>Nombre de la actividad</p></td>
-	       <td><p>Logro Esperado</p></td>
-	       <td><p>Evaluada o no evaluada</p></td>
-		   </thead>
-	    <tbody>"; 	
+	$tabla1 ="<table id = grading>
+		<caption><h4> Summary of Courses </h4></caption>
+        <thead>
+		<td><p> Course </p></td>
+		<td><p> Code </p></td>
+		<td><p> Section </p></td>
+        <td><p> Assessed Activities </p></td>
+"/*        <td><p> Status </p></td>
+*/."	    </thead>
+    <tbody>"; 
 
- for ($i = 0; $i < sizeof($actividades); $i++) {
-	$tabla1.="<tr><td><p>".$nombresact[$i]."</p></td>
- 				  <td><p>".$logrosesperados[$i]."</p></td>";
-	if (in_array($actividades[$i] ,array_diff($actividades, $a_evaluadas))) {
-		$tabla1.="<td><p>No evaluada</p></td>";
-	}
-	else {
-		$tabla1.="<td><p>Evaluada</p></td>";
+	$logrosesperados = array();	// Logros esperados
+	$actividades = array(array());	 	// Ids de las actividades
+	$nombresact = array(array());		// Nombres de la actividades
+	
+	// Para cada curso
+	foreach ($codifs as $key => $codificacion) {
+		$tabla1.= "<tr><td><p>$nombres_cursos[$key]</p></td>
+				   <td><p>$codifs[$key]</p></td>";
+					
+		$activity_counter = array();
+		$ids_criterios = array();
+		$secc_cell = "<td>";
 		
+		// Se obtiene data de las secciones asociadas a cada curso 
+		$sections_data = mysql_query("SELECT curso_id, seccion from Cursos where codificacion='$codificacion';")
+			or die(mysql_error());
+		
+		while ($result = mysql_fetch_array($sections_data)) {
+			$cids[$codificacion][] = $result["curso_id"];
+			$ids_criterios[] = $result["curso_id"];
+		 	$secciones[$codificacion][] = $result["seccion"];
+
+			// Retiene el listado de secciones asociado al curso
+			$secc_cell .= ("<p>".$result["seccion"]."</p>"); 
+		
+			$tabla1.=$secc_cell;
+		}
+
+		$tabla1.="</td><td>";
+
+		foreach ($ids_criterios as $cid) {
+
+			$activity_counter[$cid] = 0;
+		
+			// Se obtiene data de las actividades evaluadas asociadas a cada curso. 
+			$activity_data = mysql_query("SELECT distinct act_id, nombre_act, logro_esperado from Actividades
+				natural join ActividadesCurso natural join Evaluacion where	curso_id='$cid';")
+				or die(mysql_error());	
+
+			$activity_counter[$cid] = mysql_num_rows($activity_data);
+
+			if ($activity_counter > 0) {
+				while ($result = mysql_fetch_array($activity_data)) {
+			 		$a_evaluadas[] = $result["act_id"];
+					$logrosesperados[] = $result["logro_esperado"];
+				}
+			}
+		}
+
+		foreach ($activity_counter as $qty) {
+			$tabla1.= "<p>$qty</p>";
+		}
+
+		$tabla1.= "</td></tr>";	
 	}
-	$tabla1.="</tr>";
- }
- $tabla1.="</tbody></table>";
- 
+	$tabla1.="</tbody></table>";
+
  // Para las actividades que han sido evaluados
  for ($i = 0; $i < sizeof($a_evaluadas); $i++) {
 	// Se obtiene el total de estudiantes evaluados en la actividad
@@ -165,13 +187,14 @@ if (mysql_num_rows($query)>0) {
 		}
 	}
   }
-}
+ }
 
-$criterios_norep = array_unique($nombres_crs);
+ /*--------------------- Genero tabla de resumen de criterios ---------------------*/
+ if (sizeof($a_evaluadas)>0) {
 
-/*--------------------- Genero tabla de resumen de criterios ---------------------*/
-if (sizeof($a_evaluadas)>0) {
- $tabla2 ="<br><br><br><br><table id = grading>
+  $criterios_norep = array_unique($nombres_crs);
+
+  $tabla2 ="<br><br><br><br><table id = grading>
 	 <caption><h4>Resumen de criterios para actividades evaluadas</h4>
 	</caption>
 	       <thead><td><p>Criterio</p></td>
@@ -181,15 +204,15 @@ if (sizeof($a_evaluadas)>0) {
 		   </thead>
 	    <tbody>"; 	
 
- $alcanzado = 0;	// Contador de veces que se alcanzo el criterio
- $noalcanzado = 0;	// Contador de veces que no se alcanzo
+  $alcanzado = 0;	// Contador de veces que se alcanzo el criterio
+  $noalcanzado = 0;	// Contador de veces que no se alcanzo
 
- /* Arreglos para retener data a utilizarse en agregados por dominio */
- $cr_evaluados = array();
- $total = array();
- $aprobado = array();
+  /* Arreglos para retener data a utilizarse en agregados por dominio */
+  $cr_evaluados = array();
+  $total = array();
+  $aprobado = array();
 
- foreach ($criterios_norep as $criterio) {
+  foreach ($criterios_norep as $criterio) {
 	// Criterio
 	$tabla2.="<tr><td><p>".$criterio."</p></td>";
 	$result = array_keys($nombres_crs, $criterio);  
@@ -221,19 +244,21 @@ if (sizeof($a_evaluadas)>0) {
 
 	$alcanzado = 0;
 	$noalcanzado = 0;
+  }
+  $tabla2.="</tbody></table>";
+
  }
- $tabla2.="</tbody></table>";
+ else {
+  $tabla2 = "<p><br><br>Para mostrar agregados por dominios y criterios debe haber al menos una actividad evaluada
+			en el programa.<br>";
+ }
 
-}
-else {
- $tabla2 = "<p><br><br>Para ver resultados por criterios debe evaluar al menos una actividad.<br>";
-}
-/*--------------------- Genero tabla de criterios alineados a dominios ---------------------*/ 
-$dominios = array(); // Tabla para retener relacion "dominio" => "cr1","cr2",...
-$cont_dom = 0; // Retiene la cantidad de dominios distintos
+ /*--------------------- Genero tabla de criterios alineados a dominios ---------------------*/ 
+ $dominios = array(); // Tabla para retener relacion "dominio" => "cr1","cr2",...
+ $cont_dom = 0; // Retiene la cantidad de dominios distintos
 
-if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
- foreach ($cr_evaluados as $criterio) {
+ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
+  foreach ($cr_evaluados as $criterio) {
 	// Relaciono dominios con criterios
 	$query = mysql_query("Select nombre_dom from Dominios natural join CriterioPertenece
 		where crit_id in (Select crit_id from Criterios where nombre_crit='$criterio');")
@@ -246,10 +271,10 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 			$dominios[$dom][] = $criterio;
 		}
 	}
- }
+  }
 
- // Se comienza a generar la tabla  
- $tabla3 = "<br><br><br><br><table id = grading>
+  // Se comienza a generar la tabla  
+  $tabla3 = "<br><br><br><br><table id = grading>
 	 <caption><h4>Agregados por dominios para el curso</h4>
 	</caption>
 	       <thead>
@@ -261,7 +286,7 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 		   </thead>
 	    <tbody>"; 	
 
- foreach ($dominios as $dom => $lista_criterios) { 
+  foreach ($dominios as $dom => $lista_criterios) { 
 	$apr = 0;	// Contador de criterios alineados aprobados
 	$tot = 0;	// Contador del total de criterios alineados evaluados
 	$tabla3.="<tr>";
@@ -289,24 +314,29 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 			}						
  	}
 	$tabla3.="</tr>";
- }	
- $tabla3.="</tbody></table>";
+  }	
+  $tabla3.="</tbody></table>";
 
-} // Termina if actividades evaluadas
-else {
+ } // Termina if actividades evaluadas
+ else {
 	$tabla3 = "";
-}
+ }
 
 }
-/************************ SI NO HAY ACTIVIDADES... ************************/
-else {
-	$tabla2 ="<div id='content'><center><p> Error: Aún no se han realizado actividades para este curso.</center></div>";
-} 
-
-if (isset($tabla1)) echo $tabla1;
-if (isset($tabla2)) echo $tabla2;
-if (isset($tabla3)) echo $tabla3;
-
-echo "<br><br><br><br><br><br></center></div>";
 
 ?>
+
+<div id='content'> 
+	<center>
+
+	<h3> Results for <?echo $prog_id;?> program</h3>
+	<? if (!isset($error))
+		  if (isset($tabla1)) echo $tabla1;
+		  if (isset($tabla2)) echo $tabla2;
+		  if (isset($tabla3)) echo $tabla3;
+		else
+			echo $error;
+	?>
+
+	<br><br><br><br><br></center>
+</div>

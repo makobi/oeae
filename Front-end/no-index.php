@@ -65,6 +65,7 @@ $cursos = mysql_query($cursosquery);
 	<link rel="stylesheet" href="bootstrap.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<script type="text/javascript" src="effects.js"></script>
+
 <!-- 	 <script type="text/javascript" src="holder.js"></script> -->
 
 	<script type="text/javascript">
@@ -117,7 +118,7 @@ $cursos = mysql_query($cursosquery);
 						while ($row=mysql_fetch_array($cursos)) {
 							$string = "
 							<li class='cursos'>
-								<a href='#' id='".$row[2]."' onclick='abrir_cerrar($row[1]);'>
+								<a href='#' onclick='abrir_cerrar($row[1]);'>
 									<div class='secction'> 
 										<div id='addactivity'>
 											<table>
@@ -131,7 +132,7 @@ $cursos = mysql_query($cursosquery);
 													</td>
 
 													<td>
-														<a href='#' class='newactivity'><img class='add' src='add.png' width='10' height='10'></a>
+														<a href='#' class='newactivity' id='".$row[2]."'><img class='add' src='add.png' width='10' height='10'></a>
 													</td>
 												</tr>
 											</table>
@@ -158,7 +159,16 @@ $cursos = mysql_query($cursosquery);
 									echo $act;
 								}
 							}
-							echo "</ul></li>";						
+							echo "<li>
+										<a href='#' class='courseresults'>
+											<div class='secction2'>
+												<div><img src='class_img.jpg' id='effect'>	</div>
+												<p id='".$row[2]."'>Results for course</p>
+											</div>
+										</a>
+								</li>
+
+									</ul></li>";						
 
 						}	
 						?>
@@ -174,13 +184,21 @@ $cursos = mysql_query($cursosquery);
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Create Rubric</p>
 					</div></a>
-					<a href="#" ><div class="secction"> 
+					<a href="#" ><div class="secction">
 						<div ><img src="option_icon.png" id="effect"></div>
 						<a href="Manual_de_Usuario_Profesor.pdf" target = "_blank"><p>Manual de Usuario</p></a>
 					</div></a>
-					<a href="#" ><div class="secction"> 
+					<a href="#" id="newcourse"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Option Name Here</p>
+						<p>Add a course</p>
+					</div></a>
+					<a href="#" id="managestudents"><div class="secction"> 
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p>Manage students</p>
+					</div></a>
+					<a href="#" class="addcrit"><div class="secction"> 
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p>Add Criterio</p>
 					</div></a>
 
 				</div>
@@ -210,8 +228,8 @@ $cursos = mysql_query($cursosquery);
 						<h1><? echo "$_SESSION[nombre_prof]"; ?></h1>
 						<h2> <?php echo "$_SESSION[email]"; ?></h2>
 						<h2> <?php echo "$_SESSION[fac_prof]"; ?></h2>
-						<h2> <?php echo "$_SESSION[dpto_prof]"; ?></h2> <br>
-
+						<h2> <?php echo "$_SESSION[dpto_prof]"; ?></h2>
+						<h2><a href="../Front-end/changepass.php">Click here to change your password</a></h2> <br>
 						</center>
 					</div>
 					<!-- Aqui termina el div -->

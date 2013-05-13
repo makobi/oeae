@@ -17,9 +17,6 @@ if ($db) {
   echo "no salio";
   exit();
 }
-
-echo "<div id='content'>
-		<center>";
 /***************************************************************************************************/
 // Generar Rubrica
 		$aid = $_SESSION['act_id'];
@@ -53,21 +50,25 @@ for ($i=0; $i < $crit_qty; $i++) {
 		// Query para borrar los criterios seleccionados por el usuario
 		$delquery = "DELETE FROM RubricaLocal WHERE rublocal_id=$rub_id AND crit_id=".$cids[$i]." AND prof_id=".$_SESSION['prof_id'];
 		if(mysql_query($delquery)) {
-			echo $cids[$i];
+
 		}
 	}
+	$index = 'crit'.$cids[$i];
+	$descripciones = $_GET[$index];
+	mysql_query("UPDATE EscalaCriterio set descripcion='$descripciones[0]' where crit_id=".$cids[$i]." and valor=2");
+	mysql_query("UPDATE EscalaCriterio set descripcion='$descripciones[1]' where crit_id=".$cids[$i]." and valor=4");
+	mysql_query("UPDATE EscalaCriterio set descripcion='$descripciones[2]' where crit_id=".$cids[$i]." and valor=6");
+	mysql_query("UPDATE EscalaCriterio set descripcion='$descripciones[3]' where crit_id=".$cids[$i]." and valor=8");
+
 }
 
 if ($_GET['addcriterio']!=0) {
 	// Query para insertar criterios a la Rubrica Local
 	$addquery = "INSERT INTO RubricaLocal (rublocal_id,crit_id,prof_id) values (".$rub_id.",".$_GET['addcriterio'].",".$_SESSION['prof_id'].")";
 	if (mysql_query($addquery)) {
-		echo "<br>Criterio añadido!<br>";
 	}
 }
 
-
-echo "	</center>
-		</div>";
+echo "Todo salio bien!";
 
  ?>

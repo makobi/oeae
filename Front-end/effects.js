@@ -33,6 +33,18 @@ $(document).ready(function() {
 		})
 	});
 
+	$(".courseresults").on("click", function() {
+
+		var id = $(this).find('p').attr('id');
+
+		var url = "../Scripts/resultsforcourse.php?course_id="+id;
+
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 	// Información del perfil del profesor
 	$("#profile").on("click", function () {
 		$.get("../Scripts/profile.php", function(html) {
@@ -43,7 +55,7 @@ $(document).ready(function() {
 
 	// Crear una actividad nueva
 	$(".newactivity").on("click", function() {
-		var curso_id = $(this).prev().attr("id");
+		var curso_id = $(this).attr("id");
 
 		var url= "../Scripts/activity.php?curso_id="+curso_id ;
 
@@ -71,6 +83,16 @@ $(document).ready(function() {
 		})
 	});
 
+
+	// Agregados para administrador
+	$(".results").on("click", function() {
+		url = "../Scripts/resultsby.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
 	// Crear Criterio (admin only)
 	$(".addcrit").on("click", function() {
 		url = "../Scripts/createcriterio.php";
@@ -80,9 +102,19 @@ $(document).ready(function() {
 		})
 	});
 
-	// Crear Criterio (admin only)
+	// Crear Criterio
 	$(".editcrit").on("click", function() {
 		url = "../Scripts/editcriterio.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
+	// Crear Dominio (admin only)
+	$(".adddom").on("click", function() {
+		url = "../Scripts/createdom.php";
+		console.log("llegamos");
 		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)
@@ -101,6 +133,23 @@ $(document).ready(function() {
 	// Crear Rubrica local (Professor only)
 	$("#create").on("click", function() {
 		url = "../Scripts/createrubriclocal.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
+	// Add a course
+	$("#newcourse").on("click", function() {
+		url = "../Scripts/newcourse.php";
+		$.get(url, function(html) {
+			$("#content").hide()
+			$("#content").replaceWith(html)
+		})
+	});
+
+	$("#managestudents").on("click", function() {
+		url = "../Scripts/managestudents.php";
 		$.get(url, function(html) {
 			$("#content").hide()
 			$("#content").replaceWith(html)

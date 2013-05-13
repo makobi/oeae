@@ -27,6 +27,10 @@ if ($db) {
   exit();
 }
 
+$name = $_SESSION['nombre_act'];
+$id = $_SESSION['act_id'];
+
+$rubrics = '../Scripts/viewcourse.php?nombre_act='.$name.'&act_id='.$id;
 
 // Buscar el curso al cual pertenece la actividad
 $courseidquery = "SELECT curso_id from ActividadesCurso where act_id=$_SESSION[act_id]";
@@ -40,10 +44,6 @@ $nombre_crit = mysql_query($criteriosquery);
 		$aid = $_SESSION['act_id'];
 
 		// Busco el id de los criterios asociados a esa rubrica
-//		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN Rubricas WHERE act_id = '$aid'")
-//					or die(mysql_error());
-
-
 		$query1 = mysql_query("SELECT crit_id FROM Actividades NATURAL JOIN RubricaLocal WHERE act_id = '$aid'")
 					or die(mysql_error());
 
@@ -86,7 +86,7 @@ $table=				'<div id="content"><center>
 						<tr>
 							<td>
 					<ul class="thumbnails">
-					  <li id="displayrubric">
+					  <li id="rubrics">
 					    <a href="#" class="actividades" id="thumbnail">
 					    	<h3>Rubrics</h3>
 					     </a>
@@ -126,10 +126,10 @@ for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
 				<td><p>".$criterios[$cids[$i]]." <br> <br> <input type='checkbox' name='".$cids[$i]."' value='".$cids[$i]."'>   <strong> Eliminar </strong> </p>
 				</td>
-				<td>".$descripcion[$cids[$i]][2]."</td>
-				<td>".$descripcion[$cids[$i]][4]."</td>
-				<td>".$descripcion[$cids[$i]][6]."</td>
-				<td>".$descripcion[$cids[$i]][8]."</td>
+				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][2]."</textarea></td>
+				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][4]."</textarea></td>
+				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][6]."</textarea></td>
+				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][8]."</textarea></td>
 			  </tr>";
 }
 
@@ -165,6 +165,14 @@ echo $table."</table></form>
 
 			$('#results a').on('click', function() {
 				var url = '../Scripts/resultsforact.php';
+				$.get(url, function(html) {
+					$('#content').hide()
+					$('#content').replaceWith(html)
+				})
+			});
+
+			$('#rubrics a').on('click', function() {
+				var url = '".$rubrics."';
 				$.get(url, function(html) {
 					$('#content').hide()
 					$('#content').replaceWith(html)

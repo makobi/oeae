@@ -39,7 +39,7 @@ $output = " <div id='content'>
 
  			while ($res = mysql_fetch_array($eval)) {
  				$output = $output."
- 				<h4>Comentario ".strval(intval($res['valor'])-1)."-".$res['valor']."</h4> 
+ 				<h4>Descripción del nivel de ejecución ".strval(intval($res['valor'])-1)."-".$res['valor']."</h4> 
  			<textarea rows='4' name='comentario".$res['valor']."'>".$res['descripcion']."</textarea> ";
  			}
  			$output = $output."<h4>Dominios que pertenece</h4> ";

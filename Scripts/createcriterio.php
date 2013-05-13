@@ -30,13 +30,13 @@ $output = " <div id='content'>
  		<form>
  			<h4>Nombre Criterio</h4>
  			<input type='text' name='nombre_crit'>
- 			<h4>Comentario 1-2</h4>
+ 			<h4>Descripción del nivel de ejecución 1-2</h4>
  			<textarea rows='2' name='comentario2'></textarea>
- 			<h4>Comentario 3-4</h4>
+ 			<h4>Descripción del nivel de ejecución 3-4</h4>
  			<textarea rows='2' name='comentario4'></textarea>
- 			<h4>Comentario 5-6</h4>
+ 			<h4>Descripción del nivel de ejecución 5-6</h4>
  			<textarea rows='2' name='comentario6'></textarea>
- 			<h4>Comentario 7-8</h4>
+ 			<h4>Descripción del nivel de ejecución 7-8</h4>
  			<textarea rows='2' name='comentario8'></textarea>
  			<h4>Dominios que pertenece</h4>";
  			 

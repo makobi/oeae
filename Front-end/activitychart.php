@@ -1,8 +1,4 @@
-<?php
-/*
-	Tahiri Laboy De Jesus
-	Script para ver agregados por actividad
-*/
+<?php 
 
 /* Parametros para conexion a la base de datos */
 $server         = 'localhost';
@@ -92,7 +88,7 @@ if ($estudiantes > 0) {
 
 		// Verificar si el criterio fue evaluado y de ser asi, si fue aprobado.
 		if ($totales[$criterio][11] == 0) {
-			$totales[$criterio][9] = 'x';
+			$totales[$criterio][9] = '0';
 			$totales[$criterio][10] = 'No evaluado';
 		}
 		else if ($totales[$criterio][9] >= $logroesperado) {
@@ -102,90 +98,8 @@ if ($estudiantes > 0) {
 	} 
 }
 
-// print_r($totales);
 
-echo "<script type='text/javascript'>
-			$('#students a').on('click', function() {
-				var course = $(this).attr('id');
-				var url = '../Scripts/students.php?course_id='+course;
-				$.get(url, function(html) {
-					$('#content').hide()
-					$('#content').replaceWith(html)
-				})
-			});
-	</script>
 
-	<div id='content'><center>";
-echo '					<table id="thumb0">
-						<tr>
-							<td>
-					<ul class="thumbnails">
-					  <li id="rubrics">
-					    <a href="#" class="actividades" id="thumbnail" >
-					    	<h3>Rubrics</h3>
-					     </a>
-					  </li>
-					   <li id="thumb2">
-					    <a href="#" class="thumbnail" id="thumbnail">
-					    	<h3>Results</h3>
-					     </a>
-					  </li>
-
-					  <li id="students">
-					  	<div id="thumbnail">
-					    	<a href="#" class="thumbnail" id="'.$_SESSION['course_id'].'" >
-					    		<h3>Students</h3>
-					     	</a>
-					     </div>
-					  </li>
-					  
-					</ul>
-				</td>
-				</tr>
-				</table>';
-echo "
-	<h3>Resultados para ".$nombre."</h3>";
-echo "  <p> Logro esperado: ".$logroesperado."\n";
-
-$tabla = "";
-
-/* Si se han evaluado estudiantes, desplegamos la tabla */
-if ($estudiantes != 0) {
-  // Se comienza a generar la tabla de los totales
-  $tabla.="<table id = grading>
-	 <caption><h4>Tabla de distribución de puntuaciones por criterio</h4></br>
-	</caption>
-	       <thead><td><p>Criterios</p></td>
-	       <td colspan='9'><p>Escala</p></td>
-	       <td><p>Porciento de estudiantes que aprobaron</p></td>
-		   <td><p>Alcanzado o no alcanzado</p></td></thead>
-	    <tbody><tr><td> </td>
-				<td><b>0</b></td>
-				<td><b>1</b></td>
-				<td><b>2</b></td>
-                <td><b>3</b></td>
-                <td><b>4</b></td>
-                <td><b>5</b></td>
-                <td><b>6</b></td>
-                <td><b>7</b></td>
-				<td><b>8</b></td>
-				<td> </td> 
-				<td> <a href=../Front-end/activitychart.php>View chart for this activity</a> </td> 
-            </tr>";
-
-  // Se llena la tabla con los resultados
-  for ($i=0; $i<$crit_qty; $i++) {
-    $tabla.="<tr><td><p>".$criterios[$i]."</p>";
-    for($j=0; $j<=10; $j++) {
-	$tabla.="</td>
-                 <td><p>".$totales[$i][$j]."</p></td>";
-    }
-    $tabla.="</tr>";
-  }
-
-  $tabla.="</tbody></table></br></br>";
-
-/***************************** AGREGADOS POR DOMINIOS *****************************/
 
   // Obtengo los nombres de los diferentes dominios
   $query = mysql_query("select nombre_dom, nombre_crit from RubricaLocal natural join
@@ -262,73 +176,109 @@ if ($estudiantes != 0) {
   }
 
 
-  $tabla.="
-  <table id = grading>
-	 <caption><h4>Tabla de agregados por dominios</h4></br></caption>
-        <thead>
-	       <td><p>Dominios</p></td>
-	       <td><p>Criterios Alineados</p></td>
-	       <td><p>Criterios Alcanzados</p></td>
-		   <td><p>Porcentaje</p></td>
-		   <td><p>Alcanzado o no alcanzado</p></td>
-	    </thead><tbody>";
+ ?>
 
-  $dom_i = 0;
-  $span = 0;
+ <html>
+ <head>
+ 	<title>Activity Chart</title>
+ 	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+ 	 <script type='text/javascript'>
+  	  google.load('visualization', '1', {packages:['corechart']});
+      google.setOnLoadCallback(drawChart);
 
-  for ($i = 0; $i < sizeof($criterios_alineados); $i++) {
-	if($i == $span) {
-		$tabla.="<tr><td rowspan=".$d_span[$dominios[$dom_i]].">".$dominios[$dom_i]."</td>";
-	}
-    $tabla.="<td>".$criterios_alineados[$i]."</td>";
-	if($i == $span) {
-		$tabla.="<td rowspan=".$d_span[$dominios[$dom_i]].">".$aprobados[$dom_i]." de "
-			.($d_span[$dominios[$dom_i]]-$noevaluados[$dom_i])." </td>";
-		$tabla.="<td rowspan=".$d_span[$dominios[$dom_i]].">".$porciento[$dom_i]."</td> 
-			<td rowspan=".$d_span[$dominios[$dom_i]].">".$dom_alcanzado[$dom_i]."</td>" ;
-		$span += $d_span[$dominios[$dom_i]];
-		$dom_i++;
-	}
-	$tabla.="</tr>";
-  }
-  $tabla.="</tbody></table>";
-  if (isset($mensaje)) $tabla.=$mensaje;
-}
-else { // No se han evaluado estudiantes
-  $tabla.="<p> Error: Aún no se han realizado evaluaciones para esta actividad.";
-}   
-  $tabla.="<br><br><br><br><br><br></center></div>
+      function drawChart() {
+
+		var distr = new google.visualization.DataTable();
+
+        distr.addColumn('string', 'Criterio');
+        distr.addColumn('number', '0 pts');
+        distr.addColumn('number', '1 pts');
+        distr.addColumn('number', '2 pts');
+        distr.addColumn('number', '3 pts');
+        distr.addColumn('number', '4 pts');
+        distr.addColumn('number', '5 pts');
+        distr.addColumn('number', '6 pts');
+        distr.addColumn('number', '7 pts');
+        distr.addColumn('number', '8 pts');
+
+        <?php  
+		for ($i=0; $i < $crit_qty; $i++) { 
+		echo 'distr.addRow(["'.$criterios[$i].'",  
+            '.$totales[$i][0].',   
+            '.$totales[$i][1].',
+            '.$totales[$i][2].',
+            '.$totales[$i][3].',
+            '.$totales[$i][4].',
+            '.$totales[$i][5].',
+            '.$totales[$i][6].',
+            '.$totales[$i][7].',
+            '.$totales[$i][8].'
+          ]);';
+		}
+		?>
+
+        var options = {
+          title: 'Distribucion de Valores por Criterio',
+          hAxis: {title: 'Criterios',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Cantidad de Estudiantes',titleTextStyle: {color: 'black'}}
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('column_div'));
+        chart.draw(distr, options);
 
 
-  	  <script type='text/javascript'>
-			$('#students a').on('click', function() {
-				var course = $(this).attr('id');
-				var url = '../Scripts/students.php?course_id='+course;
-				$.get(url, function(html) {
-					$('#content').hide()
-					$('#content').replaceWith(html)
-				})
+		var agrupados = new google.visualization.DataTable();
 
-			});
+        agrupados.addColumn('string', 'Criterio');
+        agrupados.addColumn('number', 'Logro Esperado');
+        agrupados.addColumn('number', 'Menor al Logro Esperado');
+		
+		<?php  
+		for ($i=1; $i <= $crit_qty; $i++) { 
+		echo 'agrupados.addRow(["'.$criterios[$i-1].'",  '.(0.01*$totales[$i-1][9]).',   '.strval((100-$totales[$i-1][9])*0.01).' ]);';
+		}
+		?>
+		
+		var options2 = {
+			<?php echo "title: 'Resultados agrupados para la actividad: ".$name."',"; ?>
+          
+          hAxis: {title: 'Criterios',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Porcentaje de Estudiantes', format:'#%',titleTextStyle: {color: 'black'}}
+        };
 
-			$('#results a').on('click', function() {
-				var url = '../Scripts/resultsforact.php';
-				$.get(url, function(html) {
-					$('#content').hide()
-					$('#content').replaceWith(html)
-				})
-			});
+        var chart2 = new google.visualization.ColumnChart(document.getElementById('column2_div'));
+        chart2.draw(agrupados, options2);
 
-			$('#rubrics a').on('click', function() {
-				var url = '".$rubrics."';
-				$.get(url, function(html) {
-					$('#content').hide()
-					$('#content').replaceWith(html)
-				})
-			});
+        var dominios = new google.visualization.DataTable();
 
-			</script>";
+        dominios.addColumn('string', 'Dominio');
+        dominios.addColumn('number', 'Logro Esperado');
+        dominios.addColumn('number', 'Menor al Logro Esperado');
 
-echo $tabla;
+        <?php 
+        for ($i=0; $i < count($dominios); $i++) { 
+        	echo 'dominios.addRow(["'.$dominios[$i].'",'.($porciento[$i]*0.01).','.strval((100-$porciento[$i])*0.01).']);';
+        }
 
-?>
+         ?>
+
+		var options3 = {
+			<?php echo "title: 'Resultados de dominios para la actividad: ".$name."',"; ?>
+          
+          hAxis: {title: 'Dominio',  titleTextStyle: {color: 'black'}},
+          vAxis: {title: 'Porcentaje de Criterios', format:'#%',titleTextStyle: {color: 'black'}}
+        };
+
+        var chart3 = new google.visualization.ColumnChart(document.getElementById('column3_div'));
+        chart3.draw(dominios, options3);
+
+    	}
+</script>
+
+ </head>
+ <body>
+ 	<div id='column_div' style='width: 700px; height: 500px;'></div>
+ 	<div id='column2_div' style='width: 700px; height: 500px;'></div>
+ 	<div id='column3_div' style='width: 700px; height: 500px;'></div>
+ </body>
+ </html>
