@@ -89,7 +89,7 @@ $cursos = mysql_query($cursosquery);
 		<table style="width:100%; height:50px;">
 			<tr>
 				<td style="width:50px;">
-
+					<img src="UPR.png" style="width:300px; padding-left:10px;">
 				</td>
 				<td style="width:50px; text-align:right;">
 					<a href="index.php" id="logout"><p style="margin-right:50px; margin-top:10px;">Logout</p></a>
