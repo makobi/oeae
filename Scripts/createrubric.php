@@ -83,7 +83,6 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			<tr>
 			<td>
 			Rubric Name: <input type = 'text' name = 'rname'><br><br>
-			Criterio - Dominios(s)
 			<br><br>
 			</td>
 			</tr><tr><table><tr>";
@@ -91,13 +90,17 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	for ($i = 0; $i < mysql_num_rows($query); $i++) {
 		if ($i != 0 && $i%4==0) {
 			$content .= "</tr><tr>";
+
 			for ($j=$i-4; $j < $i; $j++) { 
+
 				$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$j])
 				or die(mysql_error());
 				$content .= "<td>";
+
 				while ($row = mysql_fetch_array($domquery)) {
 					$content .= $row[0]."<br><br> ";
 				}
+				
 				$content .= "</td>";
 			}
 			$content = $content. "
@@ -118,17 +121,38 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 					";
 		}
 	}
-	$content = $content."</tr></table>";
+	$content = $content."</tr>";
 
-	// for ($i = 0; $i < mysql_num_rows($query); $i++) {
-	// 	$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$i])
-	// 			or die(mysql_error());
-	// 	$content .= "<td>";
-	// 	while ($row = mysql_fetch_array($domquery)) {
-	// 		$content .= $row[0]."<br><br> ";
-	// 	}
-	// 	$content .= "</td>";
-	// }
+	if ($i%4 != 0) {
+		for ($k=$i-($i%4); $k < $i; $k++) { 
+				$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$j])
+				or die(mysql_error());
+				$content .= "<td>";
+
+				while ($row = mysql_fetch_array($domquery)) {
+					$content .= $row[0]."<br><br> ";
+				}
+				
+				$content .= "</td>";
+
+		}
+	} else {
+				for ($k=$i-4; $k < $i; $k++) { 
+				$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$j])
+				or die(mysql_error());
+				$content .= "<td>";
+
+				while ($row = mysql_fetch_array($domquery)) {
+					$content .= $row[0]."<br><br> ";
+				}
+				
+				$content .= "</td>";
+
+		}
+	}
+
+	$content = $content."</table>";
+
 
 
 	$content .= "</table></tr><br><br>
