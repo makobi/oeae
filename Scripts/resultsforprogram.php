@@ -68,7 +68,7 @@ else { // Si hay cursos...
 					
 		$activity_counter = array();
 		$ids_criterios = array();
-		$secc_cell = "<td>";
+		$tabla1.="<td>";
 		
 		// Se obtiene data de las secciones asociadas a cada curso 
 		$sections_data = mysql_query("SELECT curso_id, seccion from Cursos where codificacion='$codificacion';")
@@ -80,9 +80,8 @@ else { // Si hay cursos...
 		 	$secciones[$codificacion][] = $result["seccion"];
 
 			// Retiene el listado de secciones asociado al curso
-			$secc_cell .= ("<p>".$result["seccion"]."</p>"); 
-		
-			$tabla1.=$secc_cell;
+			$tabla1 = $tabla1."<p>".$result["seccion"]."</p>"; 
+
 		}
 
 		$tabla1.="</td><td>";
