@@ -56,7 +56,7 @@ else if ($type == "program") {
 					<a href='#' onClick='ViewResults(\"$type\",\"$program\")'> $program </a>
 				 </p>";
 		}
-		else $url = "<p> $program </p>";
+		else $url = "";//"<p> $program </p>";
 
 		return $url;
 	}
