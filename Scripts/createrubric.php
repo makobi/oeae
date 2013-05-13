@@ -86,33 +86,52 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			Criterio - Dominios(s)
 			<br><br>
 			</td>
-			</tr><tr><table></tr>";
+			</tr><tr><table><tr>";
 
 	for ($i = 0; $i < mysql_num_rows($query); $i++) {
-
-		$content = $content. "
-			
-			<td>
-			<label class='checkbox'>
-			<input type='checkbox' name='cr[]' value=".$idscriterios[$i].">".$criterios[$i]."
-			</label>
-			</td>
-			";
-	}
-	$content = $content."</tr><tr>";
-
-	for ($i = 0; $i < mysql_num_rows($query); $i++) {
-		$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$i])
+		if ($i != 0 && $i%4==0) {
+			$content .= "</tr><tr>";
+			for ($j=$i-4; $j < $i; $j++) { 
+				$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$j])
 				or die(mysql_error());
-		$content .= "<td>";
-		while ($row = mysql_fetch_array($domquery)) {
-			$content .= $row[0]."<br><br> ";
+				$content .= "<td>";
+				while ($row = mysql_fetch_array($domquery)) {
+					$content .= $row[0]."<br><br> ";
+				}
+				$content .= "</td>";
+			}
+			$content = $content. "
+				</tr></table><table><tr>
+				<td>
+				<label class='checkbox'>
+				<input type='checkbox' name='cr[]' value=".$idscriterios[$i].">".$criterios[$i]."
+				</label>
+				</td>
+			";
+		}else {
+				$content = $content. "
+					<td>
+					<label class='checkbox'>
+					<input type='checkbox' name='cr[]' value=".$idscriterios[$i].">".$criterios[$i]."
+					</label>
+					</td>
+					";
 		}
-		$content .= "</td>";
 	}
+	$content = $content."</tr></table>";
+
+	// for ($i = 0; $i < mysql_num_rows($query); $i++) {
+	// 	$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$i])
+	// 			or die(mysql_error());
+	// 	$content .= "<td>";
+	// 	while ($row = mysql_fetch_array($domquery)) {
+	// 		$content .= $row[0]."<br><br> ";
+	// 	}
+	// 	$content .= "</td>";
+	// }
 
 
-	$content .= "</tr></table></tr><br><br>
+	$content .= "</table></tr><br><br>
 			<tr>
 			<td>
 		<button type='submit' value='create' class='btn btn-danger'>Create!
