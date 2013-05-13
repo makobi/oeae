@@ -20,7 +20,7 @@ echo "<div id='content'>
 		Facultad: <br>
 		<input type='text' name='proffaculty'> <br>
 		<br>
-		<input type='submit' class='btn btn-primary'>
+		<input type='submit' class='btn btn-danger'>
 	</form>
 	</center>
 </div>

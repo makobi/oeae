@@ -4,6 +4,10 @@ html{
     min-height: 100%;
     min-width: 100%;
 } 
+
+a{
+	color: black;
+}
  
 body{
 
@@ -529,6 +533,6 @@ padding-left: 15px;
 
 .thumbnail h3{
 
-	color: red;
+	color: black;
 
 }

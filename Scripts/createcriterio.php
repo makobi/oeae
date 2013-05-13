@@ -46,7 +46,7 @@ $output = " <div id='content'>
 				</label>";
  			}
  	$output = $output."	<br><br>
- 	<input type='submit' value='Crear Criterio' class='btn btn-primary'>
+ 	<input type='submit' value='Crear Criterio' class='btn btn-danger'>
  	</form>
  	</center>
  	<br>

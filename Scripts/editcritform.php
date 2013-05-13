@@ -63,7 +63,7 @@ $output = " <div id='content'>
  				}
  			}
  	$output = $output."	<br> <br>
- 	<input type='submit' value='Someter Edición' class='btn btn-primary'>
+ 	<input type='submit' value='Someter Edición' class='btn btn-danger'>
  	</form>
  	</center>
  	<br>
