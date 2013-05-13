@@ -70,6 +70,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3019', end
 		vertical-align: top;
 		border: 1px solid gray;
 		padding-top: 10px;
+		text-align: center;
 }
 
 #logout:hover{

@@ -161,9 +161,10 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 		<button type='submit' value='create' class='btn btn-danger'>Create!
 		</tr>
 			</td>
-		</table>
-			<br></div>
-			</form>
+		</table></form>
+			<br>
+			</div>
+			<br><br><br><br><br><br>
 			</center>
 		</div>
 		";
@@ -225,11 +226,6 @@ else {
 				<button type='submit' value='create'>Create!
 				<br></div>
 				</form>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
 			</div>
 		";
 		echo $content;
