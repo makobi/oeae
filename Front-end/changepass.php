@@ -20,7 +20,7 @@
 <body>
 	<!-- Esto es la barra de arriba, que tiene el log-out -->
 	<div id="top_bar">
-		
+		<img src="OEAE.png" style="width:100px; padding-left:10px;">
 		<!-- <a href=""><p id="logout">Logout</p></a> -->
 	</div>
 	<!-- Termina la barra -->

@@ -43,7 +43,7 @@ if($_SESSION['nombre_prof']!='Administrador') {
 		<table style="width:100%; height:50px;">
 			<tr>
 				<td style="width:50px;">
-
+					<img src="OEAE.png" style="width:100px; padding-left:10px;">
 				</td>
 				<td style="width:50px; text-align:right;">
 					<a href="index.php" id="logout"><p style="margin-right:50px; margin-top:10px;">Logout</p></a>
