@@ -742,7 +742,7 @@ h6 {
   font-family: inherit;
   font-weight: bold;
   line-height: 20px;
-  color: inherit;
+  color: red;
   text-rendering: optimizelegibility;
 }
 
