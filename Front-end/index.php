@@ -73,6 +73,8 @@ session_destroy();
 					Tahirí Laboy <br>
 					José Reyes
 					</p>
+
+					<img src="UPR.png" style="width:300px; ">
 			</div>
   	
  
