@@ -61,6 +61,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3019', end
 
 		width: 90%;
 		border: 1px solid gray;
+		margin-top: 10px;
+		margin-bottom: 10px;
 }
 
 .criterio td{
