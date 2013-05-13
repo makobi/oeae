@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			Rubric Name: <input type = 'text' name = 'rname'><br><br>
 			<br><br>
 			</td>
-			</tr><tr><table><tr>";
+			</tr><tr><table class='criterio'><tr>";
 
 	for ($i = 0; $i < mysql_num_rows($query); $i++) {
 		if ($i != 0 && $i%4==0) {
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 				$content .= "</td>";
 			}
 			$content = $content. "
-				</tr></table><table><tr>
+				</tr></table><table class='criterio'><tr>
 				<td>
 				<label class='checkbox'>
 				<input type='checkbox' name='cr[]' value=".$idscriterios[$i].">".$criterios[$i]."

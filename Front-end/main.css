@@ -57,6 +57,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3019', end
 
 }
 
+.criterio{
+
+		width: 90%;
+		border: 1px solid gray;
+}
+
+.criterio td{
+
+		vertical-align: top;
+		border: 1px solid gray;
+		padding-top: 10px;
+}
+
 #logout:hover{
 
 	color: black;
