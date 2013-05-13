@@ -214,7 +214,7 @@ else $list = "<p> Error: List type not set. </p>";
 			url = "../Scripts/resultsforprogram.php?prog_id="+id;
 		}
 		else { // type == "college"
-			url = "";
+			url = "../Scripts/resultsforcollege.php?college_id="+id;
 		};
 
 		$.get(url, function(html) {
