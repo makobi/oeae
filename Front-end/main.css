@@ -51,6 +51,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff3019', end
 	font-weight: bold;
 	color: white;
 	font-size: 22px;
+	width: 80px;
+	float: right;
 
 
 }
@@ -520,7 +522,7 @@ margin: 15px;
 #rubrica tr td{
 
 
-border:1px solid blue;
+border:1px solid gray;
 padding-top: 10px;
 padding-bottom: 10px;
 padding-right: 15px;
