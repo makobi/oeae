@@ -86,29 +86,33 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			Criterio - Dominios(s)
 			<br><br>
 			</td>
-			</tr>";
+			</tr><tr><table></tr>";
+
+	for ($i = 0; $i < mysql_num_rows($query); $i++) {
+
+		$content = $content. "
+			
+			<td>
+			<label class='checkbox'>
+			<input type='checkbox' name='cr[]' value=".$idscriterios[$i].">".$criterios[$i]."
+			</label>
+			</td>
+			";
+	}
+	$content = $content."</tr><tr>";
 
 	for ($i = 0; $i < mysql_num_rows($query); $i++) {
 		$domquery = mysql_query("SELECT DISTINCT nombre_dom FROM Dominios NATURAL JOIN CriterioPertenece WHERE crit_id=".$idscriterios[$i])
 				or die(mysql_error());
-
-		$content = $content. "<tr>
-			<td>
-			<label class='checkbox'>
-			<input type='checkbox' name='cr[]' value=".$idscriterios[$i].">".$criterios[$i]." -";
-
-			$doms = "";
+		$content .= "<td>";
 		while ($row = mysql_fetch_array($domquery)) {
-			$doms = $doms." ".$row[0].",";
+			$content .= $row[0]."<br><br> ";
 		}
-
-		$content = $content.rtrim($doms,",");
-		$content = $content	."
-			</label>
-			</tr>
-			</td>";
+		$content .= "</td>";
 	}
-	$content = $content."<br><br>
+
+
+	$content .= "</tr></table></tr><br><br>
 			<tr>
 			<td>
 		<button type='submit' value='create' class='btn btn-danger'>Create!
