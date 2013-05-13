@@ -32,17 +32,17 @@ $dompertenece = "SELECT dom_id from CriterioPertenece where crit_id=$crit";
 
 $output = " <div id='content'>
  	<center>
- 		<h2>Create Criterio</h2>
+ 		<h2>Create Criterion</h2>
  		<form>
- 			<h4>Nombre Criterio</h4> 
+ 			<h4>Criterion's Name</h4> 
  			<input type='text' name='nombre_crit' value='".$nombre_crit[0]."'> ";
 
  			while ($res = mysql_fetch_array($eval)) {
  				$output = $output."
- 				<h4>Descripción del nivel de ejecución ".strval(intval($res['valor'])-1)."-".$res['valor']."</h4> 
+ 				<h4>Level of execution ".strval(intval($res['valor'])-1)."-".$res['valor']."</h4> 
  			<textarea rows='4' name='comentario".$res['valor']."'>".$res['descripcion']."</textarea> ";
  			}
- 			$output = $output."<h4>Dominios que pertenece</h4> ";
+ 			$output = $output."<h4>Domain to which it belongs:</h4> ";
  			 
  			while ($row = mysql_fetch_array($domres)) {
  				$check = false;
@@ -63,7 +63,7 @@ $output = " <div id='content'>
  				}
  			}
  	$output = $output."	<br> <br>
- 	<input type='submit' value='Someter Edición' class='btn btn-danger'>
+ 	<input type='submit' value='Submit Edit' class='btn btn-danger'>
  	</form>
  	</center>
  	<br>

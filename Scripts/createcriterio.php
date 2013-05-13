@@ -28,17 +28,17 @@ $output = " <div id='content'>
  	<center>
  		<h2>Create Criterio</h2>
  		<form>
- 			<h4>Nombre Criterio</h4>
+ 			<h4>Criterion Name</h4>
  			<input type='text' name='nombre_crit'>
- 			<h4>Descripción del nivel de ejecución 1-2</h4>
+ 			<h4>Level of execution 1-2</h4>
  			<textarea rows='2' name='comentario2'></textarea>
- 			<h4>Descripción del nivel de ejecución 3-4</h4>
+ 			<h4>Level of execution 3-4</h4>
  			<textarea rows='2' name='comentario4'></textarea>
- 			<h4>Descripción del nivel de ejecución 5-6</h4>
+ 			<h4>Level of execution 5-6</h4>
  			<textarea rows='2' name='comentario6'></textarea>
- 			<h4>Descripción del nivel de ejecución 7-8</h4>
+ 			<h4>Level of execution 7-8</h4>
  			<textarea rows='2' name='comentario8'></textarea>
- 			<h4>Dominios que pertenece</h4>";
+ 			<h4>Domain to which it belongs:</h4>";
  			 
  			while ($row = mysql_fetch_array($domres)) {
  				$output = $output."<label class='checkbox inline'>
@@ -46,7 +46,7 @@ $output = " <div id='content'>
 				</label>";
  			}
  	$output = $output."	<br><br>
- 	<input type='submit' value='Crear Criterio' class='btn btn-danger'>
+ 	<input type='submit' value='Create Criterion' class='btn btn-danger'>
  	</form>
  	</center>
  	<br>

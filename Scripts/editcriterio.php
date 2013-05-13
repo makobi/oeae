@@ -26,15 +26,15 @@ $crits = mysql_query($critquery);
 
 $output = "<div id='content'>
 			<center>
-			<h2>Edit Criterio</h2>
+			<h2>Edit Criterion</h2>
 			<form>
-			<h3>Seleccione un criterio</h3>
+			<h3>Select Criterion</h3>
 			<select name='crit' id='crit'>";
 while ($row = mysql_fetch_array($crits)) {
 	$output = $output."<option value='".$row['crit_id']."'>".$row['nombre_crit']."</option>";
 }
 $output = $output."</select><br>
-			<input type='submit' value='Seleccionar Criterio' class='btn btn-danger'>
+			<input type='submit' value='Select Criterion' class='btn btn-danger'>
 			</form>
 			</center>
 			</div>

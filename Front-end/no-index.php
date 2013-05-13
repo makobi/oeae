@@ -184,10 +184,6 @@ $cursos = mysql_query($cursosquery);
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Create Rubric</p>
 					</div></a>
-					<a href="#" ><div class="secction">
-						<div ><img src="option_icon.png" id="effect"></div>
-						<a href="Manual_de_Usuario_Profesor.pdf" target = "_blank"><p>Manual de Usuario</p></a>
-					</div></a>
 					<a href="#" id="newcourse"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
 						<p>Add a course</p>
@@ -198,7 +194,11 @@ $cursos = mysql_query($cursosquery);
 					</div></a>
 					<a href="#" class="addcrit"><div class="secction"> 
 						<div ><img src="option_icon.png" id="effect"></div>
-						<p>Add Criterio</p>
+						<p>Add criterion</p>
+					</div></a>
+					<a href="Manual_de_Usuario_Profesor.pdf" target = "_blank"><div class="secction">
+						<div ><img src="option_icon.png" id="effect"></div>
+						<p> User's Manual</p>
 					</div></a>
 
 				</div>

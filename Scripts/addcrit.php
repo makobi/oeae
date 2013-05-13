@@ -44,6 +44,6 @@ mysql_query($insertcrit);
 		mysql_query($domquery);
 	}
 
-echo "Se añadio el criterio $nombre_crit!";
+echo "Criterion $nombre_crit added!";
 
  ?>

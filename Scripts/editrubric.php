@@ -114,7 +114,7 @@ $table=				'<div id="content"><center>
 $table=$table." <h1>".$_SESSION['nombre_act']."</h1>
 							<form>
 							<table id='rubrica'><tr>
-				<td><input type='submit' value='Someter' class='btn btn-danger'></td>
+				<td><input type='submit' value='Submit' class='btn btn-danger'></td>
 				<td>1-2</td>
 				<td>3-4</td>
 				<td>5-6</td>
@@ -124,7 +124,7 @@ $table=$table." <h1>".$_SESSION['nombre_act']."</h1>
 // Cada fila de la rubrica representa un criterio
 for ($i=0; $i < $crit_qty; $i++) {
 		$table=$table."<tr>
-				<td><p>".$criterios[$cids[$i]]." <br> <br> <input type='checkbox' name='".$cids[$i]."' value='".$cids[$i]."'>   <strong> Eliminar </strong> </p>
+				<td><p>".$criterios[$cids[$i]]." <br> <br> <input type='checkbox' name='".$cids[$i]."' value='".$cids[$i]."'>   <strong> Delete </strong> </p>
 				</td>
 				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][2]."</textarea></td>
 				<td><textarea name=crit".$cids[$i]."[]>".$descripcion[$cids[$i]][4]."</textarea></td>
@@ -135,9 +135,9 @@ for ($i=0; $i < $crit_qty; $i++) {
 
 $table=$table."<tr>
 				<td>
-				Seleccione criterio para añadir
+				Select criterion to add: 
 				<select name='addcriterio'>
-				<option value='0'> Ninguno";
+				<option value='0'> None";
 while ($row = mysql_fetch_array($nombre_crit)) {
 	$table = $table."<option value='$row[1]'>$row[0]";
 }

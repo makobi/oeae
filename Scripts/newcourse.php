@@ -84,6 +84,6 @@ else {
 
 	}
 	// Si no se ha procesado debe mostrar el form nuevamente
-	else echo "Entra la info, mamao!\n";
+	else echo "Error: 404!\n";
 }
 ?>

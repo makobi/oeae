@@ -48,6 +48,6 @@ foreach ($dom as $dominio) {
 		mysql_query($domquery);
 	}
 
-echo "Se edito el criterio $nombre_crit!";
+echo "Criterion $nombre_crit was edited!";
 
  ?>

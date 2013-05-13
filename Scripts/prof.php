@@ -11,13 +11,13 @@ echo "<div id='content'>
 	<center>
 	<p>Enter Professor's information</p>
 	<form method='post' action='newprof.php'>
-		Nombre del Professor: <br>
+		Professors Name: <br>
 		<input type='text' name='profname'> <br>
 		Email: <br>
 		<input type='text' name='profemail'> <br>
-		Departamento: <br>
+		Department: <br>
 		<input type='text' name='profdept'> <br>
-		Facultad: <br>
+		Faculty: <br>
 		<input type='text' name='proffaculty'> <br>
 		<br>
 		<input type='submit' class='btn btn-danger'>

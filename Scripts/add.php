@@ -46,9 +46,9 @@ if ($type = 'g') {
 $actividad = "INSERT INTO Actividades (nombre_act, rublocal_id, logro_esperado, estudiantes_logro) values ('$nombre_act', '$rublocal_id', '$logro_esperado', '$estudiantes_logro')";
 
 if(mysql_query($actividad)) {
-	echo "Se creo la actividad!";
+	echo "Activity Created!";
 }else {
-	echo "No se creo la actividad!";
+	echo "Error: Activity Not Created!";
 }
 
 $newactivity = mysql_query("SELECT act_id from Actividades where nombre_act='$nombre_act'");

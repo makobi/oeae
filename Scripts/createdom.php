@@ -23,12 +23,12 @@ if ($db) {
 
 $output = " <div id='content'>
  	<center>
- 		<h2>Create Dominio</h2>
+ 		<h2>Create Domain</h2>
  		<form>
- 			<h4>Nombre Dominio</h4>
+ 			<h4>Domain's Name</h4>
  			<input type='text' name='nombre_dom'>";
  	$output = $output."	<br><br>
- 	<input type='submit' value='Crear Dominio' class='btn btn-danger'>
+ 	<input type='submit' value='Create Domain' class='btn btn-danger'>
  	</form>
  	</center>
  	<br>

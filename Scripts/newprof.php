@@ -31,7 +31,7 @@ $db = mysql_connect("localhost","nosotros","oeaeavaluo2013");
 if ($db) {
   mysql_select_db("Avaluo");
 } else {
-  echo "no salio";
+  echo "Error: Not able to Connect";
   exit();
 }
 

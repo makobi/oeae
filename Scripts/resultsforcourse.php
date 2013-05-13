@@ -64,17 +64,17 @@ if (mysql_num_rows($query)>0) {
  }
 
  echo "<div id='content'><center>
-	  <h3>Resultados para curso ".$codif." (".$nombre_curso.")</h3>
-	  <a href=../Front-end/coursechart.php>Ver Graficas para estos resultados</a>";
+	  <h3>Results for course ".$codif." (".$nombre_curso.")</h3>
+	  <a href=../Front-end/coursechart.php target='_blank'>View charts for these results</a>";
 
  /* Se genera tabla con resumen de actividades para el curso - Incluye los nombres
 	de las actividades, su logro esperado y si estas han sido evaluadas o no */
  $tabla1 ="<table id = grading>
-	 <caption><h4>Resumen de actividades</h4>
+	 <caption><h4>Summary of activities</h4>
 	</caption>
-	       <thead><td><p>Nombre de la actividad</p></td>
-	       <td><p>Logro Esperado</p></td>
-	       <td><p>Evaluada o no evaluada</p></td>
+	       <thead><td><p>Name of activity</p></td>
+	       <td><p>Expected Outcome</p></td>
+	       <td><p>Evaluated or not evaluated</p></td>
 		   </thead>
 	    <tbody>"; 	
 
@@ -82,10 +82,10 @@ if (mysql_num_rows($query)>0) {
 	$tabla1.="<tr><td><p>".$nombresact[$i]."</p></td>
  				  <td><p>".$logrosesperados[$i]."</p></td>";
 	if (in_array($actividades[$i] ,array_diff($actividades, $a_evaluadas))) {
-		$tabla1.="<td><p>No evaluada</p></td>";
+		$tabla1.="<td><p>Not evaluated</p></td>";
 	}
 	else {
-		$tabla1.="<td><p>Evaluada</p></td>";
+		$tabla1.="<td><p>Evaluated</p></td>";
 		
 	}
 	$tabla1.="</tr>";
@@ -151,12 +151,12 @@ if (mysql_num_rows($query)>0) {
 			// Verificar si el criterio fue evaluado y de ser asi, si fue aprobado.
 			if ($totales[$criterio][11] == 0) {
 				$totales[$criterio][9] = 'x';
-				$totales[$criterio][10] = 'No evaluado';
+				$totales[$criterio][10] = 'Not evaluated';
 			}
 			else if ($totales[$criterio][9] >= $logrosesperados[$i]) {
-				$totales[$criterio][10] = 'Alcanzado';
+				$totales[$criterio][10] = 'Achieved';
 			}
-			else $totales[$criterio][10] = 'No alcanzado';
+			else $totales[$criterio][10] = 'Not achieved';
 		} 
 		// Copio los resultados que necesito de la tabla 2D a arreglos sencillos.
 		for($k = 0; $k < $crit_qty; $k++) {
@@ -172,12 +172,12 @@ $criterios_norep = array_unique($nombres_crs);
 /*--------------------- Genero tabla de resumen de criterios ---------------------*/
 if (sizeof($a_evaluadas)>0) {
  $tabla2 ="<br><br><br><br><table id = grading>
-	 <caption><h4>Resumen de criterios para actividades evaluadas</h4>
+	 <caption><h4>Summary fo criteria for evaluated activities</h4>
 	</caption>
-	       <thead><td><p>Criterio</p></td>
-	       <td><p>Veces que se evaluó</p></td>
-	       <td><p>Aprobado</p></td>
-		   <td><p>No aprobado</p></td>
+	       <thead><td><p>Criterion</p></td>
+	       <td><p>Number of times evaluated</p></td>
+	       <td><p>Achieved</p></td>
+		   <td><p>Not Achieved</p></td>
 		   </thead>
 	    <tbody>"; 	
 
@@ -194,13 +194,13 @@ if (sizeof($a_evaluadas)>0) {
 	$tabla2.="<tr><td><p>".$criterio."</p></td>";
 	$result = array_keys($nombres_crs, $criterio);  
 	foreach ($result as $status) {
-		if ($cr_aprobados[$status] == "Alcanzado") $alcanzado++;
-		else if ($cr_aprobados[$status] == "No alcanzado") $noalcanzado++;
+		if ($cr_aprobados[$status] == "Achieved") $alcanzado++;
+		else if ($cr_aprobados[$status] == "Not Achieved") $noalcanzado++;
 	}
 
 	$veces = $alcanzado + $noalcanzado; // Cuantas veces fue evaluado el criterio
 	if ($veces == 0) {
-		$veces = "No evaluado";
+		$veces = "Not evaluated";
 		$alcanzado = "-";
 		$noalcanzado = "-";
 	}
@@ -226,7 +226,7 @@ if (sizeof($a_evaluadas)>0) {
 
 }
 else {
- $tabla2 = "<p><br><br>Para ver resultados por criterios debe evaluar al menos una actividad.<br>";
+ $tabla2 = "<p><br><br>To see the results you must had evaluated at least one activity.<br>";
 }
 /*--------------------- Genero tabla de criterios alineados a dominios ---------------------*/ 
 $dominios = array(); // Tabla para retener relacion "dominio" => "cr1","cr2",...
@@ -250,14 +250,14 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 
  // Se comienza a generar la tabla  
  $tabla3 = "<br><br><br><br><table id = grading>
-	 <caption><h4>Agregados por dominios para el curso</h4>
+	 <caption><h4>Aggregates by domain for the course</h4>
 	</caption>
 	       <thead>
-		   <td><p>Dominios</p></td>
-	       <td><p>Criterios alineados</p></td>
-	       <td><p>Criterios alcanzados</p></td>
-   		   <td><p>Porciento</p></td>
-		   <td><p>Alcanzado o no alcanzado</p></td>
+		   <td><p>Domain</p></td>
+	       <td><p>Aligned Criteria</p></td>
+	       <td><p>Achieved Criteria</p></td>
+   		   <td><p>Percentages</p></td>
+		   <td><p>Achieved or not achieved</p></td>
 		   </thead>
 	    <tbody>"; 	
 
@@ -282,10 +282,10 @@ if (sizeof($a_evaluadas) > 0) { // Si hay actividades evaluadas...
 		   		   <td rowspan = $span><p>".round(($apr/$tot)*100,2)."</p></td>";
 			// Si el porcentaje es mayor que 70, se alcanzo.
 			if (round(($apr/$tot)*100,2) > 70) {
-				$tabla3.= "<td rowspan = $span><p> Alcanzado </p></td>";
+				$tabla3.= "<td rowspan = $span><p> Achieved </p></td>";
 			}
 			else {
-				$tabla3.= "<td rowspan = $span><p> No alcanzado </p></td>";
+				$tabla3.= "<td rowspan = $span><p> Not achieved </p></td>";
 			}						
  	}
 	$tabla3.="</tr>";
@@ -300,7 +300,7 @@ else {
 }
 /************************ SI NO HAY ACTIVIDADES... ************************/
 else {
-	$tabla2 ="<div id='content'><center><p> Error: Aún no se han realizado actividades para este curso.</center></div>";
+	$tabla2 ="<div id='content'><center><p> Error: There are no activities for this course.</center></div>";
 } 
 
 if (isset($tabla1)) echo $tabla1;

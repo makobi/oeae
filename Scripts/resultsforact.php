@@ -93,12 +93,12 @@ if ($estudiantes > 0) {
 		// Verificar si el criterio fue evaluado y de ser asi, si fue aprobado.
 		if ($totales[$criterio][11] == 0) {
 			$totales[$criterio][9] = 'x';
-			$totales[$criterio][10] = 'No evaluado';
+			$totales[$criterio][10] = 'Not evaluated';
 		}
 		else if ($totales[$criterio][9] >= $logroesperado) {
-			$totales[$criterio][10] = 'Alcanzado';
+			$totales[$criterio][10] = 'Achieved';
 		}
-		else $totales[$criterio][10] = 'No alcanzado';
+		else $totales[$criterio][10] = 'Not Achieved';
 	} 
 }
 
@@ -144,8 +144,8 @@ echo '					<table id="thumb0">
 				</tr>
 				</table>';
 echo "
-	<h3>Resultados para ".$nombre."</h3>";
-echo "  <p> Logro esperado: ".$logroesperado."\n";
+	<h3>Results for ".$nombre."</h3>";
+echo "  <p> Expected Outcome: ".$logroesperado."\n";
 
 $tabla = "";
 
@@ -153,12 +153,12 @@ $tabla = "";
 if ($estudiantes != 0) {
   // Se comienza a generar la tabla de los totales
   $tabla.="<table id = grading>
-	 <caption><h4>Tabla de distribución de puntuaciones por criterio</h4></br>
+	 <caption><h4>Table of points distribution by criterion</h4></br>
 	</caption>
-	       <thead><td><p>Criterios</p></td>
-	       <td colspan='9'><p>Escala</p></td>
-	       <td><p>Porciento de estudiantes que aprobaron</p></td>
-		   <td><p>Alcanzado o no alcanzado</p></td></thead>
+	       <thead><td><p>Criteria</p></td>
+	       <td colspan='9'><p>Scale</p></td>
+	       <td><p>Percentage of students that aproved</p></td>
+		   <td><p>Achieved or not achieved</p></td></thead>
 	    <tbody><tr><td> </td>
 				<td><b>0</b></td>
 				<td><b>1</b></td>
@@ -170,7 +170,7 @@ if ($estudiantes != 0) {
                 <td><b>7</b></td>
 				<td><b>8</b></td>
 				<td> </td> 
-				<td> <a href=../Front-end/activitychart.php>View chart for this activity</a> </td> 
+				<td> <a href=../Front-end/activitychart.php target='_blank'>View charts for this activity</a> </td> 
             </tr>";
 
   // Se llena la tabla con los resultados
@@ -232,13 +232,13 @@ if ($estudiantes != 0) {
 	// Se verifica cuantos de los criterios alineados a los dominios fueron aprobados. 
 	for ($i = $first; $i < $last; $i++) {
 		$fila = array_search($criterios_alineados[$i], $criterios);
-		if ($totales[$fila][10] == 'Alcanzado') {
+		if ($totales[$fila][10] == 'Achieved') {
 			$aprobados[$iter]++; // Aumento el conteo de criterios aprobados
 		}
-		else if ($totales[$fila][10] == 'No evaluado') {
+		else if ($totales[$fila][10] == 'Not evaluate') {
 			$noevaluados[$iter]++; // Aumento el conteo de criterios no evaluados
 			$criterios_alineados[$i] .= "*";
-			$mensaje = "<br><p>*Criterio no evaluado.";
+			$mensaje = "<br><p>*Criterion not evaluated.";
 		}
 	}
 	// Se computa el porciento de criterios aprobados
@@ -247,14 +247,14 @@ if ($estudiantes != 0) {
 	
 		// Se verifica si el dominio se alcanzo
 		if (round($porciento[$iter],-1) >= 70) {
-			$dom_alcanzado[] = 'Alcanzado';
+			$dom_alcanzado[] = 'Achieved';
 		}
-		else $dom_alcanzado[] = 'No alcanzado';
+		else $dom_alcanzado[] = 'Not achieved';
 	}
 	// Si ninguno de los criterios fue evaluado
 	else {
 		$porciento[] = "x";
-		$dom_alcanzado[] = "No evaluado";
+		$dom_alcanzado[] = "Not evaluated";
 	}	
 
 	$first = $last; // Establezco desde donde comienza la nueva iteracion.
@@ -264,13 +264,13 @@ if ($estudiantes != 0) {
 
   $tabla.="
   <table id = grading>
-	 <caption><h4>Tabla de agregados por dominios</h4></br></caption>
+	 <caption><h4>Table of aggregates by domain</h4></br></caption>
         <thead>
-	       <td><p>Dominios</p></td>
-	       <td><p>Criterios Alineados</p></td>
-	       <td><p>Criterios Alcanzados</p></td>
-		   <td><p>Porcentaje</p></td>
-		   <td><p>Alcanzado o no alcanzado</p></td>
+	       <td><p>Domiain</p></td>
+	       <td><p>Aligned Criteria</p></td>
+	       <td><p>Achieved Criteria</p></td>
+		   <td><p>Percentage</p></td>
+		   <td><p>Achieved or not achieved</p></td>
 	    </thead><tbody>";
 
   $dom_i = 0;
@@ -295,7 +295,7 @@ if ($estudiantes != 0) {
   if (isset($mensaje)) $tabla.=$mensaje;
 }
 else { // No se han evaluado estudiantes
-  $tabla.="<p> Error: Aún no se han realizado evaluaciones para esta actividad.";
+  $tabla.="<p> Error: There are no evaluations for this activity";
 }   
   $tabla.="<br><br><br><br><br><br></center></div>
 

@@ -37,11 +37,11 @@ $curso = mysql_fetch_array($cursoquery);
 $output = "
 <div id='content'>
 <center>
-<h2>Crear Actividad: ".$curso[0]."</h2>
+<h2>Create Activity: ".$curso[0]."</h2>
 <form>
-	Nombre de la Actividad: <br>
+	Name of Activity: <br>
 	<input type='text' name='nombre_act'> <br>
-	Seleccione Rubrica para la actividad <br>
+	Select Rubric for the Activity: <br>
 	<select name='rub_id'>";
 
 while ($row = mysql_fetch_array($query)) {
@@ -53,11 +53,11 @@ while ($res = mysql_fetch_array($query2)) {
 }
 
 $output = $output."</select> <br>
-	Logro Esperado (1-100) <br>
+	Expected Outcome (1-100) <br>
 	<input type='text' name='logro_esperado'> <br>
-	Procentaje de Estudiantes (1-100) <br>
+	Student Percentage (1-100) <br>
 	<input type='text' name='estudiantes_logro'> <br>
-	<input type='Submit' value='Crear Actividad'>
+	<input type='Submit' value='Create Activity'>
 </form>
 </center>
 </div>

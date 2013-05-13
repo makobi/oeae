@@ -14,7 +14,7 @@ $db = mysql_connect("localhost","nosotros","oeaeavaluo2013");
 if ($db) {
   mysql_select_db("Avaluo");
 } else {
-  echo "no salio";
+  echo "Not able to connect to databases.";
   exit();
 }
 /***************************************************************************************************/
@@ -69,6 +69,6 @@ if ($_GET['addcriterio']!=0) {
 	}
 }
 
-echo "Todo salio bien!";
+echo "Criterion Removed!";
 
  ?>

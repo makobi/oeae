@@ -76,13 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			<table>
 			<tr>
 			<td>			
-			<p><strong>Indique el nombre de la rubrica y seleccione los criterios que desea tener</strong></p>
+			<p><strong>Insert the rubric's name and select its criteria:</strong></p>
 			</td>
 			</tr>
 			<tr>
 			<td>
 			Rubric Name: <input type = 'text' name = 'rname'><br><br>
-			Criterio - Dominios(s)
+			Criterion - Domain(s)
 			<br><br>
 			</td>
 			</tr>";

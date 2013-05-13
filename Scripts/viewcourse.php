@@ -116,12 +116,12 @@ $table=				'<div id="content"><center>
 // Aqui se comienza a generar la tabla de la rubrica
 $table=$table." <h1>".$_SESSION['nombre_act']."
 				<form name='delete'>
-				<input type='submit' value='Eliminar Actividad' class='btn btn-danger'>
+				<input type='submit' value='Delete activity' class='btn btn-danger'>
 				</form>
 				</h1>
 				<table id='rubrica'><tr>
 				<form name='edit'>
-				<td><input type='submit' value='Editar' class='btn btn-danger'></td>
+				<td><input type='submit' value='Edit' class='btn btn-danger'></td>
 				</form>
 				<td>1-2</td>
 				<td>3-4</td>
