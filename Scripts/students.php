@@ -150,11 +150,17 @@ while ($row = mysql_fetch_array($students)) {
 
 	// Sumar puntos obtenidos por cada criterio al acumulador
 	for ($i=0; $i < $crit_qty; $i++) { 
-	$eval = "SELECT ptos_obtenidos from Evaluacion 
-			where act_id=$_SESSION[act_id] and crit_id=".$cids[$i]." and mat_id=$mat_id";
-	$res = mysql_query($eval);
-	$puntos = mysql_fetch_array($res);
-	$score = $score + intval($puntos[0]);
+	$eval = "SELECT ptos_obtenidos from Evaluacion where act_id='$_SESSION[act_id]' and crit_id='$cids[$i]' and mat_id='$mat_id'";
+	$res = mysql_query($eval) or die(mysql_error());
+
+	if (mysql_num_rows($res) != 0) {
+		$puntos = mysql_fetch_array($res);
+		$score = $score + intval($puntos[0]);
+	} else {
+		$puntos = 0;
+		$score = $score + $puntos;
+	}
+	
 	}
 
 	$content=$content."<td>

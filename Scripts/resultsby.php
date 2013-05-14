@@ -44,7 +44,7 @@ else {
 	<h2> Show results by: </h2> <br> <br>	
 
 	<h3>
-		<a href='#' onClick='ResultsListByType("college")'> College or School </a><br><br>
+		<!-- <a href='#' onClick='ResultsListByType("college")'> College or School </a><br><br> -->
 		<a href='#' onClick='ResultsListByType("program")'> Program </a><br><br>
 		<a href='#' onClick='ResultsListByType("course")'> Course </a><br><br>
 	</h3>

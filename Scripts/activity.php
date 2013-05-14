@@ -26,7 +26,7 @@ if ($db) {
 }
 
 // Select the distinct Rubrics from the database
-$query = mysql_query("SELECT rublocal_id, nombre_rub FROM NombresRubricasLocal natural join RubricaCreadaPor where prof_id='$_SESSION[prof_id]'");
+$query = mysql_query("SELECT distinct * FROM NombresRubricasLocal NATURAL JOIN RubricaCreadaPor where prof_id='$_SESSION[prof_id]' and rublocal_id=rub_id");
 $cursoquery = mysql_query("SELECT nombre_curso FROM Cursos where curso_id=".$_SESSION['curso_id']);
 $query2 = mysql_query("SELECT rub_id, nombre_rub FROM NombresRubricas");
 
